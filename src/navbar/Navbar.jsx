@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DropDown from "./DropDown";
 import { DICT } from "../urils/dictionary";
 
-const items = (lang, dict) => {
+const register_items = (lang, dict) => {
   return [
     {
       key: "2",
@@ -24,38 +24,84 @@ const items = (lang, dict) => {
       label: (
         <Link
           className="text-black no-underline"
-          to="/register-found-person-form"
+          to="/asset-registration"
         >
-          {dict.reg_found[lang]}
+          Asset Registration
+        </Link>
+      ),
+    },
+    {
+      key: "4",
+      label: (
+        <Link
+          className="text-black no-underline"
+          to="/gis-registration"
+        >
+          GIS Registration
+        </Link>
+      ),
+    },
+    {
+      key: "5",
+      label: (
+        <Link
+          className="text-black no-underline"
+          to="/gis-survey-registration"
+        >
+          GIS Survey Registration
         </Link>
       ),
     },
   ];
 };
 
-const items3 = (lang, dict) => {
+const assignment_items = (lang, dict) => {
   return [
     {
-      key: "6",
+      key: "2",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
-          to="/employee-registration"
+          to="/qr-code-assignment"
         >
-          {dict.emp_reg[lang]}
+          QR Code Assignment
         </Link>
       ),
     },
     {
-      key: "7",
+      key: "3",
       label: (
         <Link className="text-black no-underline" to="/citizen-registration">
-          {dict.city_reg[lang]}
+          Asset Allotment
         </Link>
       ),
     },
   ];
 };
+
+const setting_item = (dict, lang) => {
+  return [
+
+    {
+      key: "1",
+      label: (
+        <Link className="text-black no-underline hover:text-green" to="/">
+          Profile
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Link className="text-black no-underline hover:text-green" to="/">
+          {dict.help[lang]}
+        </Link>
+      ),
+    },
+    
+  ];
+};
+
 const Navbar = ({ lang, setLang }) => {
   const dict = DICT;
 
@@ -96,65 +142,67 @@ const Navbar = ({ lang, setLang }) => {
     <div className="px-3 font-openSans">
       <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
         <div className="hidden mt-0 lg:flex gap-5  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
-          <Link className="text-white no-underline " to="/dashboard">
-            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-              Dashboard{" "}
-            </div>
-          </Link>
-          <Link
-            to={"/welcome-to-lost-and-found-2025"}
+          
+        <Link
+            to={"/home"}
             className="no-underline text-white"
           >
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               {dict.home[lang]}
             </div>
           </Link>
+          
+          <Link className="text-white no-underline " to="/dashboard">
+            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+              Dashboard{" "}
+            </div>
+          </Link>
+          
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={items(lang, dict)}
+              items={register_items(lang, dict)}
               name={dict.register[lang]}
             ></DropDown>
           </div>
 
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            <div className="h-10 flex items-center">
-              <DropDown
-                items={items3(lang, dict)}
-                name={dict.user_reg[lang]}
-              ></DropDown>
-            </div>
-          </div> */}
-          {/* 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={items2(dict, lang)}
-              name={dict.search[lang]}
+              items={assignment_items(lang, dict)}
+              name="Assignment"
             ></DropDown>
           </div>
 
-          */}
-
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            {dict.notice_board[lang]}
-          </div> */}
-
-          {/* 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            Help
+            <DropDown
+              items={assignment_items(lang, dict)}
+              name="Schedule"
+            ></DropDown>
           </div>
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            A / अ
-          </div> */}
+            <DropDown
+              items={assignment_items(lang, dict)}
+              name="Complaince"
+            ></DropDown>
+          </div>
 
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+
+          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+            <DropDown
+              items={assignment_items(lang, dict)}
+              name="Waste Management"
+            ></DropDown>
+          </div>
+
+
+          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               <DropDown
-                items={items4(dict, lang)}
+                items={setting_item(dict, lang)}
                 name={dict.setting[lang]}
               ></DropDown>
             </div>
-          </div> */}
+          </div>
 
           {/* {!logName ? (
             <button onClick={() => handleNavigation("/login")}>
@@ -195,7 +243,7 @@ const Navbar = ({ lang, setLang }) => {
               </div>
             </Link>
             <Link
-              to={"/welcome-to-lost-and-found-2025"}
+              to={"/home"}
               className="no-underline text-white"
             >
               <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
