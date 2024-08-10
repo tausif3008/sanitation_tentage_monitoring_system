@@ -71,13 +71,111 @@ const assignment_items = (lang, dict) => {
     {
       key: "3",
       label: (
-        <Link className="text-black no-underline" to="/citizen-registration">
+        <Link className="text-black no-underline" to="/asset-allotment">
           Asset Allotment
         </Link>
       ),
     },
   ];
 };
+
+
+const schedule_items = (lang, dict) => {
+  return [
+    {
+      key: "1",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/scheduling-and-deployment"
+        >
+          Create
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/waste-management-schedule"
+        >
+          Waste Management Schedule
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline" to="/create-tentage-schedule">
+          Tentage
+        </Link>
+      ),
+    },
+    {
+      key: "4",
+      label: (
+        <Link className="text-black no-underline" to="/create-sanitation-schedule">
+          Sanitation
+        </Link>
+      ),
+    },
+    {
+      key: "5",
+      label: (
+        <Link className="text-black no-underline" to="/monthly-report">
+          Report
+        </Link>
+      ),
+    },
+  ];
+};
+
+const complaince_items = (lang, dict) => {
+  return [
+    {
+      key: "2",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/monitoring"
+        >
+          Monitoring
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline" to="/notification">
+          Notification
+        </Link>
+      ),
+    },
+  ];
+};
+
+
+const waste_items = (lang, dict) => {
+  return [
+    {
+      key: "2",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/route"
+        >
+          Route
+        </Link>
+      ),
+    },
+  ];
+};
+
+
+
+
+
 
 const setting_item = (dict, lang) => {
   return [
@@ -174,14 +272,14 @@ const Navbar = ({ lang, setLang }) => {
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={assignment_items(lang, dict)}
+              items={schedule_items(lang, dict)}
               name="Schedule"
             ></DropDown>
           </div>
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={assignment_items(lang, dict)}
+              items={complaince_items(lang, dict)}
               name="Complaince"
             ></DropDown>
           </div>
@@ -189,7 +287,7 @@ const Navbar = ({ lang, setLang }) => {
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={assignment_items(lang, dict)}
+              items={waste_items(lang, dict)}
               name="Waste Management"
             ></DropDown>
           </div>
