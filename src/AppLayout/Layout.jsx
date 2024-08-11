@@ -34,16 +34,7 @@ const Layout = () => {
     }
   }, [location]);
 
-  useEffect(() => {
-    if (pageWidthFull) {
-      setClassWidth(
-        "md:w-10/12 w-11/12 xs:w-9/12 xl:w-10/12 2xl:w-9/12 flex flex-col m-auto"
-      );
-    } else {
-      setClassWidth("w-full flex flex-col m-auto");
-    }
-  }, [pageWidthFull]);
-
+  
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 font-roboto">
       <div>
