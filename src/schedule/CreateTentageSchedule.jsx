@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Select, Button, Row, Col, TimePicker } from "antd";
+import { Form, Select, Button, Row, Col, TimePicker, Divider } from "antd";
 
 const { Option } = Select;
 
@@ -11,8 +11,12 @@ const CreateTentageSchedule = () => {
 
   return (
     <div className="flex justify-center items-center h-full w-full mt-3">
-      <div className="w-full max-w-3xl bg-white p-6 shadow-md rounded-md">
-        <h2 className="text-xl font-bold mb-4">Tentage Schedule</h2>
+      <div className="w-full bg-white p-6 shadow-md rounded-md">
+        <div className="text-d9 text-2xl flex items-end justify-between">
+          <div className="font-bold">Tentage Schedule</div>
+          <div className="text-xs">All * marked fields are mandatory</div>
+        </div>
+        <Divider className="bg-d9 h-2/3 mt-1"></Divider>{" "}
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
             name="cleaner"
@@ -29,7 +33,9 @@ const CreateTentageSchedule = () => {
           <Form.Item
             name="timesPerDay"
             label="How many times a Day"
-            rules={[{ required: true, message: "Please select the number of times" }]}
+            rules={[
+              { required: true, message: "Please select the number of times" },
+            ]}
           >
             <Select placeholder="Select Frequency">
               <Option value="1">1</Option>
@@ -43,16 +49,24 @@ const CreateTentageSchedule = () => {
             <h3 className="text-lg font-semibold">Schedule Times</h3>
             {[...Array(5)].map((_, index) => (
               <Row gutter={16} key={index}>
-                {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
+                {[
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ].map((day) => (
                   <Col span={3} key={`${day}-${index}`}>
                     <Form.Item
-                      label={index === 0 ? day : ''}
+                      label={index === 0 ? day : ""}
                       name={`${day.toLowerCase()}_${index}`}
                     >
                       <TimePicker.RangePicker
                         format="HH:mm"
                         minuteStep={15}
-                        placeholder={['Start', 'End']}
+                        placeholder={["Start", "End"]}
                       />
                     </Form.Item>
                   </Col>

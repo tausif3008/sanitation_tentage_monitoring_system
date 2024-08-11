@@ -22,10 +22,7 @@ const register_items = (lang, dict) => {
     {
       key: "3",
       label: (
-        <Link
-          className="text-black no-underline"
-          to="/asset-registration"
-        >
+        <Link className="text-black no-underline" to="/asset-registration">
           Asset Registration
         </Link>
       ),
@@ -33,10 +30,7 @@ const register_items = (lang, dict) => {
     {
       key: "4",
       label: (
-        <Link
-          className="text-black no-underline"
-          to="/gis-registration"
-        >
+        <Link className="text-black no-underline" to="/gis-registration">
           GIS Registration
         </Link>
       ),
@@ -44,10 +38,7 @@ const register_items = (lang, dict) => {
     {
       key: "5",
       label: (
-        <Link
-          className="text-black no-underline"
-          to="/gis-survey-registration"
-        >
+        <Link className="text-black no-underline" to="/gis-survey-registration">
           GIS Survey Registration
         </Link>
       ),
@@ -78,7 +69,6 @@ const assignment_items = (lang, dict) => {
     },
   ];
 };
-
 
 const schedule_items = (lang, dict) => {
   return [
@@ -115,7 +105,10 @@ const schedule_items = (lang, dict) => {
     {
       key: "4",
       label: (
-        <Link className="text-black no-underline" to="/create-sanitation-schedule">
+        <Link
+          className="text-black no-underline"
+          to="/create-sanitation-schedule"
+        >
           Sanitation
         </Link>
       ),
@@ -155,16 +148,12 @@ const complaince_items = (lang, dict) => {
   ];
 };
 
-
 const waste_items = (lang, dict) => {
   return [
     {
       key: "2",
       label: (
-        <Link
-          className="text-black no-underline hover:text-green"
-          to="/route"
-        >
+        <Link className="text-black no-underline hover:text-green" to="/route">
           Route
         </Link>
       ),
@@ -172,14 +161,8 @@ const waste_items = (lang, dict) => {
   ];
 };
 
-
-
-
-
-
 const setting_item = (dict, lang) => {
   return [
-
     {
       key: "1",
       label: (
@@ -196,7 +179,6 @@ const setting_item = (dict, lang) => {
         </Link>
       ),
     },
-    
   ];
 };
 
@@ -240,22 +222,18 @@ const Navbar = ({ lang, setLang }) => {
     <div className="px-3 font-openSans">
       <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
         <div className="hidden mt-0 lg:flex gap-5  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
-          
-        <Link
-            to={"/home"}
-            className="no-underline text-white"
-          >
+          <Link to={"/home"} className="no-underline text-white">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               {dict.home[lang]}
             </div>
           </Link>
-          
+
           <Link className="text-white no-underline " to="/dashboard">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               Dashboard{" "}
             </div>
           </Link>
-          
+
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
               items={register_items(lang, dict)}
@@ -284,14 +262,12 @@ const Navbar = ({ lang, setLang }) => {
             ></DropDown>
           </div>
 
-
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
               items={waste_items(lang, dict)}
               name="Waste Management"
             ></DropDown>
-          </div>
-
+          </div> */}
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
@@ -340,10 +316,7 @@ const Navbar = ({ lang, setLang }) => {
                 Dashboard{" "}
               </div>
             </Link>
-            <Link
-              to={"/home"}
-              className="no-underline text-white"
-            >
+            <Link to={"/home"} className="no-underline text-white">
               <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
                 {dict.home[lang]}
               </div>

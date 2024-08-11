@@ -40,7 +40,7 @@ const SchedulingAndDeploymentForm = () => {
   };
 
   return (
-    <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-10 w-full">
+    <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
         <div className="font-bold">Scheduling and Deployment</div>
         <div className="text-xs">All * marked fields are mandatory</div>

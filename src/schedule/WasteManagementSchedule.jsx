@@ -1,6 +1,7 @@
 import React from "react";
-import { Form, Input, Button, Select, TimePicker, InputNumber } from "antd";
+import { Form, Input, Button, Select, TimePicker, InputNumber, Divider } from "antd";
 import moment from "moment";
+import CommonDivider from "../commonComponents/CommonDivider";
 
 const { Option } = Select;
 
@@ -14,8 +15,12 @@ const WasteManagementSchedule = () => {
 
   return (
     <div className="flex justify-center items-center h-full w-full mt-3">
-      <div className="w-full max-w-4xl bg-white p-6 shadow-md rounded-md">
-        <h2 className="text-xl font-bold mb-4">Waste Management Schedule</h2>
+      <div className="w-full bg-white p-6 -mb-3 shadow-md rounded-md">
+        <div className="text-d9 text-2xl flex items-end justify-between">
+          <div className="font-bold">Scheduling and Deployment</div>
+          <div className="text-xs">All * marked fields are mandatory</div>
+        </div>
+        <Divider className="bg-d9 h-2/3 mt-1"></Divider>{" "}
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <Form.Item
@@ -45,7 +50,9 @@ const WasteManagementSchedule = () => {
             <Form.Item
               name="vehicleNo"
               label="Vehicle No"
-              rules={[{ required: true, message: "Please enter vehicle number" }]}
+              rules={[
+                { required: true, message: "Please enter vehicle number" },
+              ]}
             >
               <Input placeholder="Enter Vehicle No." />
             </Form.Item>
@@ -84,7 +91,12 @@ const WasteManagementSchedule = () => {
             label="How many times a Day"
             rules={[{ required: true, message: "Please enter a number" }]}
           >
-            <InputNumber min={1} max={4} className="w-full" placeholder="Enter number of times per day" />
+            <InputNumber
+              min={1}
+              max={4}
+              className="w-full"
+              placeholder="Enter number of times per day"
+            />
           </Form.Item>
 
           <div className="overflow-x-auto">
@@ -105,23 +117,26 @@ const WasteManagementSchedule = () => {
                 {[1, 2, 3, 4].map((time) => (
                   <tr key={time}>
                     <td className="py-2 px-4 border-b text-center">{time}</td>
-                    {["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].map(
-                      (day) => (
-                        <td key={day} className="py-2 px-4 border-b text-center">
-                          <Form.Item
-                            name={`${day}_${time}`}
-                            noStyle
-                          >
-                            <TimePicker
-                              format="HH:mm"
-                              placeholder="--:--"
-                              defaultOpenValue={moment("00:00", "HH:mm")}
-                              className="w-full"
-                            />
-                          </Form.Item>
-                        </td>
-                      )
-                    )}
+                    {[
+                      "monday",
+                      "tuesday",
+                      "wednesday",
+                      "thursday",
+                      "friday",
+                      "saturday",
+                      "sunday",
+                    ].map((day) => (
+                      <td key={day} className="py-2 px-4 border-b text-center">
+                        <Form.Item name={`${day}_${time}`} noStyle>
+                          <TimePicker
+                            format="HH:mm"
+                            placeholder="--:--"
+                            defaultOpenValue={moment("00:00", "HH:mm")}
+                            className="w-full"
+                          />
+                        </Form.Item>
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>

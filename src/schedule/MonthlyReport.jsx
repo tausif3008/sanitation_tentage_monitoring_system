@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Select, Button, Form, Tooltip } from 'antd';
+import { Table, Select, Button, Form, Tooltip, Divider } from 'antd';
 import { DownloadOutlined, CalendarOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -70,29 +70,48 @@ const MonthlyReport = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-full w-full mt-3 px-4">
-      <div className="w-full max-w-7xl bg-white p-8 shadow-md rounded-md">
-        <h2 className="text-xl font-bold mb-4">Monthly Reports</h2>
-
+      <div className="w-full bg-white p-6 shadow-md rounded-md">
+        <div className="text-d9 text-2xl flex items-end justify-between">
+          <div className="font-bold">Monthly Reports</div>
+          <div className="text-xs">All * marked fields are mandatory</div>
+        </div>
+        <Divider className="bg-d9 h-2/3 mt-1"></Divider>
         <Form layout="inline" className="mb-6">
           <Form.Item label="Select Year">
             <Select defaultValue="2024" style={{ width: 120 }}>
-              {[2024, 2023, 2022].map(year => (
-                <Option key={year} value={year}>{year}</Option>
+              {[2024, 2023, 2022].map((year) => (
+                <Option key={year} value={year}>
+                  {year}
+                </Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item label="Select Month">
             <Select defaultValue="July" style={{ width: 120 }}>
               {[
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'
-              ].map(month => (
-                <Option key={month} value={month}>{month}</Option>
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((month) => (
+                <Option key={month} value={month}>
+                  {month}
+                </Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">Submit</Button>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
           </Form.Item>
         </Form>
 
@@ -101,7 +120,7 @@ const MonthlyReport = () => {
             type="default"
             icon={<CalendarOutlined />}
             className="mr-2"
-            onClick={() => console.log('Show Calendar View')}
+            onClick={() => console.log("Show Calendar View")}
           >
             Calendar View
           </Button>
@@ -129,7 +148,7 @@ const MonthlyReport = () => {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{ x: 'max-content' }} // Enable horizontal scroll if necessary
+          scroll={{ x: "max-content" }} // Enable horizontal scroll if necessary
         />
       </div>
     </div>

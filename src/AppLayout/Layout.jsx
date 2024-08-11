@@ -20,6 +20,20 @@ const Layout = () => {
   const [pageWidthFull, setPageWidthFull] = useState(false);
   const [classWidth, setClassWidth] = useState();
 
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname) {
+      const wFullCondition = location.pathname.split("/").includes("dashboard");
+      if (!wFullCondition) {
+        setClassWidth(
+          "md:w-10/12 w-11/12 xs:w-9/12 xl:w-10/12 2xl:w-9/12 flex flex-col m-auto"
+        );
+      } else {
+        setClassWidth("w-full flex flex-col m-auto");
+      }
+    }
+  }, [location]);
+
   useEffect(() => {
     if (pageWidthFull) {
       setClassWidth(

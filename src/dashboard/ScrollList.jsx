@@ -1,7 +1,7 @@
 import { Divider } from "antd";
 import React from "react";
 
-const TaskSNotCompleted = ({ label, list }) => {
+const ScrollList = ({ label, list }) => {
   return (
     <div className="w-full h-full border-gray-400 border">
       <div className="text-xl font-semibold text-center mt-1">
@@ -22,4 +22,4 @@ const TaskSNotCompleted = ({ label, list }) => {
   );
 };
 
-export default TaskSNotCompleted;
+export default ScrollList;
