@@ -3,6 +3,10 @@ import img2 from "../assets/Images/kumbh image 2.png";
 import img3 from "../assets/Images/kumbh image 3.jpeg";
 import ContactImage from "../assets/Images/Contact Image.png";
 
+import MapBanner from "../assets/MonitoringImages/Landing/map_banner.png";
+import CleanScared from "../assets/MonitoringImages/Landing/clean_scared.png";
+
+
 import {
   Carousel,
   CarouselItem,
@@ -80,7 +84,7 @@ const items = (dict, lang) => {
     {
       img: (
         <div className="h-72 sm:80  md:h-96 overflow-hidden flex item-center">
-          <img src={img2} alt="" className="w-full overflow-hidden" />
+          <img src={MapBanner} alt="" className="w-full overflow-hidden" />
         </div>
       ),
       key: 2,
@@ -89,7 +93,7 @@ const items = (dict, lang) => {
     {
       img: (
         <div className="h-72 sm:80 md:h-96 overflow-hidden flex item-center">
-          <img src={img3} alt="" className="w-full overflow-hidden" />
+          <img src={CleanScared} alt="" className="w-full overflow-hidden" />
         </div>
       ),
       key: 3,

@@ -22,6 +22,12 @@ import CreateTentageSchedule from "./schedule/CreateTentageSchedule";
 import CreateSanitationSchedule from "./schedule/CreateSanitationSchedule";
 import MonthlyReport from "./schedule/MonthlyReport";
 
+import Monitoring from "./complaince/Monitoring";
+import MonitoringReport from "./complaince/MonitoringReport";
+import Notification from "./complaince/Notification";
+
+
+
 
 function App() {
   return (
@@ -58,7 +64,9 @@ function App() {
           <Route path="create-sanitation-schedule" element={<CreateSanitationSchedule></CreateSanitationSchedule>}></Route>
           <Route path="monthly-report" element={<MonthlyReport></MonthlyReport>}></Route>
           
-          
+          <Route path="monitoring" element={<Monitoring></Monitoring>}></Route>
+          <Route path="monitoring-report" element={<MonitoringReport></MonitoringReport>}></Route>
+          <Route path="notification" element={<Notification></Notification>}></Route>
           
         </Route>
         <Route path="login" element={<Login></Login>}></Route>
