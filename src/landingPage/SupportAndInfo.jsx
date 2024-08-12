@@ -20,7 +20,14 @@ const SupportAndInfo = () => {
           <div className="p-2">
             <ul className="list-disc font-semibold">
               <span className="hover:text-ec ">
-                <li> {dict.info_missing[lang]}</li>
+
+                  {/* {dict.info_missing[lang]} */}
+                  <li> हेल्पलाइन नंबर 1920 डायल करें</li>
+                  <li> सेक्टर 3-पुल नंबर 1 के पास</li>
+                  <li> सेक्टर 4-एसडीएम कार्यालय के पास</li>
+                  <li> सेक्टर 5-हरिश्चंद्र रोड पीडीएस शॉप के पास</li>
+
+                
               </span>
             </ul>
           </div>
@@ -54,10 +61,13 @@ const SupportAndInfo = () => {
           <div className="p-2">
             <ul className="list-disc font-semibold">
               <span className="hover:text-ec">
-                <li>{dict.police[lang]}</li>{" "}
+                <li>
+                  {/* {dict.police[lang]} */}
+                  UP Police Officials
+                  </li>{" "} 
               </span>
               <span className="hover:text-ec">
-                <li>{dict.mela_official[lang]}</li>
+                <li>Mela Officials Authority </li>
               </span>
               <span className="hover:text-ec">
                 <li>{dict.lost_found_center[lang]}</li>

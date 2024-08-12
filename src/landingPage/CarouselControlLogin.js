@@ -3,8 +3,11 @@ import img2 from "../assets/Images/kumbh image 2.png";
 import img3 from "../assets/Images/kumbh image 3.jpeg";
 import ContactImage from "../assets/Images/Contact Image.png";
 
+
 import MapBanner from "../assets/MonitoringImages/Landing/map_banner.png";
 import CleanScared from "../assets/MonitoringImages/Landing/clean_scared.png";
+
+import TentImage from "../assets/MonitoringImages/Landing/tentimage.jpg";
 
 
 import {
@@ -24,7 +27,8 @@ const items = (dict, lang) => {
           <div className="absolute h-72 sm:80 md:h-96 grid grid-cols-1 md:grid-cols-2 justify-between w-full p-4 bg-ffe">
             <div className=" flex flex-col items-center justify-center text-white gap-3">
               <div className="text-1d text-base md:text-2xl xl:text-4xl font-bold text-center">
-                {dict.bring_fam[lang]}
+                {/* {dict.bring_fam[lang]} */}
+                Track, Analyze, Optimize  Elevating Sanitation and Tentage Standards
               </div>
               <div className="text-90  text-sm md:text-2xl xl:text-4xl font-bold">
                 {dict.toll_free[lang]}
@@ -46,7 +50,7 @@ const items = (dict, lang) => {
                       </span>{" "}
                       <span className="text-1d font-semibold">
                         {" "}
-                        support@kumbhlosandfound.in
+                        support@kumbhmonitoringsystem.in
                       </span>
                     </div>
                     <div>
@@ -55,10 +59,10 @@ const items = (dict, lang) => {
                       </span>
                       <span className="text-1d font-semibold">
                         <Link
-                          to={"https://kumbhlostandfound.in/kumbh-v2/"}
+                          to={"https://kumbh-poc.kashitsolution.com/kumbhpocv2/"}
                           className="text-1d font-semibold no-underline"
                         >
-                          https://kumbhlostandfound.in/kumbh-v2/
+                          https://kumbh-poc.kashitsolution.com/kumbhpocv2/
                         </Link>
                       </span>
                     </div>
@@ -84,7 +88,7 @@ const items = (dict, lang) => {
     {
       img: (
         <div className="h-72 sm:80  md:h-96 overflow-hidden flex item-center">
-          <img src={MapBanner} alt="" className="w-full overflow-hidden" />
+          <img src={TentImage} alt="" className="w-full overflow-hidden" />
         </div>
       ),
       key: 2,

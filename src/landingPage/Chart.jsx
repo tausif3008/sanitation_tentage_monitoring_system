@@ -1,4 +1,3 @@
-import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -9,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useOutlet, useOutletContext } from "react-router";
+import { useOutletContext } from "react-router";
 
 // Register the components
 ChartJS.register(
@@ -21,31 +20,31 @@ ChartJS.register(
   Legend
 );
 
-const labels = (dict, lang) => {
-  return [
-    dict.lost[lang],
-    dict.found[lang],
-    dict.reunion[lang],
-    dict.pending[lang],
-  ];
-};
+const labels = (dict, lang) => [
+  "Tentage",
+  "Sanitation",
+  "Waste",
+  "Vehicle"
+];
 
 const Chart = () => {
   const [dict, lang] = useOutletContext();
+  
+  // Update data with real values
   const data = {
     labels: labels(dict, lang),
     datasets: [
       {
-        label: "Sales",
+        label: "Current Metrics",
         backgroundColor: [
-          "rgba(75, 192, 192, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)", // Tentage
+          "rgba(255, 99, 132, 1)", // Sanitation
+          "rgba(54, 162, 235, 1)", // Waste
+          "rgba(255, 206, 86, 1)", // Vehicle
         ],
         borderColor: "rgba(0, 0, 0, 1)",
         borderWidth: 1,
-        data: [100, 70, 65, 30],
+        data: [120, 85, 90, 50], // Replace these with actual values
       },
     ],
   };
@@ -53,8 +52,19 @@ const Chart = () => {
   const options = {
     maintainAspectRatio: false,
     scales: {
+      x: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Categories'
+        }
+      },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Values'
+        }
       },
     },
     plugins: {
@@ -71,23 +81,11 @@ const Chart = () => {
         },
       },
       legend: {
-        display: false, // Hide the legend
-        // labels: {
-        //   generateLabels: function (chart) {
-        //     const dataset = chart.data.datasets[0];
-        //     return dataset.backgroundColor.map((color, index) => ({
-        //       text: labels[index],
-        //       fillStyle: color,
-        //       strokeStyle: dataset.borderColor,
-        //       lineWidth: dataset.borderWidth,
-        //       hidden: !chart.isDatasetVisible(0),
-        //       index: index,
-        //     }));
-        //   },
-        // },
+        display: true, // Optionally show legend
       },
     },
   };
+
   return (
     <div className="mx-auto">
       <div className="relative h-full flex items-center justify-center w-60">
