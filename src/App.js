@@ -11,10 +11,10 @@ import UserList from "./user/UsersList";
 import AssetRegistrationForm from "./asset/AssetRegistrationForm";
 import AssetsList from "./asset/AssetsList";
 import AssetAllotment from "./asset/AssetAllotment";
-import GisRegistrationForm from "./gis/GisRegistrationForm";
+import GisServices from "./gis/GisServices";
 import GisList from "./gis/GisList";
 
-import GisSurveyRegistrationForm from "./gis/GisSurveyRegistrationForm";
+import GPSFleetRegistration from "./gis/GPSFleetRegistration";
 import QrCodeAssignmentForm from "./assignment/QrCodeAssignmentForm";
 import SchedulingAndDeploymentForm from "./schedule/SchedulingAndDeploymentForm";
 import WasteManagementSchedule from "./schedule/WasteManagementSchedule";
@@ -49,14 +49,14 @@ function App() {
           <Route path="asset-list" element={<AssetsList></AssetsList>}></Route>
 
           <Route
-            path="gis-registration"
-            element={<GisRegistrationForm></GisRegistrationForm>}
+            path="gis-services"
+            element={<GisServices></GisServices>}
           ></Route>
           <Route path="gis-list" element={<GisList></GisList>}></Route>
 
           <Route
-            path="gis-survey-registration"
-            element={<GisSurveyRegistrationForm></GisSurveyRegistrationForm>}
+            path="gps-fleet-registration"
+            element={<GPSFleetRegistration></GPSFleetRegistration>}
           ></Route>
           <Route
             path="qr-code-assignment"
