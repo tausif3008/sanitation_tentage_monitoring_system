@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import toilet from "../assets/MonitoringImages/Dashboard/toilet.png";
 import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
 import location from "../assets/MonitoringImages/Dashboard/location.png";
+import wsVhe from "../assets/MonitoringImages/Dashboard/wsVhe.png";
 import waste from "../assets/MonitoringImages/Dashboard/waste.png";
 
 import {
@@ -39,7 +40,7 @@ const defaultIcon = L.icon({
 const toiletIconsMap = L.icon({
   iconUrl: toilet,
   // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [20, 20],
+  iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
@@ -54,25 +55,38 @@ const tentageIcon = L.icon({
 
 // Nearby places
 const toiletIcon = [
-  { id: 1, name: "Toilet 1", lat: 18.5145, lng: 73.8068 },
-  { id: 2, name: "Toilet 2", lat: 18.515, lng: 73.807 },
+  { id: 1, name: "Toilet 1", lat: 25.4314, lng: 81.8785 },
+  { id: 2, name: "Toilet 2", lat: 25.4268, lng: 81.8862 },
 ];
 
 const tentagePlaces = [
-  { id: 3, name: "Tent 3", lat: 18.513, lng: 73.8055 },
-  { id: 4, name: "Tent 4", lat: 18.516, lng: 73.81 },
+  { id: 3, name: "Tent 3", lat: 25.4325, lng: 81.884 },
+  { id: 4, name: "Tent 4", lat: 25.4448, lng: 81.8698 },
 ];
 
 // Nearby places
 const wastesPlaces = [
-  { id: 1, name: "Waste 1", lat: 18.5145, lng: 73.8076 },
-  { id: 2, name: "Waste 2", lat: 18.515, lng: 73.812 },
+  { id: 1, name: "Bin 1", lat: 25.452, lng: 81.8538 },
+  { id: 2, name: "Bin 2", lat: 25.4472, lng: 81.8665 },
+];
+
+const wastesIcon = L.icon({
+  iconUrl: wsVhe,
+  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [24, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
+const wastesPlacesV = [
+  { id: 3, name: "Waste 1", lat: 25.4365, lng: 81.814 },
+  { id: 4, name: "Waste 2", lat: 25.4548, lng: 81.8198 },
 ];
 
 const wasteIcon = L.icon({
   iconUrl: waste,
   // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [20, 20],
+  iconSize: [23, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
@@ -96,18 +110,21 @@ const UserLocationMarker = ({ setUserLocation }) => {
 
   useEffect(() => {
     if (map) {
-      map.locate({ setView: true, maxZoom: 5 });
+      map.locate({
+        setView: true,
+        maxZoom: 5,
+      });
     }
   }, [map]);
 
   return null;
 };
 
-const MapComponent = ({ tentage, wastes, sanitization }) => {
+const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
   const mapRef = useRef(null);
   const [userLocation, setUserLocation] = useState({
-    lat: 18.5139569,
-    lng: 73.8066049,
+    lat: 25.435,
+    lng: 81.8807,
   });
   const [routeControl, setRouteControl] = useState(null);
 
@@ -148,8 +165,8 @@ const MapComponent = ({ tentage, wastes, sanitization }) => {
   return (
     <MapContainer
       center={[userLocation.lat, userLocation.lng]}
-      zoom={15}
-      style={{ height: "270px", width: "100%" }}
+      zoom={13}
+      style={{ height: "330px", width: "100%" }}
       whenCreated={(mapInstance) => {
         mapRef.current = mapInstance;
       }}
@@ -201,6 +218,20 @@ const MapComponent = ({ tentage, wastes, sanitization }) => {
             key={index + place}
             position={[place.lat, place.lng]}
             icon={wasteIcon}
+            eventHandlers={{
+              click: () => handleMarkerClick(place.lat, place.lng),
+            }}
+          >
+            <Popup>{place.name}</Popup>
+          </Marker>
+        ))}
+
+      {bin &&
+        wastesPlacesV.map((place, index) => (
+          <Marker
+            key={index + place}
+            position={[place.lat, place.lng]}
+            icon={wastesIcon}
             eventHandlers={{
               click: () => handleMarkerClick(place.lat, place.lng),
             }}

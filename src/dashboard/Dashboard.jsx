@@ -8,14 +8,24 @@ import ListMaker from "./ListMaker";
 import ResourceUtilizationCharts from "../Charts/ResourceUtilizationCharts";
 import UserFeedBackChart from "../Charts/UserFeedBackChart";
 import SectorSelection from "./SectorSelection";
+import StackedColumn from "./StackedColumn";
+
+import toilet from "../assets/MonitoringImages/Dashboard/toilet.png";
+import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
+import location from "../assets/MonitoringImages/Dashboard/location.png";
+import wsVhe from "../assets/MonitoringImages/Dashboard/wsVhe.png";
+import waste from "../assets/MonitoringImages/Dashboard/waste.png";
+import Centers from "./Centers.jsx";
 
 const tasksNotCompletedMessageList = [
-  "Toilets Not Cleaned - 10",
-  "Toilets Not Repaired - 10",
-  "Tentages Not Cleaned - 10",
-  "Tentages Not Repaired - 10",
-  "Wastes Not Cleaned - 10",
-  "Wastes Not Repaired - 10",
+  "Ensure proper disposal of sanitary waste.",
+  "Check and restock sanitary supplies ",
+  "Check for any damage to the tenting.",
+  "Inspect all tented areas for cleanliness.",
+  "Monitor waste for proper usage and overflow.",
+  "Ensure waste is sorted correctly.",
+  "Monitor bins for proper usage.",
+  "Remove all waste from bins.",
 ];
 
 const finalCalculator = (sectorStats) => {
@@ -33,7 +43,7 @@ const finalCalculator = (sectorStats) => {
 const stackedCalc = (checkedValues, setShowDashboardFor, selectedSector) => {
   const details = [];
   const values = [];
-  
+
   const sector1Tents = { total: 300, ok: 200, average: 46, bad: 54 };
   const sector2Tents = { total: 300, ok: 200, average: 50, bad: 50 };
   const sector3Tents = { total: 400, ok: 250, average: 96, bad: 54 };
@@ -135,6 +145,35 @@ const stackedCalc = (checkedValues, setShowDashboardFor, selectedSector) => {
     values.push("Wastes");
   }
 
+  if (checkedValues.includes("Bins") || !checkedValues.length) {
+    let selectedWastes = [];
+
+    if (selectedSector.includes("Sector 1")) {
+      selectedWastes.push(sector1Wastes);
+    }
+
+    if (selectedSector.includes("Sector 2")) {
+      selectedWastes.push(sector2Wastes);
+    }
+
+    if (selectedSector.includes("Sector 3")) {
+      selectedWastes.push(sector3Wastes);
+    }
+
+    const finalStats = finalCalculator(selectedWastes);
+    details.push({
+      title: "Bins",
+      value: {
+        label: "Bins",
+        total: finalStats.total,
+        ok: finalStats.ok,
+        average: finalStats.average,
+        bad: finalStats.bad,
+      },
+    });
+    values.push("Bins");
+  }
+
   setShowDashboardFor(() => {
     return {
       dashboards: details.length,
@@ -152,6 +191,7 @@ const Dashboard = () => {
     "Tentage",
     "Sanitization",
     "Wastes",
+    "Bins",
   ]);
 
   const [showDashboardFor, setShowDashboardFor] = useState({
@@ -187,8 +227,18 @@ const Dashboard = () => {
           bad: "200",
         },
       },
+      {
+        title: "Wastes",
+        value: {
+          label: "Wastes",
+          total: 8000,
+          ok: "300",
+          average: "300",
+          bad: "200",
+        },
+      },
     ],
-    values: ["Tentage", "Wastes", "Sanitization"],
+    values: ["Tentage", "Wastes", "Sanitization", "Bins"],
   });
 
   const [selectedSector, setSelectedSector] = useState([
@@ -206,8 +256,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-2 px-3">
-      <div className="w-full lg:w-32 mt-3 bg-gray-200 p-1 flex lg:flex-col">
+    <div className="flex flex-col gap-2 px-3">
+      <div className="mt-2 bg-gray-200 p-1 flex w-full">
         <div className="">
           <div className="text-sm font-semibold ">Dashboard:</div>
           <GroupCheckBox
@@ -215,40 +265,57 @@ const Dashboard = () => {
           ></GroupCheckBox>
         </div>
 
-        <div className="md:mt-3 mt-0 lg:pt-3 border-l border-gray-500 border-dashed pl-3 lg:pl-0 lg:border-none h-full">
+        <div className="mt-1 border-l border-gray-500 border-dashed pl-3 h-full">
           <div className="text-sm font-semibold">Sectors:</div>
           <SectorSelection setSectors={setSelectedSector}></SectorSelection>
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 justify-between w-full relative">
-        <div>
-          <StackedColumnChart
-            showDashboardFor={showDashboardFor}
-          ></StackedColumnChart>
+      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 w-full relative">
+        <div className="border bg-gray-200 sm:col-span-2 lg:col-span-1">
+          <div className="flex gap-3 items-center justify-center">
+            <div className="flex text-sm items-center justify-center">
+              <span>Good: </span>
+              <div className="h-3 w-3 ml-1 bg-green-500"></div>
+            </div>
+            <div className="flex text-sm items-center justify-center">
+              <span>Average: </span>
+              <div className="h-3 w-3 ml-1 bg-yellow-500"></div>
+            </div>
+            <div className="flex text-sm items-center justify-center">
+              <span>Bad: </span>
+              <div className="h-3 w-3 ml-1 bg-green-500"></div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <StackedColumnChart
+              showDashboardFor={showDashboardFor}
+            ></StackedColumnChart>
+          </div>
         </div>
-        <div className="border w-full">
+        <div className="border w-full ">
           <DistributedColumnChart
             selectedSector={selectedSector}
             tentage={showDashboardFor.values.includes("Tentage")}
             sanitization={showDashboardFor.values.includes("Sanitization")}
             wastes={showDashboardFor.values.includes("Wastes")}
+            bins={showDashboardFor.values.includes("Bins")}
           ></DistributedColumnChart>
         </div>
-
-        <div className="border w-full">
+        <div className="border w-full ">
           <ResourceUtilizationCharts
             selectedSectors={selectedSector}
             totalCats={showDashboardFor.dashboards}
             tentage={showDashboardFor.values.includes("Tentage")}
             sanitization={showDashboardFor.values.includes("Sanitization")}
             wastes={showDashboardFor.values.includes("Wastes")}
+            bins={showDashboardFor.values.includes("Bins")}
           ></ResourceUtilizationCharts>
         </div>
 
-        <div>
+        <div className="h-full border border-gray-400">
           <ListMaker
-            label={"Tasks Not Completed Today"}
+            label={"Daily Tasks"}
             selectedSectors={selectedSector}
             messageList={tasksNotCompletedMessageList}
             tentage={showDashboardFor.values.includes("Tentage")}
@@ -257,44 +324,73 @@ const Dashboard = () => {
           ></ListMaker>
         </div>
 
-        <div>
+        <div className=" md:col-span-2  ">
+          <div className="flex  text-sm gap-3 bg-pink-100 items-center justify-center p-1">
+            <div className="flex gap-1">
+              <div className="h-full flex items-center">Tent:</div>
+              <img className="h-5 w-5" src={tentage} alt="" />
+            </div>{" "}
+            <div className="flex gap-1">
+              <span className="h-full flex items-center">Wastes:</span>
+              <img className="h-5 w-5" src={wsVhe} alt="" />
+            </div>{" "}
+            <div className="flex gap-1">
+              <span className="h-full flex items-center">Sanitation:</span>
+              <img className="h-5 w-5" src={toilet} alt="" />
+            </div>{" "}
+            <div className="flex gap-1">
+              <span className="h-full flex items-center">Bins:</span>
+              <img className="h-5 w-5" src={waste} alt="" />
+            </div>
+          </div>
+          <div>
+            <MapData
+              tentage={
+                showDashboardFor.values.includes("Tentage") ||
+                !showDashboardFor.values.length
+              }
+              sanitization={
+                showDashboardFor.values.includes("Sanitization") ||
+                !showDashboardFor.values.length
+              }
+              wastes={
+                showDashboardFor.values.includes("Wastes") ||
+                !showDashboardFor.values.length
+              }
+              bin={
+                showDashboardFor.values.includes("Bins") ||
+                !showDashboardFor.values.length
+              }
+            ></MapData>
+          </div>
+        </div>
+
+        <div className="h-full border-gray-400 border">
           <ListMaker
+            isAlert={true}
             label={"Alerts And Notifications"}
             selectedSectors={selectedSector}
             messageList={tasksNotCompletedMessageList}
             tentage={showDashboardFor.values.includes("Tentage")}
             sanitization={showDashboardFor.values.includes("Sanitization")}
             wastes={showDashboardFor.values.includes("Wastes")}
+            bins={showDashboardFor.values.includes("Bins")}
           ></ListMaker>
         </div>
 
-        <div className="h-56">
-          <MapData
-            tentage={
-              showDashboardFor.values.includes("Tentage") ||
-              !showDashboardFor.values.length
-            }
-            sanitization={
-              showDashboardFor.values.includes("Sanitization") ||
-              !showDashboardFor.values.length
-            }
-            wastes={
-              showDashboardFor.values.includes("Wastes") ||
-              !showDashboardFor.values.length
-            }
-          ></MapData>
+        <div className="border w-full">
+          <StackedColumn
+            totalCats={showDashboardFor.dashboards}
+            selectedSectors={selectedSector}
+            tentage={showDashboardFor.values.includes("Tentage")}
+            sanitization={showDashboardFor.values.includes("Sanitization")}
+            wastes={showDashboardFor.values.includes("Wastes")}
+            bins={showDashboardFor.values.includes("Bins")}
+          ></StackedColumn>
         </div>
 
-        <div>
-          <div className="border w-full mt-12 sm:mt-0">
-            <UserFeedBackChart
-              totalCats={showDashboardFor.dashboards}
-              selectedSectors={selectedSector}
-              tentage={showDashboardFor.values.includes("Tentage")}
-              sanitization={showDashboardFor.values.includes("Sanitization")}
-              wastes={showDashboardFor.values.includes("Wastes")}
-            ></UserFeedBackChart>
-          </div>
+        <div className="border w-full">
+          <Centers label="Centers"></Centers>
         </div>
       </div>
     </div>

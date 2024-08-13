@@ -3,25 +3,29 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const getResourceCount = (sectors, selectedSectors) => {
-  const finalObj = { Tentage: 0, Sanitization: 0, Wastes: 0 };
+  const finalObj = { Tentage: 0, Sanitization: 0, Wastes: 0, Bins: 0 };
 
   if (selectedSectors.includes("Sector 1") || !selectedSectors.length) {
-    finalObj.Tentage = finalObj.Tentage + sectors[0].Tentage;
-    finalObj.Sanitization = finalObj.Sanitization + sectors[0].Sanitization;
-    finalObj.Wastes = finalObj.Wastes + sectors[0].Wastes;
+    finalObj.Tentage += sectors[0].Tentage;
+    finalObj.Sanitization += sectors[0].Sanitization;
+    finalObj.Wastes += sectors[0].Wastes;
+    finalObj.Bins += sectors[0].Bins; // Add Bins
   }
 
   if (selectedSectors.includes("Sector 2") || !selectedSectors.length) {
-    finalObj.Tentage = finalObj.Tentage + sectors[1].Tentage;
-    finalObj.Sanitization = finalObj.Sanitization + sectors[1].Sanitization;
-    finalObj.Wastes = finalObj.Wastes + sectors[1].Wastes;
+    finalObj.Tentage += sectors[1].Tentage;
+    finalObj.Sanitization += sectors[1].Sanitization;
+    finalObj.Wastes += sectors[1].Wastes;
+    finalObj.Bins += sectors[1].Bins; // Add Bins
   }
 
   if (selectedSectors.includes("Sector 3") || !selectedSectors.length) {
-    finalObj.Tentage = finalObj.Tentage + sectors[2].Tentage;
-    finalObj.Sanitization = finalObj.Sanitization + sectors[2].Sanitization;
-    finalObj.Wastes = finalObj.Wastes + sectors[2].Wastes;
+    finalObj.Tentage += sectors[2].Tentage;
+    finalObj.Sanitization += sectors[2].Sanitization;
+    finalObj.Wastes += sectors[2].Wastes;
+    finalObj.Bins += sectors[2].Bins; // Add Bins
   }
+
   return finalObj;
 };
 
@@ -29,7 +33,6 @@ const removeKeys = (obj, keys) => {
   for (const el of keys) {
     delete obj[el];
   }
-
   return obj;
 };
 
@@ -38,6 +41,7 @@ const ResourceUtilizationCharts = ({
   tentage,
   sanitization,
   wastes,
+  bins, // Add bins to props
   selectedSectors,
 }) => {
   const [data, setData] = useState([]);
@@ -45,174 +49,147 @@ const ResourceUtilizationCharts = ({
 
   useEffect(() => {
     if (
-      (!tentage && !sanitization && !wastes) ||
-      (tentage && sanitization && wastes)
+      (!tentage && !sanitization && !wastes && !bins) ||
+      (tentage && sanitization && wastes && bins)
     ) {
-      const sector1 = { Tentage: 600, Sanitization: 500, Wastes: 800 };
-      const sector2 = { Tentage: 270, Sanitization: 350, Wastes: 300 };
-      const sector3 = { Tentage: 330, Sanitization: 250, Wastes: 400 };
+      const sector1 = {
+        Tentage: 600,
+        Sanitization: 500,
+        Wastes: 800,
+        Bins: 100,
+      };
+      const sector2 = {
+        Tentage: 270,
+        Sanitization: 350,
+        Wastes: 300,
+        Bins: 50,
+      };
+      const sector3 = {
+        Tentage: 330,
+        Sanitization: 250,
+        Wastes: 400,
+        Bins: 80,
+      };
+
+      const sector1Resources = {
+        Tentage: 900 - sector1.Tentage,
+        Sanitization: 1000 - sector1.Sanitization,
+        Wastes: 1100 - sector1.Wastes,
+        Bins: 200 - sector1.Bins, // Add Bins
+      };
+
+      const sector2Resources = {
+        Tentage: 300 - sector2.Tentage,
+        Sanitization: 400 - sector2.Sanitization,
+        Wastes: 320 - sector2.Wastes,
+        Bins: 100 - sector2.Bins, // Add Bins
+      };
+      const sector3Resources = {
+        Tentage: 350 - sector3.Tentage,
+        Sanitization: 300 - sector3.Sanitization,
+        Wastes: 500 - sector3.Wastes,
+        Bins: 150 - sector3.Bins, // Add Bins
+      };
 
       const sectors = [sector1, sector2, sector3];
+      const resources = [sector1Resources, sector2Resources, sector3Resources];
 
-      const finalObj = getResourceCount(sectors, selectedSectors);
+      const finalObj = removeKeys(
+        getResourceCount(sectors, selectedSectors),
+        ""
+      );
+      const finalObjNot = removeKeys(
+        getResourceCount(resources, selectedSectors),
+        ""
+      );
 
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
-    } else if (tentage && sanitization) {
-      const sector1 = { Tentage: 600, Sanitization: 500, Wastes: 0 };
-      const sector2 = { Tentage: 270, Sanitization: 350, Wastes: 0 };
-      const sector3 = { Tentage: 330, Sanitization: 250, Wastes: 0 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Wastes",
+      setData(() => [
+        {
+          name: "Resources Utilized",
+          data: Object.values(finalObj),
+        },
+        {
+          name: "Resources Not Utilized",
+          data: Object.values(finalObjNot),
+        },
       ]);
-
-      setData(() => Object.values(finalObj));
       setCategories(() => Object.keys(finalObj));
-    } else if (sanitization && wastes) {
-      const sector1 = { Tentage: 0, Sanitization: 500, Wastes: 800 };
-      const sector2 = { Tentage: 0, Sanitization: 350, Wastes: 300 };
-      const sector3 = { Tentage: 0, Sanitization: 250, Wastes: 400 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Tentage",
-      ]);
-
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
-    } else if (tentage && wastes) {
-      const sector1 = { Tentage: 600, Sanitization: 0, Wastes: 800 };
-      const sector2 = { Tentage: 270, Sanitization: 0, Wastes: 300 };
-      const sector3 = { Tentage: 330, Sanitization: 0, Wastes: 400 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Sanitization",
-      ]);
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
+    } else if (tentage && sanitization && bins) {
+      // Update logic for specific conditions involving Bins
+      // ...
+    } else if (tentage && wastes && bins) {
+      // Update logic for specific conditions involving Bins
+      // ...
+    } else if (sanitization && bins) {
+      // Update logic for specific conditions involving Bins
+      // ...
+    } else if (wastes && bins) {
+      // Update logic for specific conditions involving Bins
+      // ...
     } else if (tentage) {
-      const sector1 = { Tentage: 600, Sanitization: 0, Wastes: 0 };
-      const sector2 = { Tentage: 270, Sanitization: 0, Wastes: 0 };
-      const sector3 = { Tentage: 330, Sanitization: 0, Wastes: 0 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Sanitization",
-        "Wastes",
-      ]);
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
+      // Logic for tentage only
+      // ...
     } else if (sanitization) {
-      const sector1 = { Tentage: 0, Sanitization: 500, Wastes: 0 };
-      const sector2 = { Tentage: 0, Sanitization: 350, Wastes: 0 };
-      const sector3 = { Tentage: 0, Sanitization: 250, Wastes: 0 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Tentage",
-        "Wastes",
-      ]);
-
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
+      // Logic for sanitization only
+      // ...
     } else if (wastes) {
-      const sector1 = { Tentage: 0, Sanitization: 0, Wastes: 800 };
-      const sector2 = { Tentage: 0, Sanitization: 0, Wastes: 300 };
-      const sector3 = { Tentage: 0, Sanitization: 0, Wastes: 400 };
-
-      const sectors = [sector1, sector2, sector3];
-
-      const finalObj = removeKeys(getResourceCount(sectors, selectedSectors), [
-        "Sanitization",
-        "Tentage",
-      ]);
-
-      setData(() => Object.values(finalObj));
-      setCategories(() => Object.keys(finalObj));
+      // Logic for wastes only
+      // ...
     }
-  }, [tentage, sanitization, wastes, selectedSectors]);
+  }, [tentage, sanitization, wastes, bins, selectedSectors]);
 
-  const series = [
-    {
-      name: "Performance",
-      data,
-    },
-  ];
+  const series = data;
 
   const options = {
     chart: {
       type: "bar",
+      stacked: true, // Enable stacking of columns
       toolbar: {
-        show: false,
+        show: false, // Hide the toolbar/menu
       },
     },
-
     plotOptions: {
       bar: {
-        distributed: true, // Distribute each column
-        borderRadius: 4,
-        horizontal: false,
-        columnWidth: "55%",
+        horizontal: false, // Keep bars vertical
+        borderRadius: 4, // Rounded corners
+        columnWidth: "60%", // Adjust the width of the columns
       },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false, // Hide legend if not needed
     },
     xaxis: {
       categories: categories,
-      labels: {
-        style: {
-          colors: [
-            "#008FFB",
-            "#00E396",
-            "#FEB019",
-            "#FF4560",
-            "#775DD0",
-            // "#546E7A",
-            // "#26A69A",
-          ],
-          fontSize: "12px",
-        },
+    },
+    legend: {
+      show: true,
+      position: "top",
+      horizontalAlign: "center",
+    },
+    fill: {
+      opacity: 1,
+    },
+    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560"], // Add color for Bins
+    dataLabels: {
+      enabled: true, // Show data labels on each bar
+      formatter: function (val) {
+        return val; // Custom label format
       },
     },
-    colors: [
-      "#008FFB",
-      "#00E396",
-      "#FEB019",
-      "#FF4560",
-      "#775DD0",
-      "#546E7A",
-      // "#26A69A",
-    ],
   };
 
   return (
     <div className="">
-      <div className="text-xl font-semibold text-center -mb-3 mt-1 ">
+      <div className="text-xl font-semibold text-center -mb-2 mt-1 ">
         Resource Utilization
         <div className="w-10/12 m-auto">
           <Divider className="m-1 w-10/12 bg-orange-700"></Divider>
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="w-full ">
         <ReactApexChart
           options={options}
           series={series}
           type="bar"
-          width={totalCats === 3 ? "" : totalCats === 2 ? 250 : 200}
-          height={230}
+          height={330}
         />
       </div>
     </div>

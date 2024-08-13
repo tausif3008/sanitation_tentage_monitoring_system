@@ -2,7 +2,7 @@ import { Checkbox } from "antd";
 import React from "react";
 
 const GroupCheckBox = ({ setSelectedDashboardVals }) => {
-  const plainOptions = ["Tentage", "Sanitization", "Wastes"];
+  const plainOptions = ["Tentage", "Sanitization", "Wastes", "Bins"];
 
   const onChange = (checkedValues) => {
     if (checkedValues.length) {

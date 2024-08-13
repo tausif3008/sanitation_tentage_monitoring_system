@@ -1,86 +1,174 @@
 import { Divider } from "antd";
+import { getMergedStatus } from "antd/es/_util/statusUtils";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const getFinalSLA = (selectedSector, sectorVendors) => {
+const getFinalSLA = (
+  tentage,
+  sanitization,
+  wastes,
+  bins,
+  selectedSector,
+  sectorVendors
+) => {
   let finalObj = {};
 
-  if (selectedSector.includes("Sector 1") || !selectedSector.length) {
-    finalObj = { ...finalObj, ...sectorVendors[0] };
+  // data = [];
+  // categories = ["vendor 1", "vendor 3"];
+
+  //  {
+  //       sector: "Sector 1",
+  //       ven: "vendor 1",
+  //       sections: {
+  //         tentage: 75,
+  //         sanitization: 65,
+  //         wastes: 80,
+  //       },
+  //     },
+
+  const stats = {
+    "vendor 1": 0,
+    "vendor 2": 0,
+    "vendor 3": 0,
+    "vendor 4": 0,
+    "vendor 5": 0,
+  };
+
+  for (const el of sectorVendors) {
+    if (selectedSector.includes(el.sector)) {
+      for (const element of el.vens) {
+        if (tentage) {
+          stats[element.ven] = stats[element.ven] + element.sections.tentage;
+        }
+        if (sanitization) {
+          stats[element.ven] =
+            stats[element.ven] + element.sections.sanitization;
+        }
+        if (wastes) {
+          stats[element.ven] = stats[element.ven] + element.sections.wastes;
+        }
+        if (bins) {
+          stats[element.ven] = stats[element.ven] + element.sections.bins;
+        }
+      }
+    }
   }
 
-  if (selectedSector.includes("Sector 2") || !selectedSector.length) {
-    finalObj = { ...finalObj, ...sectorVendors[1] };
+  console.log("stats", stats);
+
+  let totalSections = 0;
+
+  if (tentage) {
+    totalSections++;
+  }
+  if (sanitization) {
+    totalSections++;
+  }
+  if (wastes) {
+    totalSections++;
   }
 
-  if (selectedSector.includes("Sector 3") || !selectedSector.length) {
-    finalObj = { ...finalObj, ...sectorVendors[2] };
+  if (bins) {
+    totalSections++;
   }
 
-  return finalObj;
+  let data = [];
+  let cats = Object.keys(stats);
+
+  for (const key in stats) {
+    data.push(Math.floor(stats[key] / totalSections));
+  }
+
+  return { data, cats };
 };
 
 const DistributedColumnChart = ({
   tentage,
   sanitization,
   wastes,
+  bins,
   selectedSector,
 }) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const sector1Vendors = { "vendor 1": 91, "vendor 3": 70 };
-    const sector2Vendors = { "vendor 2": 60, "vendor 5": 64 };
-    const sector3Vendors = { "vendor 3": 45, "vendor 6": 63 };
+    const sectorVendors = [
+      {
+        sector: "Sector 1",
+        vens: [
+          {
+            ven: "vendor 1",
+            sections: {
+              tentage: 75,
+              sanitization: 65,
+              wastes: 80,
+              bins: 60,
+            },
+          },
+          {
+            ven: "vendor 3",
+            sections: {
+              tentage: 65,
+              sanitization: 85,
+              wastes: 90,
+              bins: 85,
+            },
+          },
+        ],
+      },
+      {
+        sector: "Sector 2",
+        vens: [
+          {
+            ven: "vendor 2",
+            sections: {
+              tentage: 85,
+              sanitization: 75,
+              wastes: 80,
+              bins: 77,
+            },
+          },
+          {
+            ven: "vendor 5",
+            sections: {
+              tentage: 50,
+              sanitization: 65,
+              wastes: 95,
+              bins: 87,
+            },
+          },
+        ],
+      },
 
-    // if (
-    //   ()
-    // ) {
-    const sectorVendors = [sector1Vendors, sector2Vendors, sector3Vendors];
-    const finalObj = getFinalSLA(selectedSector, sectorVendors);
+      {
+        sector: "Sector 3",
+        vens: [
+          {
+            ven: "vendor 4",
+            sections: {
+              tentage: 75,
+              sanitization: 95,
+              wastes: 40,
+              bins: 67,
+            },
+          },
+        ],
+      },
+    ];
 
-    setData(() => Object.values(finalObj));
-    setCategories(() => Object.keys(finalObj));
-    // }
-    // else if (tentage && sanitization) {
-    //   const data = [92, 70, 82, 94];
-    //   setData(() => data);
+    const finalObj = getFinalSLA(
+      tentage,
+      sanitization,
+      wastes,
+      bins,
+      selectedSector,
+      sectorVendors
+    );
 
-    //   const categories = ["vendor 1", "vendor 2", "vendor 3", "vendor 4"];
-    //   setCategories((prev) => categories);
-    // } else if (sanitization && wastes) {
-    //   const data = [82, 94, 76, 94];
-    //   setData(() => data);
-
-    //   const categories = ["vendor 3", "vendor 4", "vendor 5", "vendor 6"];
-    //   setCategories(() => categories);
-    // } else if (tentage && wastes) {
-    //   const data = [92, 70, 76, 94];
-    //   setData(() => data);
-
-    //   const categories = ["vendor1", "vendor 2", "vendor 5", "vendor 6"];
-    //   setCategories(() => categories);
-    // } else if (tentage) {
-    //   const data = [92, 70];
-    //   setData(() => data);
-
-    //   const categories = ["vendor 1", "vendor 2"];
-    //   setCategories((prev) => categories);
-    // } else if (sanitization) {
-    //   const data = [82, 94];
-    //   setData(() => data);
-
-    //   const categories = ["vendor 3", "vendor 4"];
-    //   setCategories(() => categories);
-    // } else if (wastes) {
-    //   const data = [76, 94];
-    //   setData(() => data);
-
-    //   const categories = ["vendor 5", "vendor 6"];
-    //   setCategories(() => categories);
-    // }
-  }, [tentage, sanitization, wastes, selectedSector]);
+    setData(() => finalObj.data);
+    setCategories(() => finalObj.cats);
+  }, [tentage, sanitization, wastes, selectedSector, bins]);
 
   const series = [
     {
@@ -134,9 +222,19 @@ const DistributedColumnChart = ({
       "#FEB019",
       "#FF4560",
       "#775DD0",
-      "#546E7A",
+      // "#546E7A",
       // "#26A69A",
     ],
+    yaxis: {
+      min: 0, // Set the minimum value to 0%
+      max: 100, // Set the maximum value to 100%
+      forceNiceScale: true, // Ensure y-axis shows full 0 to 100 range
+      labels: {
+        formatter: function (val) {
+          return val + "%";
+        },
+      },
+    },
   };
 
   return (
@@ -153,7 +251,7 @@ const DistributedColumnChart = ({
           options={options}
           series={series}
           type="bar"
-          height={230}
+          height={330}
         />
       </div>
     </div>

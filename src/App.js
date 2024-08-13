@@ -22,44 +22,70 @@ import CreateTentageSchedule from "./schedule/CreateTentageSchedule";
 import CreateSanitationSchedule from "./schedule/CreateSanitationSchedule";
 import MonthlyReport from "./schedule/MonthlyReport";
 
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate to="/home" />}
-        ></Route>
+        <Route path="/" element={<Navigate to="/home" />}></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-          <Route
-            path="/home"
-            element={<LandingPage></LandingPage>}
-          ></Route>
-          
-          <Route path="user-registration" element={<UserRegistrationForm></UserRegistrationForm>}></Route>
-          <Route path="user-list" element={<UserList></UserList>}></Route>
+          <Route path="/home" element={<LandingPage></LandingPage>}></Route>
 
-          <Route path="asset-registration" element={<AssetRegistrationForm></AssetRegistrationForm>}></Route>
+          <Route
+            path="user-registration"
+            element={<UserList></UserList>}
+          ></Route>
+
+          {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
+
+          <Route
+            path="asset-registration"
+            element={<AssetRegistrationForm></AssetRegistrationForm>}
+          ></Route>
           <Route path="asset-list" element={<AssetsList></AssetsList>}></Route>
 
-          <Route path="gis-registration" element={<GisRegistrationForm></GisRegistrationForm>}></Route>
+          <Route
+            path="gis-registration"
+            element={<GisRegistrationForm></GisRegistrationForm>}
+          ></Route>
           <Route path="gis-list" element={<GisList></GisList>}></Route>
 
-          <Route path="gis-survey-registration" element={<GisSurveyRegistrationForm></GisSurveyRegistrationForm>}></Route>
-          <Route path="qr-code-assignment" element={<QrCodeAssignmentForm></QrCodeAssignmentForm>}></Route>
-          <Route path="asset-allotment" element={<AssetAllotment></AssetAllotment>}></Route>
+          <Route
+            path="gis-survey-registration"
+            element={<GisSurveyRegistrationForm></GisSurveyRegistrationForm>}
+          ></Route>
+          <Route
+            path="qr-code-assignment"
+            element={<QrCodeAssignmentForm></QrCodeAssignmentForm>}
+          ></Route>
+          <Route
+            path="asset-allotment"
+            element={<AssetAllotment></AssetAllotment>}
+          ></Route>
 
-          <Route path="scheduling-and-deployment" element={<SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>}></Route>
-          <Route path="waste-management-schedule" element={<WasteManagementSchedule></WasteManagementSchedule>}></Route>
-          
-          <Route path="create-tentage-schedule" element={<CreateTentageSchedule></CreateTentageSchedule>}></Route>
-          <Route path="create-sanitation-schedule" element={<CreateSanitationSchedule></CreateSanitationSchedule>}></Route>
-          <Route path="monthly-report" element={<MonthlyReport></MonthlyReport>}></Route>
-          
-          
-          
+          <Route
+            path="scheduling-and-deployment"
+            element={
+              <SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>
+            }
+          ></Route>
+          <Route
+            path="waste-management-schedule"
+            element={<WasteManagementSchedule></WasteManagementSchedule>}
+          ></Route>
+
+          <Route
+            path="create-tentage-schedule"
+            element={<CreateTentageSchedule></CreateTentageSchedule>}
+          ></Route>
+          <Route
+            path="create-sanitation-schedule"
+            element={<CreateSanitationSchedule></CreateSanitationSchedule>}
+          ></Route>
+          <Route
+            path="monthly-report"
+            element={<MonthlyReport></MonthlyReport>}
+          ></Route>
         </Route>
         <Route path="login" element={<Login></Login>}></Route>
       </Routes>

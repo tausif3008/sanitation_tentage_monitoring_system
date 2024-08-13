@@ -8,6 +8,7 @@ const UserFeedBackChart = ({
   tentage,
   sanitization,
   wastes,
+  bins, // Added bins prop
 }) => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -44,15 +45,25 @@ const UserFeedBackChart = ({
           ],
         },
       },
+      {
+        cat: "bins", // Added bins category
+        info: {
+          sectors: [
+            { sector: "Sector 1", users: 300 },
+            { sector: "Sector 2", users: 200 },
+            { sector: "Sector 3", users: 400 },
+          ],
+        },
+      },
     ];
 
-    let data = { tentage: 0, sanitization: 0, wastes: 0 };
+    let data = { tentage: 0, sanitization: 0, wastes: 0, bins: 0 };
 
     for (const el of dataBySectors) {
       if (tentage && el.cat === "tentage") {
         for (const element of el.info.sectors) {
           if (selectedSectors.includes(element.sector)) {
-            data.tentage = data.tentage + element.users;
+            data.tentage += element.users;
           }
         }
       }
@@ -60,7 +71,7 @@ const UserFeedBackChart = ({
       if (sanitization && el.cat === "sanitization") {
         for (const element of el.info.sectors) {
           if (selectedSectors.includes(element.sector)) {
-            data.sanitization = data.sanitization + element.users;
+            data.sanitization += element.users;
           }
         }
       }
@@ -68,33 +79,34 @@ const UserFeedBackChart = ({
       if (wastes && el.cat === "wastes") {
         for (const element of el.info.sectors) {
           if (selectedSectors.includes(element.sector)) {
-            data.wastes = data.wastes + element.users;
+            data.wastes += element.users;
+          }
+        }
+      }
+
+      if (bins && el.cat === "bins") {
+        for (const element of el.info.sectors) {
+          if (selectedSectors.includes(element.sector)) {
+            data.bins += element.users;
           }
         }
       }
     }
 
     const categories = [];
-    if (data.tentage) {
-      categories.push("Tentage");
-    }
-
-    if (data.sanitization) {
-      categories.push("Sanitization");
-    }
-    if (data.wastes) {
-      categories.push("Wastes");
-    }
+    if (data.tentage) categories.push("Tentage");
+    if (data.sanitization) categories.push("Sanitization");
+    if (data.wastes) categories.push("Wastes");
+    if (data.bins) categories.push("Bins"); // Added bins category
 
     const nums = [];
-
     for (const el of categories) {
       nums.push(data[el.toLowerCase()]);
     }
 
     setCategories(() => categories);
     setData(() => nums);
-  }, [tentage, sanitization, wastes, selectedSectors]);
+  }, [tentage, sanitization, wastes, bins, selectedSectors]); // Added bins to dependency array
 
   const series = [
     {
@@ -113,7 +125,7 @@ const UserFeedBackChart = ({
 
     plotOptions: {
       bar: {
-        distributed: true, // Distribute each column
+        distributed: true,
         borderRadius: 4,
         horizontal: false,
         columnWidth: "55%",
@@ -123,7 +135,7 @@ const UserFeedBackChart = ({
       enabled: false,
     },
     legend: {
-      show: false, // Hide legend if not needed
+      show: false,
     },
     xaxis: {
       categories: categories,
@@ -135,22 +147,13 @@ const UserFeedBackChart = ({
             "#FEB019",
             "#FF4560",
             "#775DD0",
-            // "#546E7A",
-            // "#26A69A",
+            "#546E7A",
           ],
           fontSize: "12px",
         },
       },
     },
-    colors: [
-      "#008FFB",
-      "#00E396",
-      "#FEB019",
-      "#FF4560",
-      "#775DD0",
-      "#546E7A",
-      // "#26A69A",
-    ],
+    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0", "#546E7A"],
   };
 
   return (
@@ -167,7 +170,15 @@ const UserFeedBackChart = ({
           options={options}
           series={series}
           type="bar"
-          width={totalCats === 3 ? "" : totalCats === 2 ? 250 : 200}
+          width={
+            totalCats === 4
+              ? ""
+              : totalCats === 3
+              ? ""
+              : totalCats === 2
+              ? 250
+              : 200
+          } // Adjust width for 4 categories
           height={230}
         />
       </div>

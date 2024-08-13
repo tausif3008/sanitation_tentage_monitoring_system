@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table, Image, Button } from "antd";
 import { Link } from "react-router-dom";
+import UserRegistrationForm from "./UserRegistrationForm";
+import CommonTable from "../commonComponents/CommonTable";
+import CommonDivider from "../commonComponents/CommonDivider";
 
 const data = [
   {
@@ -24,12 +27,12 @@ const columns = [
     dataIndex: "name",
     key: "name",
   },
-  {
-    title: "Image",
-    dataIndex: "image",
-    key: "image",
-    render: (text) => <Image src={text} alt="User Image" width={100} />,
-  },
+  // {
+  //   title: "Image",
+  //   dataIndex: "image",
+  //   key: "image",
+  //   render: (text) => <Image src={text} alt="User Image" width={100} />,
+  // },
   {
     title: "Email",
     dataIndex: "email",
@@ -44,11 +47,13 @@ const columns = [
     title: "Age",
     dataIndex: "age",
     key: "age",
+    width: 70,
   },
   {
     title: "Gender",
     dataIndex: "gender",
     key: "gender",
+    width: 80,
   },
   {
     title: "Address",
@@ -78,19 +83,32 @@ const columns = [
 ];
 
 const UserList = () => {
+  const usersLocal = JSON.parse(localStorage.getItem("userRegistration")) || [];
+  const [isUserList, setIsUserList] = useState(false);
+  const [userList, setUserList] = useState(usersLocal);
+
   return (
-    <div>
-      <div>
-        <Link to="/user-registration">
-          <Button></Button>
-        </Link>
-      </div>
-      <Table
-        columns={columns}
-        scroll={{ x: 1600 }}
-        dataSource={data}
-        pagination={false}
-      />
+    <div className="">
+      {!isUserList && (
+        <>
+          <CommonDivider
+            label={"User List"}
+            compo={
+              <Button
+                onClick={() => setIsUserList(true)}
+                className="bg-orange-300 mb-1"
+              >
+                Add User
+              </Button>
+            }
+          ></CommonDivider>
+          <CommonTable
+            columns={columns}
+            dataSource={[...userList, ...userList, ...userList, ...userList]}
+          ></CommonTable>
+        </>
+      )}
+      {isUserList && <UserRegistrationForm></UserRegistrationForm>}
     </div>
   );
 };

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import ScrollList from "./ScrollList";
+import AlertsScrollList from "./AlertsSrollList";
 
 const getTasksBySectsCats = (
   cats,
   sanitization,
   tentage,
   wastes,
+  bins,
   selectedSectors
 ) => {
   let finalTasks = [];
 
   for (const el of cats) {
-
     if (
       tentage &&
       el.cat === "tentage" &&
@@ -35,6 +36,10 @@ const getTasksBySectsCats = (
     ) {
       finalTasks = [...finalTasks, ...el.info.tasks];
     }
+
+    if (bins && el.cat === "bins" && selectedSectors.includes(el.info.sector)) {
+      finalTasks = [...finalTasks, ...el.info.tasks];
+    }
   }
 
   return finalTasks;
@@ -47,6 +52,8 @@ const ListMaker = ({
   sanitization,
   tentage,
   wastes,
+  bins,
+  isAlert = false,
 }) => {
   const [list, setList] = useState([]);
 
@@ -57,15 +64,8 @@ const ListMaker = ({
     const sector4 = messageList[3];
     const sector5 = messageList[4];
     const sector6 = messageList[5];
-
-    // const tasks = [
-    //   { sector: "Sector 1", info: { cat: "sanitization", tasks: [sector1] } },
-    //   { sector: "Sector 2", info: { cat: "sanitization", tasks: [sector2] } },
-    //   { sector: "Sector 3", info: { cat: "tentage", tasks: [sector3] } },
-    //   { sector: "Sector 4", info: { cat: "tentage", tasks: [sector4] } },
-    //   { sector: "Sector 5", info: { cat: "wastes", tasks: [sector5] } },
-    //   { sector: "Sector 6", info: { cat: "wastes", tasks: [sector6] } },
-    // ];
+    const sector7 = messageList[6];
+    const sector8 = messageList[7];
 
     const cats = [
       { cat: "sanitization", info: { sector: "Sector 1", tasks: [sector1] } },
@@ -74,6 +74,8 @@ const ListMaker = ({
       { cat: "tentage", info: { sector: "Sector 3", tasks: [sector4] } },
       { cat: "wastes", info: { sector: "Sector 1", tasks: [sector5] } },
       { cat: "wastes", info: { sector: "Sector 3", tasks: [sector6] } },
+      { cat: "bins", info: { sector: "Sector 1", tasks: [sector7] } },
+      { cat: "bins", info: { sector: "Sector 2", tasks: [sector8] } },
     ];
 
     const finalTasks = getTasksBySectsCats(
@@ -81,51 +83,19 @@ const ListMaker = ({
       sanitization,
       tentage,
       wastes,
+      bins,
       selectedSectors
     );
 
     setList(() => finalTasks);
-
-    //   if (
-    //     (!tentage && !sanitization && !wastes) ||
-    //     (tentage && sanitization && wastes)
-    //   ) {
-    //     setList(() => [...messageList]);
-    //   } else if (tentage && sanitization) {
-    //     const data = [
-    //       messageList[0],
-    //       messageList[1],
-    //       messageList[2],
-    //       messageList[3],
-    //     ];
-
-    //     setList(() => data);
-    //   } else if (sanitization && wastes) {
-    //     setList(() => [
-    //       messageList[0],
-    //       messageList[1],
-    //       messageList[4],
-    //       messageList[5],
-    //     ]);
-    //   } else if (tentage && wastes) {
-    //     setList(() => [
-    //       messageList[2],
-    //       messageList[3],
-    //       messageList[4],
-    //       messageList[5],
-    //     ]);
-    //   } else if (tentage) {
-    //     setList(() => [messageList[0], messageList[1]]);
-    //   } else if (sanitization) {
-    //     setList(() => [messageList[2], messageList[3]]);
-    //   } else if (wastes) {
-    //     setList(() => [messageList[4], messageList[5]]);
-    //   }
-  }, [messageList, tentage, sanitization, wastes, selectedSectors]);
+  }, [messageList, tentage, sanitization, wastes, selectedSectors, bins]);
 
   return (
-    <div>
-      <ScrollList label={label} list={list}></ScrollList>
+    <div className="w-full" style={{ height: "330px" }}>
+      {isAlert && (
+        <AlertsScrollList label={label} list={list}></AlertsScrollList>
+      )}
+      {!isAlert && <ScrollList label={label} list={list}></ScrollList>}
     </div>
   );
 };
