@@ -16,6 +16,7 @@ import location from "../assets/MonitoringImages/Dashboard/location.png";
 import wsVhe from "../assets/MonitoringImages/Dashboard/wsVhe.png";
 import waste from "../assets/MonitoringImages/Dashboard/waste.png";
 import Centers from "./Centers.jsx";
+import Assets from "./Assects.jsx";
 
 const tasksNotCompletedMessageList = [
   "Ensure proper disposal of sanitary waste.",
@@ -44,17 +45,71 @@ const stackedCalc = (checkedValues, setShowDashboardFor, selectedSector) => {
   const details = [];
   const values = [];
 
-  const sector1Tents = { total: 300, ok: 200, average: 46, bad: 54 };
-  const sector2Tents = { total: 300, ok: 200, average: 50, bad: 50 };
-  const sector3Tents = { total: 400, ok: 250, average: 96, bad: 54 };
+  // Tents
+  const sector1Tents = {
+    total: 15937,
+    ok: Math.round(0.75 * 15937),
+    average: Math.round(0.15 * 15937),
+    bad: Math.round(0.2 * 15937),
+  };
 
-  const sector1San = { total: 200, ok: 100, average: 46, bad: 54 };
-  const sector2San = { total: 600, ok: 450, average: 46, bad: 54 };
-  const sector3San = { total: 100, ok: 56, average: 24, bad: 20 };
+  const sector2Tents = {
+    total: 15937,
+    ok: Math.round(0.8 * 15937),
+    average: Math.round(0.1 * 15937),
+    bad: Math.round(0.1 * 15937),
+  };
 
-  const sector1Wastes = { total: 400, ok: 300, average: 64, bad: 36 };
-  const sector2Wastes = { total: 500, ok: 450, average: 20, bad: 30 };
-  const sector3Wastes = { total: 300, ok: 200, average: 24, bad: 76 };
+  const sector3Tents = {
+    total: 15937,
+    ok: Math.round(0.7 * 15937),
+    average: Math.round(0.15 * 15937),
+    bad: Math.round(0.15 * 15937),
+  };
+
+  // Sanitation
+  const sector1San = {
+    total: 18000,
+    ok: Math.round(0.54 * 18000),
+    average: Math.round(0.26 * 18000),
+    bad: Math.round(0.2 * 18000),
+  };
+
+  const sector2San = {
+    total: 18000,
+    ok: Math.round(0.6 * 18000),
+    average: Math.round(0.25 * 18000),
+    bad: Math.round(0.15 * 18000),
+  };
+
+  const sector3San = {
+    total: 18000,
+    ok: Math.round(0.5 * 18000),
+    average: Math.round(0.25 * 18000),
+    bad: Math.round(0.25 * 18000),
+  };
+
+  // Wastes
+  const sector1Wastes = {
+    total: 22333,
+    ok: Math.round(0.6 * 22333),
+    average: Math.round(0.2 * 22333),
+    bad: Math.round(0.2 * 22333),
+  };
+
+  const sector2Wastes = {
+    total: 22333,
+    ok: Math.round(0.7 * 22333),
+    average: Math.round(0.2 * 22333),
+    bad: Math.round(0.1 * 22333),
+  };
+
+  const sector3Wastes = {
+    total: 22333,
+    ok: Math.round(0.5 * 22333),
+    average: Math.round(0.2 * 22333),
+    bad: Math.round(0.3 * 22333),
+  };
 
   if (checkedValues.includes("Tentage") || !checkedValues.length) {
     let selectedTents = [];
@@ -201,40 +256,40 @@ const Dashboard = () => {
         title: "Tentage",
         value: {
           label: "Tentage",
-          total: 1000,
-          ok: "500",
-          average: "300",
-          bad: "200",
+          total: 47812,
+          ok: 500,
+          average: 300,
+          bad: 200,
         },
       },
       {
         title: "Sanitization",
         value: {
           label: "Sanitization",
-          total: 900,
-          ok: "400",
-          average: "300",
-          bad: "200",
+          total: 56000,
+          ok: 400,
+          average: 300,
+          bad: 200,
         },
       },
       {
         title: "Wastes",
         value: {
           label: "Wastes",
-          total: 8000,
-          ok: "300",
-          average: "300",
-          bad: "200",
+          total: 47000,
+          ok: 300,
+          average: 300,
+          bad: 200,
         },
       },
       {
         title: "Wastes",
         value: {
           label: "Wastes",
-          total: 8000,
-          ok: "300",
-          average: "300",
-          bad: "200",
+          total: 70000,
+          ok: 300,
+          average: 300,
+          bad: 200,
         },
       },
     ],
@@ -293,6 +348,7 @@ const Dashboard = () => {
             ></StackedColumnChart>
           </div>
         </div>
+
         <div className="border w-full ">
           <DistributedColumnChart
             selectedSector={selectedSector}
@@ -302,6 +358,7 @@ const Dashboard = () => {
             bins={showDashboardFor.values.includes("Bins")}
           ></DistributedColumnChart>
         </div>
+
         <div className="border w-full ">
           <ResourceUtilizationCharts
             selectedSectors={selectedSector}
@@ -390,7 +447,12 @@ const Dashboard = () => {
         </div>
 
         <div className="border w-full">
-          <Centers label="Centers"></Centers>
+          <Assets
+            selectedSectors={selectedSector}
+            tentage={showDashboardFor.values.includes("Tentage")}
+            sanitization={showDashboardFor.values.includes("Sanitization")}
+            wastes={showDashboardFor.values.includes("Wastes")}
+          ></Assets>
         </div>
       </div>
     </div>

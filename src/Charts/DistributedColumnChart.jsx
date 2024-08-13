@@ -54,7 +54,6 @@ const getFinalSLA = (
     }
   }
 
-  console.log("stats", stats);
 
   let totalSections = 0;
 

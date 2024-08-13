@@ -31,7 +31,6 @@ const AssetRegistrationForm = () => {
   };
 
   const onFinish = (values) => {
-    console.log("Form Values:", values);
     values.photo = previewImage;
 
     const localAssetRegistration =

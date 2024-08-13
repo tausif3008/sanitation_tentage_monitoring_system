@@ -212,7 +212,7 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
           </Marker>
         ))}
 
-      {wastes &&
+      {bin &&
         wastesPlaces.map((place, index) => (
           <Marker
             key={index + place}
@@ -226,7 +226,7 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
           </Marker>
         ))}
 
-      {bin &&
+      {wastes &&
         wastesPlacesV.map((place, index) => (
           <Marker
             key={index + place}

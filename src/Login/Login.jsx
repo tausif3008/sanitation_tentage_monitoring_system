@@ -20,7 +20,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log(values, localStorage.getItem("userCredentials"));
     if (localStorage.getItem("userCredentials") === JSON.stringify(values)) {
       localStorage.setItem("loggedIn", true);
       message.success("Login Successful.");

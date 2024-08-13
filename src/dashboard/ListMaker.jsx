@@ -91,7 +91,7 @@ const ListMaker = ({
   }, [messageList, tentage, sanitization, wastes, selectedSectors, bins]);
 
   return (
-    <div className="w-full" style={{ height: "330px" }}>
+    <div className="w-full text-sm" style={{ height: "330px" }}>
       {isAlert && (
         <AlertsScrollList label={label} list={list}></AlertsScrollList>
       )}

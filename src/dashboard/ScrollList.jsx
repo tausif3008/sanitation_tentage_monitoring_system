@@ -13,35 +13,106 @@ const ScrollList = ({ label, list }) => {
 
       <div className="overflow-y-scroll ">
         <div className="m-2">
-          {list.map((el, index) => {
-            return (
-              <div
-                key={el}
-                className="flex justify-between h-10 border-green-400 items-center "
-              >
-                <div className="h-full flex pl-2 items-center border border-green-400 w-full">
-                  {el}
-                </div>
-                <div
-                  className={`border h-full w-10 flex items-center justify-center`}
-                >
-                  <Tooltip
-                    title={index % 2 === 0 ? "Completed" : "Not Completed"}
-                    color={index % 2 === 0 ? "green" : "red"}
-                    key={index}
-                  >
-                    <Tooltip>
-                      <div
-                        className={`h-4 w-4 rounded-full ${
-                          index % 2 === 0 ? "bg-green-500" : "bg-red-400"
-                        } `}
-                      ></div>
-                    </Tooltip>{" "}
-                  </Tooltip>
-                </div>
-              </div>
-            );
-          })}
+          <div className="flex justify-between h-10 font-semibold border-green-400 items-center ">
+            <div className="h-full flex pl-2 items-center border border-green-400 w-full">
+              Sections{" "}
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              Shift 1{" "}
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              Shift 2{" "}
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              Shift 3{" "}
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              Shift 4{" "}
+            </div>
+          </div>{" "}
+          <div className="flex justify-between h-10 border-green-400 items-center ">
+            <div className="h-full flex pl-2 items-center border border-green-400 w-full">
+              Sanitation
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-red-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-red-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+          </div>{" "}
+          <div className="flex justify-between h-10 border-green-400 items-center ">
+            <div className="h-full flex pl-2 items-center border border-green-400 w-full">
+              Wastes
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-red-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+          </div>
+          <div className="flex justify-between h-10 border-green-400 items-center ">
+            <div className="h-full flex pl-2 items-center border border-green-400 w-full">
+              Tentation
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-red-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>{" "}
+            <div
+              className={`border h-full w-32 text-sm flex items-center justify-center`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-green-500`}></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

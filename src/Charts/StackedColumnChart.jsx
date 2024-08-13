@@ -5,8 +5,8 @@ import toiletLogo from "../assets/MonitoringImages/Dashboard/toiletLogo.png";
 import waste from "../assets/MonitoringImages/Dashboard/waste.png";
 import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
 import wsVhe from "../assets/MonitoringImages/Dashboard/wsVhe.png";
-
 import PercentageBar from "../dashboard/PercenrageBar";
+
 const formatter = (value) => <CountUp end={value} separator="," />;
 
 const StackedColumnChart = ({ sectors, showDashboardFor }) => {
@@ -25,6 +25,7 @@ const StackedColumnChart = ({ sectors, showDashboardFor }) => {
           className="bg-green-200"
         ></SingleSanitization>
       )}
+
       {content[1] && (
         <SingleSanitization
           content={content[1]}
@@ -32,6 +33,7 @@ const StackedColumnChart = ({ sectors, showDashboardFor }) => {
           className="bg-yellow-100"
         ></SingleSanitization>
       )}
+
       {content[2] && (
         <SingleSanitization
           content={content[2]}
@@ -39,6 +41,7 @@ const StackedColumnChart = ({ sectors, showDashboardFor }) => {
           className="bg-teal-200"
         ></SingleSanitization>
       )}
+
       {content[3] && (
         <SingleSanitization
           content={content[3]}
@@ -103,10 +106,14 @@ const SingleSanitization = ({ className, content }) => {
               </div>
               <div
                 className={
-                  "flex flex-col text-white font-semibold w-full text-sm text-center items-end"
+                  "flex flex-col text-white font-semibold w-full text-sm text-center items-center"
                 }
               >
-                <PercentageBar good={good} average={average} bad={bad} />
+                <PercentageBar
+                  good={(content.value.ok / content.value.total) * 100}
+                  average={(content.value.average / content.value.total) * 100}
+                  bad={(content.value.bad / content.value.total) * 100}
+                />
               </div>
             </div>
           </div>

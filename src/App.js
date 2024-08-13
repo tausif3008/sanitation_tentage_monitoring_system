@@ -26,8 +26,6 @@ import Monitoring from "./complaince/Monitoring";
 import MonitoringReport from "./complaince/MonitoringReport";
 import Notification from "./complaince/Notification";
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -69,15 +67,29 @@ function App() {
             element={<AssetAllotment></AssetAllotment>}
           ></Route>
 
-          <Route path="scheduling-and-deployment" element={<SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>}></Route>
-          <Route path="waste-management-schedule" element={<WasteManagementSchedule></WasteManagementSchedule>}></Route>
-          
-          <Route path="create-tentage-schedule" element={<CreateTentageSchedule></CreateTentageSchedule>}></Route>
-          <Route path="create-sanitation-schedule" element={<CreateSanitationSchedule></CreateSanitationSchedule>}></Route>
-          <Route path="monthly-report" element={<MonthlyReport></MonthlyReport>}></Route>
-          
-          
-          
+          <Route
+            path="scheduling-and-deployment"
+            element={
+              <SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>
+            }
+          ></Route>
+          <Route
+            path="waste-management-schedule"
+            element={<WasteManagementSchedule></WasteManagementSchedule>}
+          ></Route>
+
+          <Route
+            path="create-tentage-schedule"
+            element={<CreateTentageSchedule></CreateTentageSchedule>}
+          ></Route>
+          <Route
+            path="create-sanitation-schedule"
+            element={<CreateSanitationSchedule></CreateSanitationSchedule>}
+          ></Route>
+          <Route
+            path="monthly-report"
+            element={<MonthlyReport></MonthlyReport>}
+          ></Route>
         </Route>
         <Route path="login" element={<Login></Login>}></Route>
       </Routes>
