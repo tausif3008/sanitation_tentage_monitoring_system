@@ -30,16 +30,16 @@ const register_items = (lang, dict) => {
     {
       key: "4",
       label: (
-        <Link className="text-black no-underline" to="/gis-registration">
-          GIS Registration
+        <Link className="text-black no-underline" to="/gis-services">
+          GIS Services
         </Link>
       ),
     },
     {
       key: "5",
       label: (
-        <Link className="text-black no-underline" to="/gis-survey-registration">
-          GIS Survey Registration
+        <Link className="text-black no-underline" to="/gps-fleet-registration">
+          GPS Fleet Registration
         </Link>
       ),
     },
