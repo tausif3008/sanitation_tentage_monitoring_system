@@ -97,8 +97,7 @@ function App() {
           ></Route>
 
           <Route
-            path="monitoring-report/:id"
-            element={<MonitoringReport></MonitoringReport>}
+            path="monitoring-report/:id" element={<MonitoringReport></MonitoringReport>}
           ></Route>
 
 

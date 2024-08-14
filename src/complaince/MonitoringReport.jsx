@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const MonitoringReport = () => {
   const { id } = useParams(); // Extract id from the URL
-  const { assetId } = useParams(); // Extract assetId from URL parameters
   const [assetDetails, setAssetDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,31 +13,29 @@ const MonitoringReport = () => {
       setLoading(true);
       try {
         const response = await fetch(`http://192.168.1.141:8001/get-asset-quetion/${id}/`);
-
         const result = await response.json();
 
         if (response.ok && result.data) {
-          // Assuming the first item in the data array is the relevant asset
           const asset = result.data[0];
-          
+
           // Set asset details
           setAssetDetails([
-            { label: "Assets Name", value: "Table" }, // Replace with actual data
-            { label: "Assets Code", value: "Table0039" }, // Replace with actual data
-            { label: "Assets Description", value: "Table 6 by 8 ft" }, // Replace with actual data
-            { label: "Assets Unit", value: "Option 1" }, // Replace with actual data
-            { label: "Assets Group", value: "Option 2" }, // Replace with actual data
-            { label: "Assets Vendor", value: "Option 2" }, // Replace with actual data
+            { label: "Assets Name", value: asset.asset_name || "N/A" },
+            { label: "Assets Code", value: asset.asset_code || "N/A" },
+            { label: "Assets Description", value: asset.asset_description || "N/A" },
+            { label: "Assets Unit", value: asset.asset_unit || "N/A" },
+            { label: "Assets Group", value: asset.asset_group || "N/A" },
+            { label: "Assets Vendor", value: asset.asset_vendor || "N/A" },
             {
               label: "Qr Code",
-              value: <Image width={100} src="path_to_qr_code_image" alt="QR Code" />,
+              value: <Image width={100} src={asset.qr_code_url || "path_to_qr_code_image"} alt="QR Code" />,
             },
             {
               label: "Photo",
-              value: <Image width={100} src="path_to_photo_image" alt="Photo" />,
+              value: <Image width={100} src={asset.photo_url || "path_to_photo_image"} alt="Photo" />,
             },
-            { label: "Latitude", value: "18.5110776" }, // Replace with actual data
-            { label: "Longitude", value: "81.888215" }, // Replace with actual data
+            { label: "Latitude", value: asset.latitude || "N/A" },
+            { label: "Longitude", value: asset.longitude || "N/A" },
           ]);
 
           // Transform API data to match table format
@@ -54,7 +51,6 @@ const MonitoringReport = () => {
           message.error(result.message || "Failed to load asset details");
         }
       } catch (error) {
-       
         message.error(error.message || "An error occurred while fetching the asset details");
       } finally {
         setLoading(false);
@@ -62,7 +58,7 @@ const MonitoringReport = () => {
     };
 
     fetchAssetData();
-  }, [assetId]); // Dependency array includes assetId to refetch data when assetId changes
+  }, [id]); // Dependency array includes id to refetch data when id changes
 
   const renderResponse = (text) => (
     <Tag
