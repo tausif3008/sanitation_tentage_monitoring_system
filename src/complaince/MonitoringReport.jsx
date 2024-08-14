@@ -16,7 +16,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://192.168.1.141:8001/get-asset-quetion/${data.assetsId}/`
+          `http://filemanagement.metaxpay.in:8001/get-asset-quetion/${data.assetsId}/`
         );
 
         const result = await response.json();

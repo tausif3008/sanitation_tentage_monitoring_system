@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Divider, Upload, message, Modal } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Divider,
+  Upload,
+  message,
+  Modal,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
@@ -53,13 +62,16 @@ const AssetRegistrationForm = () => {
     delete values.assetSubType;
 
     try {
-      const response = await fetch("http://192.168.1.141:8001/create-asset/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "http://filemanagement.metaxpay.in:8001/create-asset/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -72,7 +84,9 @@ const AssetRegistrationForm = () => {
         throw new Error("Failed to register asset");
       }
     } catch (error) {
-      message.error(error.message || "An error occurred while registering the asset.");
+      message.error(
+        error.message || "An error occurred while registering the asset."
+      );
     }
   };
 
@@ -87,7 +101,10 @@ const AssetRegistrationForm = () => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ assetType: "Toilets & Sanitation", vendor: "Vendor 1" }}
+        initialValues={{
+          assetType: "Toilets & Sanitation",
+          vendor: "Vendor 1",
+        }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
@@ -134,10 +151,15 @@ const AssetRegistrationForm = () => {
           <Form.Item
             label={<div className="font-semibold">Asset Sub Type</div>}
             name="assetSubType"
-            rules={[{ required: true, message: "Please select an Asset Sub Type" }]}
+            rules={[
+              { required: true, message: "Please select an Asset Sub Type" },
+            ]}
             className="mb-4"
           >
-            <Select placeholder="Select Asset Sub Type" className="rounded-none">
+            <Select
+              placeholder="Select Asset Sub Type"
+              className="rounded-none"
+            >
               {subTypes.map((subType, index) => (
                 <Option key={index} value={subType}>
                   {subType}
@@ -185,6 +207,7 @@ const AssetRegistrationForm = () => {
 
       <Modal
         title="Asset Registered Successfully"
+        width={400}
         visible={qrCodeModalVisible}
         onCancel={() => setQrCodeModalVisible(false)}
         footer={[
@@ -195,15 +218,21 @@ const AssetRegistrationForm = () => {
       >
         {qrCodeData && (
           <div className="text-center">
-            <p><strong>Asset Name:</strong> {qrCodeData.asset_name}</p>
-            <p><strong>Asset Code:</strong> {qrCodeData.asset_code}</p>
-            {qrCodeData.qr_image && (
-              <img
-                src={`http://192.168.1.141:8001${qrCodeData.qr_image}`}
-                alt="QR Code"
-                style={{ width: "200px", height: "200px" }}
-              />
-            )}
+            <p>
+              <strong>Asset Name:</strong> {qrCodeData.asset_name}
+            </p>
+            <p>
+              <strong>Asset Code:</strong> {qrCodeData.asset_code}
+            </p>
+            <div className="flex w-full justify-center items-center">
+              {qrCodeData.qr_image && (
+                <img
+                  src={`http://filemanagement.metaxpay.in:8001${qrCodeData.qr_image}`}
+                  alt="QR Code"
+                  style={{ width: "200px", height: "200px" }}
+                />
+              )}
+            </div>
           </div>
         )}
       </Modal>

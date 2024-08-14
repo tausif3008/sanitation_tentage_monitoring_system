@@ -23,7 +23,9 @@ const AssetsList = () => {
     const fetchAssets = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://192.168.1.141:8001/asset-list/");
+        const response = await fetch(
+          "http://filemanagement.metaxpay.in:8001/asset-list/"
+        );
         const result = await response.json();
 
         if (response.ok && result.data) {
@@ -34,7 +36,8 @@ const AssetsList = () => {
             assetsName: item.asset_name || "N/A",
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
-            qrCodeUrl: "http://192.168.1.141:8001/" + item.qr_code || "", // Add QR code URL
+            qrCodeUrl:
+              "http://filemanagement.metaxpay.in:8001/" + item.qr_code || "", // Add QR code URL
           }));
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data

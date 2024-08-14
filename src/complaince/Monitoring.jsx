@@ -23,7 +23,9 @@ const Monitoring = () => {
     const fetchAssets = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://192.168.1.141:8001/asset-list/");
+        const response = await fetch(
+          "http://filemanagement.metaxpay.in:8001/asset-list/"
+        );
         const result = await response.json();
 
         if (response.ok && result.data) {
@@ -35,7 +37,7 @@ const Monitoring = () => {
             assetsName: item.asset_name || "N/A",
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
-            qrCodeUrl: "http://192.168.1.141:8001/" + item.qr_code || "", // Add QR code URL
+            qrCodeUrl: item.qr_code || "", // Add QR code URL
           }));
 
           setData(transformedData);
@@ -170,17 +172,21 @@ const Monitoring = () => {
           {isAssetList && <div>Other Component/Form</div>}
 
           <Modal
+            width={300}
             title="QR Code"
             visible={isModalVisible}
             onCancel={handleCancel}
             footer={null}
           >
-            <div style={{ textAlign: "center" }}>
+            <div
+              style={{ textAlign: "center" }}
+              className="flex justify-center items-center"
+            >
               {qrCodeUrl ? (
                 <img
-                  src={qrCodeUrl}
+                  src={"http://filemanagement.metaxpay.in:8001" + qrCodeUrl}
                   alt="QR Code"
-                  style={{ maxWidth: "100%" }}
+                  style={{ maxWidth: "200px" }}
                 />
               ) : (
                 <QRCode value={qrCodeData} />
