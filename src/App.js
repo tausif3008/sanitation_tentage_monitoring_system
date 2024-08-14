@@ -91,17 +91,12 @@ function App() {
             element={<MonthlyReport></MonthlyReport>}
           ></Route>
 
-          <Route
-            path="monitoring"
-            element={<Monitoring></Monitoring>}
-          ></Route>
+          <Route path="monitoring" element={<Monitoring></Monitoring>}></Route>
 
           <Route
-            path="monitoring-report/:id"
+            path="monitoring-report/:id/:data"
             element={<MonitoringReport></MonitoringReport>}
           ></Route>
-
-
         </Route>
         <Route path="login" element={<Login></Login>}></Route>
       </Routes>

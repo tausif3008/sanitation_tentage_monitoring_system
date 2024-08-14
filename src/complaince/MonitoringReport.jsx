@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Table, Image, Tag, message } from "antd";
 import { useParams } from "react-router-dom";
+import CommonDivider from "../commonComponents/CommonDivider";
 
-const MonitoringReport = () => {
+const MonitoringReport = ({ data, setsetAssetInfo }) => {
+  console.log("data--------", data);
+
   const { id } = useParams(); // Extract id from the URL
   const { assetId } = useParams(); // Extract assetId from URL parameters
   const [assetDetails, setAssetDetails] = useState([]);
@@ -13,56 +16,76 @@ const MonitoringReport = () => {
     const fetchAssetData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://192.168.1.141:8001/get-asset-quetion/${id}/`);
+        const response = await fetch(
+          `http://192.168.1.141:8001/get-asset-quetion/${data.assetsId}/`
+        );
 
         const result = await response.json();
 
         if (response.ok && result.data) {
           // Assuming the first item in the data array is the relevant asset
           const asset = result.data[0];
-          
+
           // Set asset details
           setAssetDetails([
-            { label: "Assets Name", value: "Table" }, // Replace with actual data
-            { label: "Assets Code", value: "Table0039" }, // Replace with actual data
-            { label: "Assets Description", value: "Table 6 by 8 ft" }, // Replace with actual data
-            { label: "Assets Unit", value: "Option 1" }, // Replace with actual data
-            { label: "Assets Group", value: "Option 2" }, // Replace with actual data
-            { label: "Assets Vendor", value: "Option 2" }, // Replace with actual data
-            {
-              label: "Qr Code",
-              value: <Image width={100} src="path_to_qr_code_image" alt="QR Code" />,
-            },
-            {
-              label: "Photo",
-              value: <Image width={100} src="path_to_photo_image" alt="Photo" />,
-            },
-            { label: "Latitude", value: "18.5110776" }, // Replace with actual data
-            { label: "Longitude", value: "81.888215" }, // Replace with actual data
+            { label: "Assets Name", value: data.assetsName }, // Replace with actual data
+            { label: "Assets Code", value: data.assetsCode }, // Replace with actual data
+
+            // {
+            //   label: "Photo",
+            //   value: (
+            //     <Image width={100} src="path_to_photo_image" alt="Photo" />
+            //   ),
+            // },
+            // { label: "Latitude", value: "18.5110776" }, // Replace with actual data
+            // { label: "Longitude", value: "81.888215" }, // Replace with actual data
           ]);
 
+          const date = new Date(data.dataCreated);
+          const options = { day: "2-digit", month: "short", year: "numeric" };
+          const formattedDate = date.toLocaleDateString("en-GB", options);
+
           // Transform API data to match table format
-          const questions = asset.assetdata.map((item, index) => ({
-            key: item.id,
-            question: item.question,
-            day1: item.answer ? "Yes" : "No",
-            // Add other days if needed, based on your API data or requirements
-          }));
+          console.log(
+            "            answer: result.data[0].assetdata?.answer",
+            result.data[0]
+          );
+
+          const questions = asset.assetdata.map((item, index) => {
+            console.log(
+              "logresult.data[0].assetdata[index]",
+              result.data[0].assetdata[0],
+              result.data[0].assetdata[1]
+            );
+            return {
+              key: item.id,
+              question: item.question,
+              day1: item.answer ? "Yes" : "No",
+              dataCreated: formattedDate,
+              answer: result.data[0].assetdata[index - 1]?.answer ? (
+                <Tag color="green">Yes</Tag>
+              ) : (
+                <Tag color="green">No</Tag>
+              ),
+              // Add other days if needed, based on your API data or requirements
+            };
+          });
 
           setQuestionData(questions);
         } else {
           message.error(result.message || "Failed to load asset details");
         }
       } catch (error) {
-       
-        message.error(error.message || "An error occurred while fetching the asset details");
+        message.error(
+          error.message || "An error occurred while fetching the asset details"
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchAssetData();
-  }, [assetId]); // Dependency array includes assetId to refetch data when assetId changes
+  }, [data, data.assetId]); // Dependency array includes assetId to refetch data when assetId changes
 
   const renderResponse = (text) => (
     <Tag
@@ -78,22 +101,33 @@ const MonitoringReport = () => {
       title: "Date/Question",
       dataIndex: "question",
       key: "question",
-      width: 300,
+    },
+    {
+      title: "Answer",
+      dataIndex: "answer",
+      key: "answer",
+    },
+    {
+      title: "Date",
+      dataIndex: "dataCreated",
+      key: "question",
     },
     // Assuming you need columns for 12 days, adjust as needed
-    ...Array.from({ length: 12 }, (_, i) => ({
-      title: `${String(i + 1).padStart(2, "0")}-Aug-2024`,
-      dataIndex: `day${i + 1}`,
-      key: `day${i + 1}`,
-      render: renderResponse,
-    })),
   ];
 
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
-      <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Monitoring Report</div>
-      </div>
+      <CommonDivider
+        label={"Monitoring Report"}
+        compo={
+          <Button
+            className="mb-2 bg-green-400"
+            onClick={() => setsetAssetInfo(null)}
+          >
+            Asset Listing
+          </Button>
+        }
+      ></CommonDivider>
       <div className="mt-4">
         <Row gutter={[16, 16]} className="mb-4">
           {assetDetails.map((item, index) => (
@@ -102,7 +136,7 @@ const MonitoringReport = () => {
             </Col>
           ))}
         </Row>
-
+        <Image width={100} src={data.qrCodeUrl} alt="QR Code" />
         <Table
           columns={dateColumns}
           dataSource={questionData}
@@ -112,7 +146,6 @@ const MonitoringReport = () => {
           className="rounded-none"
           loading={loading}
         />
-
         <div className="flex justify-end">
           <Button type="primary" className="mt-4 rounded-none bg-5c">
             Save Report

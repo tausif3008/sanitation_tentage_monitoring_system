@@ -17,6 +17,8 @@ const AssetsList = () => {
   const [qrCodeData, setQrCodeData] = useState(""); // State for QR code data
   const [qrCodeUrl, setQrCodeUrl] = useState(""); // State for QR code image URL
 
+  const [assestInfo, setAssestInfo] = useState({});
+
   useEffect(() => {
     const fetchAssets = async () => {
       setLoading(true);
@@ -32,7 +34,7 @@ const AssetsList = () => {
             assetsName: item.asset_name || "N/A",
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
-            qrCodeUrl: "http://192.168.1.141:8001/"+item.qr_code || "", // Add QR code URL
+            qrCodeUrl: "http://192.168.1.141:8001/" + item.qr_code || "", // Add QR code URL
           }));
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
@@ -40,7 +42,9 @@ const AssetsList = () => {
           message.error(result.message || "Failed to load assets");
         }
       } catch (error) {
-        message.error(error.message || "An error occurred while fetching the assets");
+        message.error(
+          error.message || "An error occurred while fetching the assets"
+        );
       } finally {
         setLoading(false);
       }
@@ -48,7 +52,6 @@ const AssetsList = () => {
 
     fetchAssets();
 
-    // Simulate the success message after registration
     const queryParams = new URLSearchParams(window.location.search);
     if (queryParams.get("status") === "success") {
       setSuccessMessage("Asset Registered Successfully");
@@ -59,10 +62,11 @@ const AssetsList = () => {
   }, []);
 
   const handleSearch = (value) => {
-    const filtered = data.filter((item) =>
-      item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
-      item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
-      item.vendor.toLowerCase().includes(value.toLowerCase())
+    const filtered = data.filter(
+      (item) =>
+        item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
+        item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
+        item.vendor.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -98,7 +102,9 @@ const AssetsList = () => {
       key: "action",
       render: (text, record) => (
         <div>
-          <Button type="link" onClick={() => showQrCode(record)}>QR</Button>
+          <Button type="link" onClick={() => showQrCode(record)}>
+            QR
+          </Button>
           <Button type="link">View</Button>
           <Button type="link">Edit</Button>
           {/* <Button type="link">Delete</Button> */}
@@ -141,7 +147,7 @@ const AssetsList = () => {
               className="mr-4 p-2"
             />
           </div>
-          <CommonTable
+          <Table
             columns={columns}
             dataSource={filteredData}
             loading={loading}
@@ -165,7 +171,7 @@ const AssetsList = () => {
       >
         <div style={{ textAlign: "center" }}>
           {qrCodeUrl ? (
-            <img src={qrCodeUrl} alt="QR Code" style={{ maxWidth: '100%' }} />
+            <img src={qrCodeUrl} alt="QR Code" style={{ maxWidth: "100%" }} />
           ) : (
             <QRCode value={qrCodeData} />
           )}

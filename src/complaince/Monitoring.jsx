@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
 import CommonTable from "../commonComponents/CommonTable";
 import CommonDivider from "../commonComponents/CommonDivider";
+import MonitoringReport from "./MonitoringReport";
 
 const { Search } = Input;
 
@@ -16,6 +17,7 @@ const Monitoring = () => {
   const [isModalVisible, setIsModalVisible] = useState(false); // State for Modal visibility
   const [qrCodeData, setQrCodeData] = useState(""); // State for QR code data
   const [qrCodeUrl, setQrCodeUrl] = useState(""); // State for QR code image URL
+  const [assetInfo, setsetAssetInfo] = useState();
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -29,18 +31,22 @@ const Monitoring = () => {
             key: item.id,
             srNo: index + 1,
             assetsId: item.id,
+            dataCreated: item.date_created,
             assetsName: item.asset_name || "N/A",
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
             qrCodeUrl: "http://192.168.1.141:8001/" + item.qr_code || "", // Add QR code URL
           }));
+
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
         } else {
           message.error(result.message || "Failed to load assets");
         }
       } catch (error) {
-        message.error(error.message || "An error occurred while fetching the assets");
+        message.error(
+          error.message || "An error occurred while fetching the assets"
+        );
       } finally {
         setLoading(false);
       }
@@ -48,7 +54,6 @@ const Monitoring = () => {
 
     fetchAssets();
 
-    // Simulate the success message after registration
     const queryParams = new URLSearchParams(window.location.search);
     if (queryParams.get("status") === "success") {
       setSuccessMessage("Asset Registered Successfully");
@@ -59,10 +64,11 @@ const Monitoring = () => {
   }, []);
 
   const handleSearch = (value) => {
-    const filtered = data.filter((item) =>
-      item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
-      item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
-      item.vendor.toLowerCase().includes(value.toLowerCase())
+    const filtered = data.filter(
+      (item) =>
+        item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
+        item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
+        item.vendor.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -98,9 +104,11 @@ const Monitoring = () => {
       key: "action",
       render: (text, record) => (
         <div>
-          <Button type="link" onClick={() => showQrCode(record)}>QR</Button>
-          <Button type="link">
-            <Link to={`/monitoring-report/${record.assetsId}`}>View Monitoring</Link>
+          <Button type="link" onClick={() => showQrCode(record)}>
+            QR
+          </Button>
+          <Button type="link" onClick={() => setsetAssetInfo(record)}>
+            View Monitoring
           </Button>
         </div>
       ),
@@ -108,70 +116,87 @@ const Monitoring = () => {
   ];
 
   return (
-    <div className="">
-      {/* Success Message */}
-      {successMessage && (
-        <div
-          style={{
-            textAlign: "center",
-            color: "green",
-            fontWeight: "bold",
-            marginBottom: "20px",
-          }}
-        >
-          {successMessage}
-        </div>
-      )}
-
-      {!isAssetList && (
-        <>
-          <CommonDivider
-            label={"Assets Listing"}
-            compo={
-              <Link to="/asset-registration">
-                <Button className="bg-orange-300 mb-1">Add New Asset</Button>
-              </Link>
-            }
-          />
-          <div className="mb-4 flex justify-between items-center">
-            <Search
-              placeholder="Search assets"
-              onSearch={handleSearch}
-              style={{ width: 300 }}
-              className="mr-4 p-2"
-            />
-          </div>
-          <CommonTable
-            columns={columns}
-            dataSource={filteredData}
-            loading={loading}
-            pagination={{
-              pageSize: 10,
-              showSizeChanger: true,
-              pageSizeOptions: ["10", "20", "30"],
-            }}
-          />
-        </>
-      )}
-      {/* Replace this with another component/form if needed */}
-      {isAssetList && <div>Other Component/Form</div>}
-
-      {/* QR Code Modal */}
-      <Modal
-        title="QR Code"
-        visible={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <div style={{ textAlign: "center" }}>
-          {qrCodeUrl ? (
-            <img src={qrCodeUrl} alt="QR Code" style={{ maxWidth: '100%' }} />
-          ) : (
-            <QRCode value={qrCodeData} />
+    <>
+      {!assetInfo ? (
+        <div className="">
+          {/* Success Message */}
+          {successMessage && (
+            <div
+              style={{
+                textAlign: "center",
+                color: "green",
+                fontWeight: "bold",
+                marginBottom: "20px",
+              }}
+            >
+              {successMessage}
+            </div>
           )}
+
+          {!isAssetList && (
+            <>
+              <CommonDivider
+                label={"Assets Listing"}
+                compo={
+                  <Link to="/asset-registration">
+                    <Button className="bg-orange-300 mb-1">
+                      Add New Asset
+                    </Button>
+                  </Link>
+                }
+              />
+              <div className="mb-4 flex justify-between items-center">
+                <Search
+                  placeholder="Search assets"
+                  onSearch={handleSearch}
+                  style={{ width: 300 }}
+                  className="mr-4 p-2"
+                />
+              </div>
+              <Table
+                columns={columns}
+                bordered
+                dataSource={filteredData}
+                loading={loading}
+                pagination={{
+                  pageSize: 10,
+                  showSizeChanger: true,
+                  pageSizeOptions: ["10", "20", "30"],
+                }}
+              />
+            </>
+          )}
+          {/* Replace this with another component/form if needed */}
+          {isAssetList && <div>Other Component/Form</div>}
+
+          <Modal
+            title="QR Code"
+            visible={isModalVisible}
+            onCancel={handleCancel}
+            footer={null}
+          >
+            <div style={{ textAlign: "center" }}>
+              {qrCodeUrl ? (
+                <img
+                  src={qrCodeUrl}
+                  alt="QR Code"
+                  style={{ maxWidth: "100%" }}
+                />
+              ) : (
+                <QRCode value={qrCodeData} />
+              )}
+            </div>
+          </Modal>
         </div>
-      </Modal>
-    </div>
+      ) : (
+        <div>
+          <MonitoringReport
+            data={assetInfo}
+            setsetAssetInfo={setsetAssetInfo}
+          ></MonitoringReport>
+        </div>
+      )}
+    </>
   );
 };
 
