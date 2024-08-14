@@ -22,7 +22,7 @@ const register_items = (lang, dict) => {
     {
       key: "3",
       label: (
-        <Link className="text-black no-underline" to="/asset-registration">
+        <Link className="text-black no-underline" to="/asset-list">
           Asset Registration
         </Link>
       ),

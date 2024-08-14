@@ -90,6 +90,18 @@ function App() {
             path="monthly-report"
             element={<MonthlyReport></MonthlyReport>}
           ></Route>
+
+          <Route
+            path="monitoring"
+            element={<Monitoring></Monitoring>}
+          ></Route>
+
+          <Route
+            path="monitoring-report"
+            element={<MonitoringReport></MonitoringReport>}
+          ></Route>
+
+
         </Route>
         <Route path="login" element={<Login></Login>}></Route>
       </Routes>

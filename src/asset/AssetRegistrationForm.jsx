@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Divider, Upload } from "antd";
+import { Form, Input, Button, Select, Divider, Upload, message, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
@@ -9,6 +9,8 @@ const AssetRegistrationForm = () => {
   const [form] = Form.useForm();
   const [previewImage, setPreviewImage] = useState(null);
   const [subTypes, setSubTypes] = useState([]);
+  const [qrCodeModalVisible, setQrCodeModalVisible] = useState(false);
+  const [qrCodeData, setQrCodeData] = useState(null);
 
   const handleChange = ({ fileList }) => {
     if (fileList.length > 0 && fileList[0].originFileObj) {
@@ -27,7 +29,7 @@ const AssetRegistrationForm = () => {
   const onAssetTypeChange = (value) => {
     let subTypeOptions = [];
     switch (value) {
-      case "Type 1":
+      case "sanitizedType":
         subTypeOptions = [
           "Manpower Deployment",
           "Cleaning and Sanitation",
@@ -36,7 +38,7 @@ const AssetRegistrationForm = () => {
           "Waste Management",
         ];
         break;
-      case "Type 2":
+      case "tentageType":
         subTypeOptions = ["Tentage Issues", "Furniture Items"];
         break;
       default:
@@ -46,18 +48,32 @@ const AssetRegistrationForm = () => {
     form.setFieldsValue({ assetSubType: undefined });
   };
 
-  const onFinish = (values) => {
-    values.photo = previewImage;
+  const onFinish = async (values) => {
+    // Remove assetSubType from the payload
+    delete values.assetSubType;
 
-    const localAssetRegistration =
-      JSON.parse(localStorage.getItem("assetRegistration")) || [];
+    try {
+      const response = await fetch("http://192.168.1.141:8001/create-asset/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-    localAssetRegistration.push(JSON.parse(JSON.stringify(values)));
-
-    localStorage.setItem(
-      "assetRegistration",
-      JSON.stringify(localAssetRegistration)
-    );
+      if (response.ok) {
+        const result = await response.json();
+        setQrCodeData(result);
+        setQrCodeModalVisible(true);
+        message.success("Asset registered successfully!");
+        form.resetFields();
+        setPreviewImage(null);
+      } else {
+        throw new Error("Failed to register asset");
+      }
+    } catch (error) {
+      message.error(error.message || "An error occurred while registering the asset.");
+    }
   };
 
   return (
@@ -76,7 +92,7 @@ const AssetRegistrationForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Assets Name</div>}
-            name="assetsName"
+            name="asset_name"
             rules={[{ required: true, message: "Please enter Assets Name" }]}
             className="mb-4"
           >
@@ -100,7 +116,7 @@ const AssetRegistrationForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Asset Type</div>}
-            name="assetType"
+            name="asset_type"
             rules={[{ required: true, message: "Please select an Asset Type" }]}
             className="mb-4"
           >
@@ -109,11 +125,12 @@ const AssetRegistrationForm = () => {
               className="rounded-none"
               onChange={onAssetTypeChange}
             >
-              <Option value="Type 1">Toilets & Sanitation</Option>
-              <Option value="Type 2">Tentage & Furniture</Option>
+              <Option value="sanitizedType">Toilets & Sanitation</Option>
+              <Option value="tentageType">Tentage & Furniture</Option>
               {/* Add more options as needed */}
             </Select>
           </Form.Item>
+
           <Form.Item
             label={<div className="font-semibold">Asset Sub Type</div>}
             name="assetSubType"
@@ -132,13 +149,13 @@ const AssetRegistrationForm = () => {
         <div className="grid grid-cols-1 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Assets Description</div>}
-            name="assetsDescription"
+            name="asset_desc"
             className="mb-4"
           >
             <TextArea rows={2} placeholder="Enter Assets Description" />
           </Form.Item>
         </div>
-        <div className="grid grid-cols-1 gap-x-5">
+        {/* <div className="grid grid-cols-1 gap-x-5">
           <Form.Item
             name="photo"
             label="Photo of Assets"
@@ -152,7 +169,7 @@ const AssetRegistrationForm = () => {
               <Button icon={<UploadOutlined />}>Upload Photo</Button>
             </Upload>
           </Form.Item>
-        </div>
+        </div> */}
         <div className="flex justify-end">
           <Form.Item>
             <Button
@@ -165,6 +182,31 @@ const AssetRegistrationForm = () => {
           </Form.Item>
         </div>
       </Form>
+
+      <Modal
+        title="Asset Registered Successfully"
+        visible={qrCodeModalVisible}
+        onCancel={() => setQrCodeModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setQrCodeModalVisible(false)}>
+            Close
+          </Button>,
+        ]}
+      >
+        {qrCodeData && (
+          <div className="text-center">
+            <p><strong>Asset Name:</strong> {qrCodeData.asset_name}</p>
+            <p><strong>Asset Code:</strong> {qrCodeData.asset_code}</p>
+            {qrCodeData.qr_code && (
+              <img
+                src={`http://192.168.1.141:8001${qrCodeData.qr_code}`}
+                alt="QR Code"
+                style={{ width: "200px", height: "200px" }}
+              />
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
