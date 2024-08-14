@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Input, message, Modal } from "antd";
 import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
-import CommonTable from "../commonComponents/CommonTable";
 import CommonDivider from "../commonComponents/CommonDivider";
 import MonitoringReport from "./MonitoringReport";
 
@@ -147,12 +146,12 @@ const Monitoring = () => {
                   </Link>
                 }
               />
-              <div className="mb-4 flex justify-between items-center">
+              <div className="mb-2 flex justify-between items-center">
                 <Search
                   placeholder="Search assets"
                   onSearch={handleSearch}
                   style={{ width: 300 }}
-                  className="mr-4 p-2"
+                  className=""
                 />
               </div>
               <Table

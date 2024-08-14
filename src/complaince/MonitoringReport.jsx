@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
 
 const MonitoringReport = ({ data, setsetAssetInfo }) => {
-  console.log("data--------", data);
-
   const { id } = useParams(); // Extract id from the URL
   const [assetDetails, setAssetDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
@@ -44,17 +42,8 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
           const formattedDate = date.toLocaleDateString("en-GB", options);
 
           // Transform API data to match table format
-          console.log(
-            "            answer: result.data[0].assetdata?.answer",
-            result.data[0]
-          );
 
           const questions = asset.assetdata.map((item, index) => {
-            console.log(
-              "logresult.data[0].assetdata[index]",
-              result.data[0].assetdata[0],
-              result.data[0].assetdata[1]
-            );
             return {
               key: item.id,
               question: item.question,
@@ -74,9 +63,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
           message.error(result.message || "Failed to load asset details");
         }
       } catch (error) {
-        message.error(
-          error.message || "An error occurred while fetching the asset details"
-        );
+        message.error("Please add monitoring details by scanning the QR code.");
       } finally {
         setLoading(false);
       }
