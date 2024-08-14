@@ -19,14 +19,14 @@ const register_items = (lang, dict) => {
         </Link>
       ),
     },
-    // {
-    //   key: "3",
-    //   label: (
-    //     <Link className="text-black no-underline" to="/asset-list">
-    //       Asset Registration
-    //     </Link>
-    //   ),
-    // },
+    {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline" to="/asset-list">
+          Asset Registration
+        </Link>
+      ),
+    },
     {
       key: "4",
       label: (
