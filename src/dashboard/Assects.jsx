@@ -4,23 +4,23 @@ import { SearchOutlined } from "@ant-design/icons";
 
 const columns = (searchText, setSearchText) => [
   {
-    title: "Section",
+    title: <div style={{ fontSize: "13px" }}> Section</div>,
     dataIndex: "section",
     key: "section",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Asset Name",
+    title: <div style={{ fontSize: "13px" }}> Asset Name</div>,
     dataIndex: "assetName",
     key: "assetName",
   },
   {
-    title: "Sector",
+    title: <div style={{ fontSize: "13px" }}> Sector</div>,
     dataIndex: "sector",
     key: "sector",
   },
   {
-    title: "Asset Code",
+    title: <div style={{ fontSize: "13px" }}> Asset Code</div>,
     dataIndex: "assetCode",
     key: "assetCode",
     filterDropdown: ({

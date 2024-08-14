@@ -187,7 +187,7 @@ const RatingChart = ({
       },
     },
     xaxis: {
-      categories: ["Sanitization", "Tentage", "Wastes", "Bins"],
+      categories: ["Sanitation", "Tentage", "Wastes", "Bins"],
       labels: {
         formatter: function (val) {
           return val + "%"; // Label format with percentage
