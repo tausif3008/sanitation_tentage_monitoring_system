@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 
 const ComingSoon = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-
+    <div className="flex flex-col items-center justify-center mt-10 bg-gray-100">
       <div>
         <Link to="/">
           <Button type="primary" size="large">
@@ -27,7 +26,6 @@ const ComingSoon = () => {
       <p>Superimposing (Integration) Shape Files on the desired base Maps</p>
       <p>Geo coding & Creating Geo database</p>
 
-
       <b>Delivery:</b>
       <p>Accurate location intelligence</p>
       <p>Analytics capabilities</p>
@@ -38,11 +36,9 @@ const ComingSoon = () => {
       <p>Trend analysis capabilities</p>
       <p>Reporting</p>
 
-
       <p className="text-lg text-gray-600 mb-8">
         <b>We're working hard to bring you this feature. Stay tuned!</b>
       </p>
-      
     </div>
   );
 };
