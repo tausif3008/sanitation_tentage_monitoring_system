@@ -197,9 +197,9 @@ const AssetRegistrationForm = () => {
           <div className="text-center">
             <p><strong>Asset Name:</strong> {qrCodeData.asset_name}</p>
             <p><strong>Asset Code:</strong> {qrCodeData.asset_code}</p>
-            {qrCodeData.qr_code && (
+            {qrCodeData.qr_image && (
               <img
-                src={`http://192.168.1.141:8001${qrCodeData.qr_code}`}
+                src={`http://192.168.1.141:8001${qrCodeData.qr_image}`}
                 alt="QR Code"
                 style={{ width: "200px", height: "200px" }}
               />

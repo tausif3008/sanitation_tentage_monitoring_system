@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Input, message } from "antd";
+import { Table, Button, Input, message, Modal } from "antd";
 import { Link } from "react-router-dom";
+import QRCode from "qrcode.react";
 import CommonTable from "../commonComponents/CommonTable";
 import CommonDivider from "../commonComponents/CommonDivider";
 
@@ -12,6 +13,9 @@ const AssetsList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [isAssetList, setIsAssetList] = useState(false);
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [isModalVisible, setIsModalVisible] = useState(false); // State for Modal visibility
+  const [qrCodeData, setQrCodeData] = useState(""); // State for QR code data
+  const [qrCodeUrl, setQrCodeUrl] = useState(""); // State for QR code image URL
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -28,6 +32,7 @@ const AssetsList = () => {
             assetsName: item.asset_name || "N/A",
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
+            qrCodeUrl: "http://192.168.1.141:8001/"+item.qr_code || "", // Add QR code URL
           }));
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
@@ -62,6 +67,16 @@ const AssetsList = () => {
     setFilteredData(filtered);
   };
 
+  const showQrCode = (record) => {
+    setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
+    setQrCodeUrl(record.qrCodeUrl); // Set the QR code URL
+    setIsModalVisible(true); // Show the modal
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false); // Hide the modal
+  };
+
   const columns = [
     {
       title: "Assets Name",
@@ -83,7 +98,7 @@ const AssetsList = () => {
       key: "action",
       render: (text, record) => (
         <div>
-          <Button type="link">QR</Button>
+          <Button type="link" onClick={() => showQrCode(record)}>QR</Button>
           <Button type="link">View</Button>
           <Button type="link">Edit</Button>
           {/* <Button type="link">Delete</Button> */}
@@ -140,6 +155,22 @@ const AssetsList = () => {
       )}
       {/* Replace this with another component/form if needed */}
       {isAssetList && <div>Other Component/Form</div>}
+
+      {/* QR Code Modal */}
+      <Modal
+        title="QR Code"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <div style={{ textAlign: "center" }}>
+          {qrCodeUrl ? (
+            <img src={qrCodeUrl} alt="QR Code" style={{ maxWidth: '100%' }} />
+          ) : (
+            <QRCode value={qrCodeData} />
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };
