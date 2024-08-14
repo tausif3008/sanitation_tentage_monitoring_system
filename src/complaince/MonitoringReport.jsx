@@ -72,14 +72,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
     fetchAssetData();
   }, [data, data.assetId]); // Dependency array includes assetId to refetch data when assetId changes
 
-  const renderResponse = (text) => (
-    <Tag
-      color={text === "Yes" ? "green" : "red"}
-      style={{ width: 50, textAlign: "center" }}
-    >
-      {text}
-    </Tag>
-  );
+ 
 
   const dateColumns = [
     {
