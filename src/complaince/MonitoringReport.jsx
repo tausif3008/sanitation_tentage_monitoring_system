@@ -7,7 +7,6 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
   console.log("data--------", data);
 
   const { id } = useParams(); // Extract id from the URL
-  const { assetId } = useParams(); // Extract assetId from URL parameters
   const [assetDetails, setAssetDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +22,6 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
         const result = await response.json();
 
         if (response.ok && result.data) {
-          // Assuming the first item in the data array is the relevant asset
           const asset = result.data[0];
 
           // Set asset details
