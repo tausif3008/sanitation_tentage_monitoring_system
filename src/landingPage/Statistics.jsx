@@ -2,8 +2,6 @@ import { Divider, Statistic } from "antd";
 import React from "react";
 import CountUp from "react-countup";
 
-
-
 import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
 import toiletlogo from "../assets/MonitoringImages/Dashboard/toiletLogo.png";
 import waste from "../assets/MonitoringImages/Dashboard/waste.png";
@@ -30,11 +28,11 @@ const Statistics = () => {
           </div>
           <div className="flex items-center justify-around flex-col font-semibold">
             <span className="flex items-center ">
-              <Statistic value={2000} formatter={formatter} />
+              <Statistic value={47811} formatter={formatter} />
             </span>
             <span className="flex items-center text-center">
               {/* {dict.total_lost[lang]} */}
-              Total Tentage 
+              Total Tentage
             </span>
           </div>
         </div>
@@ -45,7 +43,7 @@ const Statistics = () => {
           </div>
           <div className="flex items-center justify-around flex-col font-semibold">
             <span className="flex items-center">
-              <Statistic value={15000} formatter={formatter} />
+              <Statistic value={54000} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
               {/* {dict.total_found[lang]} */}
@@ -61,7 +59,7 @@ const Statistics = () => {
 
           <div className="flex items-center justify-center flex-col font-semibold">
             <span className="flex items-center">
-              <Statistic value={14000} formatter={formatter} />
+              <Statistic value={66999} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
               {/* {dict.total_reunion[lang]} */}
@@ -76,7 +74,7 @@ const Statistics = () => {
           </div>
           <div className="flex items-center justify-center flex-col">
             <span className="flex items-center ">
-              <Statistic value={560} formatter={formatter} />
+              <Statistic value={66999} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
               {/* {dict.pending_cases[lang]} */}

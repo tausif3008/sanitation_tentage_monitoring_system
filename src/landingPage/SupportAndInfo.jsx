@@ -20,14 +20,11 @@ const SupportAndInfo = () => {
           <div className="p-2">
             <ul className="list-disc font-semibold">
               <span className="hover:text-ec ">
-
-                  {/* {dict.info_missing[lang]} */}
-                  <li> हेल्पलाइन नंबर 1920 डायल करें</li>
-                  <li> सेक्टर 3-पुल नंबर 1 के पास</li>
-                  <li> सेक्टर 4-एसडीएम कार्यालय के पास</li>
-                  <li> सेक्टर 5-हरिश्चंद्र रोड पीडीएस शॉप के पास</li>
-
-                
+                {/* {dict.info_missing[lang]} */}
+                <li> हेल्पलाइन नंबर 1920 डायल करें</li>
+                <li> सेक्टर 3-पुल नंबर 1 के पास</li>
+                <li> सेक्टर 4-एसडीएम कार्यालय के पास</li>
+                <li> सेक्टर 5-हरिश्चंद्र रोड पीडीएस शॉप के पास</li>
               </span>
             </ul>
           </div>
@@ -39,17 +36,16 @@ const SupportAndInfo = () => {
           <div className="p-2">
             <ul className="list-disc  font-semibold ">
               <li className="">
-                <span className="hover:text-ec">
-                  {dict.photo_missing_found[lang]}
-                </span>
+                <span className="hover:text-ec">FAQ </span>
               </li>
               <li>
-                <span className="hover:text-ec">
-                  {dict.check_status[lang]}{" "}
-                </span>
+                <span className="hover:text-ec">Community Forum </span>
               </li>
               <li>
-                <span className="hover:text-ec">{dict.quick_search[lang]}</span>
+                <span className="hover:text-ec">Technical Support</span>
+              </li>
+              <li>
+                <span className="hover:text-ec">Citizen Feedback</span>
               </li>
             </ul>
           </div>
@@ -64,14 +60,12 @@ const SupportAndInfo = () => {
                 <li>
                   {/* {dict.police[lang]} */}
                   UP Police Officials
-                  </li>{" "} 
+                </li>{" "}
               </span>
               <span className="hover:text-ec">
                 <li>Mela Officials Authority </li>
               </span>
-              <span className="hover:text-ec">
-                <li>{dict.lost_found_center[lang]}</li>
-              </span>{" "}
+
               <span className="hover:text-ec">
                 <li>{dict.citizens[lang]}</li>
               </span>

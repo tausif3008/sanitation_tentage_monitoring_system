@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { useOutletContext } from "react-router";
+import { max } from "moment";
 
 // Register the components
 ChartJS.register(
@@ -20,16 +21,11 @@ ChartJS.register(
   Legend
 );
 
-const labels = (dict, lang) => [
-  "Tentage",
-  "Sanitation",
-  "Waste",
-  "Vehicle"
-];
+const labels = (dict, lang) => ["Tentage", "Sanitation", "Waste", "Bins"];
 
 const Chart = () => {
   const [dict, lang] = useOutletContext();
-  
+
   // Update data with real values
   const data = {
     labels: labels(dict, lang),
@@ -55,16 +51,17 @@ const Chart = () => {
       x: {
         beginAtZero: true,
         title: {
-          display: true,
-          text: 'Categories'
-        }
+          display: false,
+          text: "Categories",
+        },
       },
       y: {
+        max: 100,
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Values'
-        }
+          text: "Values",
+        },
       },
     },
     plugins: {
@@ -81,7 +78,7 @@ const Chart = () => {
         },
       },
       legend: {
-        display: true, // Optionally show legend
+        display: false, // Optionally show legend
       },
     },
   };

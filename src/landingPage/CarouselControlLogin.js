@@ -61,7 +61,7 @@ const items = (dict, lang) => {
                           to={
                             "https://kumbh-poc.kashitsolution.com/kumbhpocv2/"
                           }
-                          className="font-semibold no-underline text-white"
+                          className="font-semibold no-underline text-1d"
                         >
                           https://kumbh-poc.kashitsolution.com/kumbhpocv2/
                         </Link>
@@ -97,8 +97,8 @@ const items = (dict, lang) => {
     },
     {
       img: (
-        <div className="h-72 sm:80 md:h-96 overflow-hidden flex item-center">
-          <img src={CleanScared} alt="" className="w-full overflow-hidden" />
+        <div className="h-72 sm:80 md:h-96 overflow-hidden flex item-center justify-center bg-white">
+          <img src={CleanScared} alt="" className=" overflow-hidden" />
         </div>
       ),
       key: 3,
