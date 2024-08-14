@@ -11,6 +11,7 @@ const AssetsList = () => {
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [isAssetList, setIsAssetList] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -41,6 +42,15 @@ const AssetsList = () => {
     };
 
     fetchAssets();
+
+    // Simulate the success message after registration
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get("status") === "success") {
+      setSuccessMessage("Asset Registered Successfully");
+      setTimeout(() => {
+        setSuccessMessage(""); // Hide the message after 3 seconds
+      }, 3000);
+    }
   }, []);
 
   const handleSearch = (value) => {
@@ -77,7 +87,6 @@ const AssetsList = () => {
           <Button type="link">View</Button>
           <Button type="link">Edit</Button>
           {/* <Button type="link">Delete</Button> */}
-          
         </div>
       ),
     },
@@ -85,6 +94,20 @@ const AssetsList = () => {
 
   return (
     <div className="">
+      {/* Success Message */}
+      {successMessage && (
+        <div
+          style={{
+            textAlign: "center",
+            color: "green",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          {successMessage}
+        </div>
+      )}
+
       {!isAssetList && (
         <>
           <CommonDivider
@@ -107,7 +130,11 @@ const AssetsList = () => {
             columns={columns}
             dataSource={filteredData}
             loading={loading}
-            pagination={{ pageSize: 10, showSizeChanger: true, pageSizeOptions: ["10", "20", "30"] }}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              pageSizeOptions: ["10", "20", "30"],
+            }}
           />
         </>
       )}
