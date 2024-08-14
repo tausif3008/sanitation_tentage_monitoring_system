@@ -214,7 +214,7 @@ const ResourceUtilizationCharts = ({
       { day: "Wed", Tentage: 172, Sanitization: 3500, Wastes: 170 },
       { day: "Thur", Tentage: 170, Sanitization: 450, Wastes: 900 },
       { day: "Fri", Tentage: 180, Sanitization: 670, Wastes: 280 },
-      { day: "Sat", Tentage: 190, Sanitization: 820, Wastes:530 },
+      { day: "Sat", Tentage: 190, Sanitization: 820, Wastes: 530 },
       { day: "Sun", Tentage: 200, Sanitization: 960, Wastes: 530 },
     ];
     const dailyUtilization3 = [
@@ -274,13 +274,13 @@ const ResourceUtilizationCharts = ({
         { day: "Mon", Tentage: 140, Sanitization: 1340, Wastes: 1270 },
         { day: "Tue", Tentage: 150, Sanitization: 350, Wastes: 1340 },
         { day: "Wed", Tentage: 160, Sanitization: 650, Wastes: 190 },
-        { day: "Thur", Tentage: 170, Sanitization:460, Wastes: 300 },
+        { day: "Thur", Tentage: 170, Sanitization: 460, Wastes: 300 },
         { day: "Fri", Tentage: 180, Sanitization: 270, Wastes: 610 },
         { day: "Sat", Tentage: 190, Sanitization: 480, Wastes: 820 },
         { day: "Sun", Tentage: 200, Sanitization: 350, Wastes: 530 },
       ];
     }
-    
+
     final.forEach((dayUtilization) => {
       weeklyData.Tentage.push(
         (dayUtilization.Tentage / totalResources.Tentage) * 100
@@ -294,24 +294,32 @@ const ResourceUtilizationCharts = ({
     });
 
     // Normalize percentages to be within 85% to 95%
-    const fianlata = [];
+    const finalData = [];
 
-    setData(() => [
-      {
+    if (tentage) {
+      finalData.push({
         name: "Tentage",
         data: normalizePercentages(weeklyData.Tentage),
-      },
-      {
+      });
+    }
+
+    if (sanitization) {
+      finalData.push({
         name: "Sanitization",
         data: normalizePercentages(weeklyData.Sanitization),
-      },
-      {
+      });
+    }
+
+    if (wastes) {
+      finalData.push({
         name: "Wastes",
         data: normalizePercentages(weeklyData.Wastes),
-      },
-    ]);
+      });
+    }
+
+    setData(() => finalData);
     setCategories(() => dailyUtilization.map((day) => day.day));
-  }, [selectedSectors]);
+  }, [selectedSectors, tentage, wastes, sanitization]);
 
   const series = data;
 
