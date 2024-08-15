@@ -43,19 +43,48 @@ const register_items = (lang, dict) => {
         </Link>
       ),
     },
+
+    {
+      key: "6",
+      label: (
+        <Link className="text-black no-underline" to="/vendor-registration">
+          Vendor Registration
+        </Link>
+      ),
+    },
+
+    {
+      key: "7",
+      label: (
+        <Link className="text-black no-underline" to="/vehicle-registration">
+          Vehicle Registration
+        </Link>
+      ),
+    },
   ];
 };
 
 const assignment_items = (lang, dict) => {
   return [
     {
+      key: "1",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/manpower-assignment"
+        >
+          ManPower Assignment
+        </Link>
+      ),
+    },
+    {
       key: "2",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
-          to="/qr-code-assignment"
+          to="/assigning-monitoring-manpower"
         >
-          QR Code Assignment
+          Assigning Monitoring ManPower
         </Link>
       ),
     },
@@ -113,14 +142,6 @@ const schedule_items = (lang, dict) => {
         </Link>
       ),
     },
-    {
-      key: "5",
-      label: (
-        <Link className="text-black no-underline" to="/monthly-report">
-          Report
-        </Link>
-      ),
-    },
   ];
 };
 
@@ -155,6 +176,27 @@ const waste_items = (lang, dict) => {
       label: (
         <Link className="text-black no-underline hover:text-green" to="/route">
           Route
+        </Link>
+      ),
+    },
+  ];
+};
+
+const reports_items = (lang, dict) => {
+  return [
+    {
+      key: "2",
+      label: (
+        <Link className="text-black no-underline hover:text-green" to="/#">
+          Report 1
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline" to="/#">
+          Report 2
         </Link>
       ),
     },
@@ -262,6 +304,13 @@ const Navbar = ({ lang, setLang }) => {
             ></DropDown>
           </div>
 
+          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+            <DropDown
+              items={reports_items(lang, dict)}
+              name="Reports"
+            ></DropDown>
+          </div>
+
           {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
               items={waste_items(lang, dict)}
@@ -269,14 +318,14 @@ const Navbar = ({ lang, setLang }) => {
             ></DropDown>
           </div> */}
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               <DropDown
                 items={setting_item(dict, lang)}
                 name={dict.setting[lang]}
               ></DropDown>
             </div>
-          </div>
+          </div> */}
 
           {/* {!logName ? (
             <button onClick={() => handleNavigation("/login")}>

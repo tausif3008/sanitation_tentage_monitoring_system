@@ -17,7 +17,10 @@ const SchedulingAndDeploymentForm = () => {
     const localSchedules =
       JSON.parse(localStorage.getItem("schedulingDeployment")) || [];
     localSchedules.push(JSON.parse(JSON.stringify(values)));
-    localStorage.setItem("schedulingDeployment", JSON.stringify(localSchedules));
+    localStorage.setItem(
+      "schedulingDeployment",
+      JSON.stringify(localSchedules)
+    );
   };
 
   // Example list of assets
@@ -32,6 +35,20 @@ const SchedulingAndDeploymentForm = () => {
     { id: 1, name: "Zone 1" },
     { id: 2, name: "Zone 2" },
     { id: 3, name: "Zone 3" },
+  ];
+
+  // Example list of cleaners
+  const cleaners = [
+    { id: 1, name: "Cleaner 1" },
+    { id: 2, name: "Cleaner 2" },
+    { id: 3, name: "Cleaner 3" },
+  ];
+
+  // Example list of support drivers
+  const drivers = [
+    { id: 1, name: "Driver 1" },
+    { id: 2, name: "Driver 2" },
+    { id: 3, name: "Driver 3" },
   ];
 
   const handleAssetChange = (value) => {
@@ -54,7 +71,8 @@ const SchedulingAndDeploymentForm = () => {
         initialValues={{ role: "admin", zone: "1" }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-          <Form.Item
+          
+          {/* <Form.Item
             label={<div className="font-semibold">Role</div>}
             name="role"
             rules={[{ required: true, message: "Please select a role" }]}
@@ -73,6 +91,41 @@ const SchedulingAndDeploymentForm = () => {
             className="mb-4"
           >
             <Input placeholder="Please enter name" className="rounded-none" />
+          </Form.Item> */}
+
+          <Form.Item
+            label={<div className="font-semibold">Select Cleaner</div>}
+            name="cleaner"
+            rules={[{ required: true, message: "Please select a cleaner" }]}
+            className="mb-4"
+          >
+            <Select placeholder="Select Cleaner" className="rounded-none">
+              {cleaners.map((cleaner) => (
+                <Option key={cleaner.id} value={cleaner.id}>
+                  {cleaner.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label={<div className="font-semibold">Select Support Driver</div>}
+            name="supportDriver"
+            rules={[
+              { required: true, message: "Please select a support driver" },
+            ]}
+            className="mb-4"
+          >
+            <Select
+              placeholder="Select Support Driver"
+              className="rounded-none"
+            >
+              {drivers.map((driver) => (
+                <Option key={driver.id} value={driver.id}>
+                  {driver.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -117,7 +170,9 @@ const SchedulingAndDeploymentForm = () => {
                 bordered
                 dataSource={selectedAssets}
                 renderItem={(item) => (
-                  <List.Item>{assets.find((asset) => asset.id === item)?.name}</List.Item>
+                  <List.Item>
+                    {assets.find((asset) => asset.id === item)?.name}
+                  </List.Item>
                 )}
               />
             </div>

@@ -4,7 +4,7 @@ import { Form, Select, Input, Button, Divider } from "antd";
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AssignmentForm = () => {
+const AssigningMonitoringManPower = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -25,10 +25,17 @@ const AssignmentForm = () => {
     { id: 3, name: "Charlie" },
   ];
 
+  // Example list of assets
+  const assets = [
+    { id: 1, name: "Asset 1" },
+    { id: 2, name: "Asset 2" },
+    { id: 3, name: "Asset 3" },
+  ];
+
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Assignment Form</div>
+        <div className="font-bold">Assigning Monitoring Manpower</div>
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
@@ -81,7 +88,9 @@ const AssignmentForm = () => {
             <Form.Item
               label={<div className="font-semibold">Department</div>}
               name="department"
-              rules={[{ required: true, message: "Please select a department" }]}
+              rules={[
+                { required: true, message: "Please select a department" },
+              ]}
               className="mb-4"
             >
               <Select placeholder="Select Department" className="rounded-none">
@@ -100,40 +109,31 @@ const AssignmentForm = () => {
               ]}
               className="mb-4"
             >
-              <Select placeholder="Select Sub Department" className="rounded-none">
+              <Select
+                placeholder="Select Sub Department"
+                className="rounded-none"
+              >
                 <Option value="manpowerDeployment">Manpower Deployment</Option>
-                <Option value="equipmentManagement">Equipment Management</Option>
+                <Option value="equipmentManagement">
+                  Equipment Management
+                </Option>
               </Select>
             </Form.Item>
 
             <Form.Item
-              label={<div className="font-semibold">Reporting Officer</div>}
-              name="reportingOfficer"
+              label={<div className="font-semibold">Asset Name</div>}
+              name="assetName"
               rules={[
-                { required: true, message: "Please select a reporting officer" },
+                { required: true, message: "Please select an asset name" },
               ]}
               className="mb-4"
             >
-              <Select placeholder="Select Reporting Officer" className="rounded-none">
-                <Option value="admin">Admin</Option>
-                <Option value="supervisor">Supervisor</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label={<div className="font-semibold">Information To</div>}
-              name="informationTo"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select an option for Information To",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Select placeholder="Select Information To" className="rounded-none">
-                <Option value="option1">Option 1</Option>
-                <Option value="option2">Option 2</Option>
+              <Select placeholder="Select Asset Name" className="rounded-none">
+                {assets.map((asset) => (
+                  <Option key={asset.id} value={asset.name}>
+                    {asset.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
 
@@ -163,4 +163,4 @@ const AssignmentForm = () => {
   );
 };
 
-export default AssignmentForm;
+export default AssigningMonitoringManPower;
