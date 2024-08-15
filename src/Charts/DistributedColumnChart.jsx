@@ -54,7 +54,6 @@ const getFinalSLA = (
     }
   }
 
-
   let totalSections = 0;
 
   if (tentage) {
@@ -239,7 +238,7 @@ const DistributedColumnChart = ({
   return (
     <div className="">
       <div className="text-xl font-semibold text-center -mb-3 mt-1 ">
-        Performance SLA Compliance
+        Vendor SLA Compliance
         <div className="w-10/12 m-auto">
           <Divider className="m-1 w-10/12 bg-orange-700"></Divider>
         </div>

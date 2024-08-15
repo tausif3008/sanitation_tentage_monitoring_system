@@ -5,7 +5,7 @@ import CountUp from "react-countup";
 import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
 import toiletlogo from "../assets/MonitoringImages/Dashboard/toiletLogo.png";
 import waste from "../assets/MonitoringImages/Dashboard/waste.png";
-import cranetruck from "../assets/MonitoringImages/Dashboard/cranetruck.png";
+import cranetruck from "../assets/MonitoringImages/Dashboard/wsVhe.png";
 
 import { useOutletContext } from "react-router";
 
@@ -30,10 +30,7 @@ const Statistics = () => {
             <span className="flex items-center ">
               <Statistic value={47811} formatter={formatter} />
             </span>
-            <span className="flex items-center text-center">
-              {/* {dict.total_lost[lang]} */}
-              Total Tentage
-            </span>
+            <span className="flex items-center text-center">Total Tentage</span>
           </div>
         </div>
 
@@ -43,7 +40,7 @@ const Statistics = () => {
           </div>
           <div className="flex items-center justify-around flex-col font-semibold">
             <span className="flex items-center">
-              <Statistic value={54000} formatter={formatter} />
+              <Statistic value={96000} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
               {/* {dict.total_found[lang]} */}
@@ -53,32 +50,32 @@ const Statistics = () => {
         </div>
 
         <div className="flex items-center justify-around p-2 bg-green-100 border-r-2 border-teal-400 border-dashed">
+          <div className="flex">
+            <img src={cranetruck} className="w-12 sm:w-16 md:w-14" alt="" />
+          </div>
+
+          <div className="flex items-center justify-center flex-col">
+            <span className="flex items-center font-semibold">
+              <Statistic value={160} formatter={formatter} />
+            </span>
+            <span className="flex items-center text-center font-semibold">
+              Total Vehicle
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-around p-2 bg-green-100 md:border-r-2 border-teal-400 border-dashed border-r-0">
           <div className="flex w-12 md:w-14 ml-2">
             <img src={waste} className="w-full" alt="" />
           </div>
 
           <div className="flex items-center justify-center flex-col font-semibold">
             <span className="flex items-center">
-              <Statistic value={66999} formatter={formatter} />
+              <Statistic value={60000} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
               {/* {dict.total_reunion[lang]} */}
               Total Bins
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center p-2 justify-between bg-zinc-200 font-semibold">
-          <div className="flex">
-            <img src={cranetruck} className="w-12 sm:w-16 md:w-14" alt="" />
-          </div>
-          <div className="flex items-center justify-center flex-col">
-            <span className="flex items-center ">
-              <Statistic value={66999} formatter={formatter} />
-            </span>
-            <span className="flex items-center text-center font-semibold">
-              {/* {dict.pending_cases[lang]} */}
-              Total Vehicle
             </span>
           </div>
         </div>

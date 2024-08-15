@@ -1,5 +1,13 @@
 import React from "react";
-import { Form, Input, Button, Select, TimePicker, InputNumber, Divider } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  TimePicker,
+  InputNumber,
+  Divider,
+} from "antd";
 import moment from "moment";
 import CommonDivider from "../commonComponents/CommonDivider";
 
@@ -22,19 +30,7 @@ const WasteManagementSchedule = () => {
         </div>
         <Divider className="bg-d9 h-2/3 mt-1"></Divider>{" "}
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <Form.Item
-              name="cleaner"
-              label="Select Cleaner"
-              rules={[{ required: true, message: "Please select a cleaner" }]}
-            >
-              <Select placeholder="Select Cleaner">
-                <Option value="cleaner1">Cleaner 1</Option>
-                <Option value="cleaner2">Cleaner 2</Option>
-                {/* Add more options as needed */}
-              </Select>
-            </Form.Item>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2">
             <Form.Item
               name="driver"
               label="Select Driver"
@@ -43,6 +39,18 @@ const WasteManagementSchedule = () => {
               <Select placeholder="Select Driver">
                 <Option value="driver1">Driver 1</Option>
                 <Option value="driver2">Driver 2</Option>
+                {/* Add more options as needed */}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="cleaner"
+              label="Select Cleaner"
+              rules={[{ required: true, message: "Please select a cleaner" }]}
+            >
+              <Select placeholder="Select Assistant Driver">
+                <Option value="cleaner1">Assistant 1</Option>
+                <Option value="cleaner2">Assistant 2</Option>
                 {/* Add more options as needed */}
               </Select>
             </Form.Item>
@@ -84,20 +92,20 @@ const WasteManagementSchedule = () => {
             >
               <Input placeholder="Enter Vendor Name" />
             </Form.Item>
-          </div>
 
-          <Form.Item
-            name="timesPerDay"
-            label="How many times a Day"
-            rules={[{ required: true, message: "Please enter a number" }]}
-          >
-            <InputNumber
-              min={1}
-              max={4}
-              className="w-full"
-              placeholder="Enter number of times per day"
-            />
-          </Form.Item>
+            <Form.Item
+              name="timesPerDay"
+              label="How many times a Day"
+              rules={[{ required: true, message: "Please enter a number" }]}
+            >
+              <InputNumber
+                min={1}
+                max={4}
+                className="w-full"
+                placeholder="Enter number of times per day"
+              />
+            </Form.Item>
+          </div>
 
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">

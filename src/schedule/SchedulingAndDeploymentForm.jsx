@@ -39,16 +39,16 @@ const SchedulingAndDeploymentForm = () => {
 
   // Example list of cleaners
   const cleaners = [
-    { id: 1, name: "Cleaner 1" },
-    { id: 2, name: "Cleaner 2" },
-    { id: 3, name: "Cleaner 3" },
+    { id: 1, name: "Driver 1" },
+    { id: 2, name: "Driver 2" },
+    { id: 3, name: "Driver 3" },
   ];
 
   // Example list of support drivers
   const drivers = [
-    { id: 1, name: "Driver 1" },
-    { id: 2, name: "Driver 2" },
-    { id: 3, name: "Driver 3" },
+    { id: 1, name: "Assistant Driver 1" },
+    { id: 2, name: "Assistant Driver 2" },
+    { id: 3, name: "Assistant Driver 3" },
   ];
 
   const handleAssetChange = (value) => {
@@ -71,7 +71,6 @@ const SchedulingAndDeploymentForm = () => {
         initialValues={{ role: "admin", zone: "1" }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-          
           {/* <Form.Item
             label={<div className="font-semibold">Role</div>}
             name="role"
@@ -94,7 +93,7 @@ const SchedulingAndDeploymentForm = () => {
           </Form.Item> */}
 
           <Form.Item
-            label={<div className="font-semibold">Select Cleaner</div>}
+            label={<div className="font-semibold">Select Driver</div>}
             name="cleaner"
             rules={[{ required: true, message: "Please select a cleaner" }]}
             className="mb-4"
@@ -109,7 +108,7 @@ const SchedulingAndDeploymentForm = () => {
           </Form.Item>
 
           <Form.Item
-            label={<div className="font-semibold">Select Support Driver</div>}
+            label={<div className="font-semibold">Select Assistant Driver</div>}
             name="supportDriver"
             rules={[
               { required: true, message: "Please select a support driver" },

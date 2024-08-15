@@ -67,32 +67,21 @@ const register_items = (lang, dict) => {
 const assignment_items = (lang, dict) => {
   return [
     {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline" to="/asset-allotment">
+          Asset Allotment
+        </Link>
+      ),
+    },
+    {
       key: "1",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
           to="/manpower-assignment"
         >
-          ManPower Assignment
-        </Link>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <Link
-          className="text-black no-underline hover:text-green"
-          to="/assigning-monitoring-manpower"
-        >
-          Assigning Monitoring ManPower
-        </Link>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <Link className="text-black no-underline" to="/asset-allotment">
-          Asset Allotment
+          Manpower Assignment
         </Link>
       ),
     },
@@ -101,17 +90,17 @@ const assignment_items = (lang, dict) => {
 
 const schedule_items = (lang, dict) => {
   return [
-    {
-      key: "1",
-      label: (
-        <Link
-          className="text-black no-underline hover:text-green"
-          to="/scheduling-and-deployment"
-        >
-          Create
-        </Link>
-      ),
-    },
+    // {
+    //   key: "1",
+    //   label: (
+    //     <Link
+    //       className="text-black no-underline hover:text-green"
+    //       to="/scheduling-and-deployment"
+    //     >
+    //       Create
+    //     </Link>
+    //   ),
+    // },
     {
       key: "2",
       label: (
@@ -127,7 +116,7 @@ const schedule_items = (lang, dict) => {
       key: "3",
       label: (
         <Link className="text-black no-underline" to="/create-tentage-schedule">
-          Tentage
+          Tentage Management Schedule
         </Link>
       ),
     },
@@ -138,7 +127,7 @@ const schedule_items = (lang, dict) => {
           className="text-black no-underline"
           to="/create-sanitation-schedule"
         >
-          Sanitation
+          Sanitation Management Schedule
         </Link>
       ),
     },

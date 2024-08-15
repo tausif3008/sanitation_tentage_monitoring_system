@@ -18,55 +18,54 @@ const CreateTentageSchedule = () => {
         </div>
         <Divider className="bg-d9 h-2/3 mt-1"></Divider>
         <Form layout="vertical" onFinish={onFinish}>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="cleaner"
-                label="Select Cleaner"
-                rules={[{ required: true, message: "Please select a cleaner" }]}
-              >
-                <Select placeholder="Select Cleaner">
-                  <Option value="cleaner1">Cleaner 1</Option>
-                  <Option value="cleaner2">Cleaner 2</Option>
-                  {/* Add more cleaners as needed */}
-                </Select>
-              </Form.Item>
-            </Col>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3">
+            <Form.Item
+              name="monitoringAgent"
+              label="Select Monitoring Agent"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select a monitoring agent",
+                },
+              ]}
+            >
+              <Select placeholder="Select Monitoring Agent">
+                <Option value="agent1">Agent 1</Option>
+                <Option value="agent2">Agent 2</Option>
+                {/* Add more monitoring agents as needed */}
+              </Select>
+            </Form.Item>
 
-            <Col span={12}>
-              <Form.Item
-                name="monitoringAgent"
-                label="Select Monitoring Agent"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select a monitoring agent",
-                  },
-                ]}
-              >
-                <Select placeholder="Select Monitoring Agent">
-                  <Option value="agent1">Agent 1</Option>
-                  <Option value="agent2">Agent 2</Option>
-                  {/* Add more monitoring agents as needed */}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
+            <Form.Item
+              name="cleaner"
+              label="Select Cleaner"
+              rules={[{ required: true, message: "Please select a cleaner" }]}
+            >
+              <Select placeholder="Select Cleaner">
+                <Option value="cleaner1">Cleaner 1</Option>
+                <Option value="cleaner2">Cleaner 2</Option>
+                {/* Add more cleaners as needed */}
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            name="timesPerDay"
-            label="How many times a Day"
-            rules={[
-              { required: true, message: "Please select the number of times" },
-            ]}
-          >
-            <Select placeholder="Select Frequency">
-              <Option value="1">1</Option>
-              <Option value="2">2</Option>
-              <Option value="3">3</Option>
-              <Option value="4">4</Option>
-            </Select>
-          </Form.Item>
+            <Form.Item
+              name="timesPerDay"
+              label="How many times a Day"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select the number of times",
+                },
+              ]}
+            >
+              <Select placeholder="Select Frequency">
+                <Option value="1">1</Option>
+                <Option value="2">2</Option>
+                <Option value="3">3</Option>
+                <Option value="4">4</Option>
+              </Select>
+            </Form.Item>
+          </div>
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold">Schedule Times</h3>

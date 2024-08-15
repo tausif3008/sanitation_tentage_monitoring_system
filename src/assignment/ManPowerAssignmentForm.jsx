@@ -28,7 +28,7 @@ const ManPowerAssignmentForm = () => {
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Assignment Form</div>
+        <div className="font-bold">Assigning Monitoring Manpower</div>
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
@@ -73,8 +73,11 @@ const ManPowerAssignmentForm = () => {
               className="mb-4"
             >
               <Select placeholder="Select Role" className="rounded-none">
-                <Option value="option1">Option 1</Option>
-                <Option value="option2">Option 2</Option>
+                <Option value="option1">Vendor</Option>
+                <Option value="option2">Monitoring Agent</Option>
+                <Option value="option2">MIS Officer</Option>
+                <Option value="option2">Driver</Option>
+                <Option value="option2">Admin</Option>
               </Select>
             </Form.Item>
 
@@ -158,7 +161,17 @@ const ManPowerAssignmentForm = () => {
               name="assignmentDetails"
               className="mb-4"
             >
-              <TextArea rows={3} placeholder="Enter Assignment Details" />
+              <Button className="w-full bg-gray-200">
+                {" "}
+                Scan or Upload QR Code{" "}
+              </Button>
+            </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Assignment Details</div>}
+              name="assignmentDetails"
+              className="mb-4"
+            >
+              <TextArea rows={1} placeholder="Enter Assignment Details" />
             </Form.Item>
           </div>
 

@@ -129,6 +129,7 @@ const getSectorWiseData = (selectedSectors, tentage, sanitization, wastes) => {
       } else if (sanitization && el.section === "Sanitation") {
         return el;
       } else if (wastes && el.section === "Wastes") {
+        el.section = "Vehicle";
         return el;
       }
     }

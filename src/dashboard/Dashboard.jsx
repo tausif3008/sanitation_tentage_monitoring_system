@@ -69,46 +69,68 @@ const stackedCalc = (checkedValues, setShowDashboardFor, selectedSector) => {
 
   // Sanitation
   const sector1San = {
-    total: 18000,
-    ok: Math.round(0.54 * 18000),
-    average: Math.round(0.26 * 18000),
-    bad: Math.round(0.2 * 18000),
+    total: 96000 / 3,
+    ok: Math.round(0.54 * (96000 / 3)),
+    average: Math.round(0.26 * (96000 / 3)),
+    bad: Math.round(0.2 * (96000 / 3)),
   };
 
   const sector2San = {
-    total: 18000,
-    ok: Math.round(0.6 * 18000),
-    average: Math.round(0.25 * 18000),
-    bad: Math.round(0.15 * 18000),
+    total: 96000 / 3,
+    ok: Math.round(0.6 * (96000 / 3)),
+    average: Math.round(0.25 * (96000 / 3)),
+    bad: Math.round(0.15 * (96000 / 3)),
   };
 
   const sector3San = {
-    total: 18000,
-    ok: Math.round(0.5 * 18000),
-    average: Math.round(0.25 * 18000),
-    bad: Math.round(0.25 * 18000),
+    total: 96000 / 3,
+    ok: Math.round(0.5 * (96000 / 3)),
+    average: Math.round(0.25 * (96000 / 3)),
+    bad: Math.round(0.25 * (96000 / 3)),
   };
 
   // Wastes
   const sector1Wastes = {
-    total: 22333,
-    ok: Math.round(0.6 * 22333),
-    average: Math.round(0.2 * 22333),
-    bad: Math.round(0.2 * 22333),
+    total: 160 / 3,
+    ok: Math.round(0.6 * (160 / 3)),
+    average: Math.round(0.2 * (160 / 3)),
+    bad: Math.round(0.2 * (160 / 3)),
   };
 
   const sector2Wastes = {
-    total: 22333,
-    ok: Math.round(0.7 * 22333),
-    average: Math.round(0.2 * 22333),
-    bad: Math.round(0.1 * 22333),
+    total: 160 / 3,
+    ok: Math.round(0.7 * (160 / 3)),
+    average: Math.round(0.2 * (160 / 3)),
+    bad: Math.round(0.1 * (160 / 3)),
   };
 
   const sector3Wastes = {
-    total: 22333,
-    ok: Math.round(0.5 * 22333),
-    average: Math.round(0.2 * 22333),
-    bad: Math.round(0.3 * 22333),
+    total: 160 / 3,
+    ok: Math.round(0.5 * (160 / 3)),
+    average: Math.round(0.2 * (160 / 3)),
+    bad: Math.round(0.3 * (160 / 3)),
+  };
+
+  // Bins
+  const sector1Bins = {
+    total: 60000 / 3,
+    ok: Math.round(0.6 * (60000 / 3)),
+    average: Math.round(0.2 * (60000 / 3)),
+    bad: Math.round(0.2 * (60000 / 3)),
+  };
+
+  const sector2Bins = {
+    total: 60000 / 3,
+    ok: Math.round(0.7 * (60000 / 3)),
+    average: Math.round(0.2 * (60000 / 3)),
+    bad: Math.round(0.1 * (60000 / 3)),
+  };
+
+  const sector3Bins = {
+    total: 60000 / 3,
+    ok: Math.round(0.5 * (60000 / 3)),
+    average: Math.round(0.2 * (60000 / 3)),
+    bad: Math.round(0.3 * (60000 / 3)),
   };
 
   if (checkedValues.includes("Tentage") || !checkedValues.length) {
@@ -204,15 +226,15 @@ const stackedCalc = (checkedValues, setShowDashboardFor, selectedSector) => {
     let selectedWastes = [];
 
     if (selectedSector.includes("Sector 1")) {
-      selectedWastes.push(sector1Wastes);
+      selectedWastes.push(sector1Bins);
     }
 
     if (selectedSector.includes("Sector 2")) {
-      selectedWastes.push(sector2Wastes);
+      selectedWastes.push(sector2Bins);
     }
 
     if (selectedSector.includes("Sector 3")) {
-      selectedWastes.push(sector3Wastes);
+      selectedWastes.push(sector3Bins);
     }
 
     const finalStats = finalCalculator(selectedWastes);
@@ -283,9 +305,9 @@ const Dashboard = () => {
         },
       },
       {
-        title: "Wastes",
+        title: "Bins",
         value: {
-          label: "Wastes",
+          label: "Bins",
           total: 70000,
           ok: 300,
           average: 300,
@@ -388,7 +410,7 @@ const Dashboard = () => {
               <img className="h-5 w-5" src={tentage} alt="" />
             </div>{" "}
             <div className="flex gap-1">
-              <span className="h-full flex items-center">Wastes:</span>
+              <span className="h-full flex items-center">Vehicle:</span>
               <img className="h-5 w-5" src={wsVhe} alt="" />
             </div>{" "}
             <div className="flex gap-1">

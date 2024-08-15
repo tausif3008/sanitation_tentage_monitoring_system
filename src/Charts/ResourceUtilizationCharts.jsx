@@ -312,7 +312,7 @@ const ResourceUtilizationCharts = ({
 
     if (wastes) {
       finalData.push({
-        name: "Wastes",
+        name: "Vehicle",
         data: normalizePercentages(weeklyData.Wastes),
       });
     }

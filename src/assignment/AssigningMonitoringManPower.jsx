@@ -35,7 +35,7 @@ const AssigningMonitoringManPower = () => {
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Assigning Monitoring Manpower</div>
+        <div className="font-bold">Assignment Form</div>
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
@@ -80,8 +80,12 @@ const AssigningMonitoringManPower = () => {
               className="mb-4"
             >
               <Select placeholder="Select Role" className="rounded-none">
-                <Option value="option1">Option 1</Option>
-                <Option value="option2">Option 2</Option>
+                <Option value="option1">Admin</Option>
+                <Option value="option1">Monitoring Agent</Option>
+                <Option value="option1">Driver</Option>
+                <Option value="option1">Supervisor</Option>
+                <Option value="option1">Vendor</Option>
+                <Option value="option2">MIS Officer</Option>
               </Select>
             </Form.Item>
 

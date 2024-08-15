@@ -65,7 +65,7 @@ const ScrollList = ({ label, list }) => {
           </div>{" "}
           <div className="flex justify-between h-10 border-green-400 items-center ">
             <div className="h-full flex pl-2 items-center border border-green-400 w-full">
-              Wastes
+              Vehicle
             </div>
             <div
               className={`border h-full w-32 text-sm flex items-center justify-center`}

@@ -79,8 +79,8 @@ const wastesIcon = L.icon({
 });
 
 const wastesPlacesV = [
-  { id: 3, name: "Waste 1", lat: 25.4365, lng: 81.814 },
-  { id: 4, name: "Waste 2", lat: 25.4548, lng: 81.8198 },
+  { id: 3, name: "Vehicle 1", lat: 25.4365, lng: 81.814 },
+  { id: 4, name: "Vehicle 2", lat: 25.4548, lng: 81.8198 },
 ];
 
 const wasteIcon = L.icon({

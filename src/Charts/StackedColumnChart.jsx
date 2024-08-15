@@ -101,6 +101,8 @@ const SingleSanitization = ({ className, content }) => {
                 <span className="text-2xl">
                   {content.title === "Sanitization"
                     ? "Sanitation"
+                    : content.title === "Wastes"
+                    ? "Vehicle"
                     : content.title}
                 </span>
               </div>
