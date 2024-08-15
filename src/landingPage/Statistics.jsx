@@ -43,7 +43,6 @@ const Statistics = () => {
               <Statistic value={96000} formatter={formatter} />
             </span>
             <span className="flex items-center text-center font-semibold">
-              {/* {dict.total_found[lang]} */}
               Total Toilets & Urinals
             </span>
           </div>
