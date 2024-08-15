@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/kumbh-monitoring/static/css/main.630c4ba1.css",
+    "main.js": "/kumbh-monitoring/static/js/main.fa3330f3.js",
+    "static/js/453.628c400b.chunk.js": "/kumbh-monitoring/static/js/453.628c400b.chunk.js",
+    "static/media/map_banner.png": "/kumbh-monitoring/static/media/map_banner.b66f6ff3f1a84206411d.png",
+    "static/media/clean_scared.png": "/kumbh-monitoring/static/media/clean_scared.0b056177906dea4bbcf7.png",
+    "static/media/goup.png": "/kumbh-monitoring/static/media/goup.362000c2e56b6d80a64b.png",
+    "static/media/Contact Image.png": "/kumbh-monitoring/static/media/Contact Image.511139699ad3336976f6.png",
+    "static/media/tentimage.jpg": "/kumbh-monitoring/static/media/tentimage.517e6b5e19dd8354ad31.jpg",
+    "static/media/kumbh image 2.png": "/kumbh-monitoring/static/media/kumbh image 2.6d52bf4c8c19e618d4aa.png",
+    "static/media/kumbh logo.png": "/kumbh-monitoring/static/media/kumbh logo.3d5b5aed784a8b322350.png",
+    "static/media/loginImage.jpg": "/kumbh-monitoring/static/media/loginImage.a5a39008b2a07a1bba9c.jpg",
+    "static/media/kumbh image 3.jpeg": "/kumbh-monitoring/static/media/kumbh image 3.0b16d76765835633af54.jpeg",
+    "static/media/insta.png": "/kumbh-monitoring/static/media/insta.661a8d22097791cf8c6d.png",
+    "index.html": "/kumbh-monitoring/index.html",
+    "main.630c4ba1.css.map": "/kumbh-monitoring/static/css/main.630c4ba1.css.map",
+    "main.fa3330f3.js.map": "/kumbh-monitoring/static/js/main.fa3330f3.js.map",
+    "453.628c400b.chunk.js.map": "/kumbh-monitoring/static/js/453.628c400b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.630c4ba1.css",
+    "static/js/main.fa3330f3.js"
+  ]
+}
