@@ -7,15 +7,21 @@ import Dashboard from "./dashboard/Dashboard";
 
 import UserRegistrationForm from "./user/UserRegistrationForm";
 import UserList from "./user/UsersList";
-
 import AssetRegistrationForm from "./asset/AssetRegistrationForm";
 import AssetsList from "./asset/AssetsList";
 import AssetAllotment from "./asset/AssetAllotment";
 import GisServices from "./gis/GisServices";
 import GisList from "./gis/GisList";
 
+import VendorRegistrationForm from "./vendor/VendorRegistrationForm";
+import VendorList from "./vendor/VendorList";
+import VehicleRegistrationForm from "./vehicle/VehicleRegistrationForm";
+import VehicleList from "./vehicle/VehicleList";
+
 import GPSFleetRegistration from "./gis/GPSFleetRegistration";
-import QrCodeAssignmentForm from "./assignment/QrCodeAssignmentForm";
+import ManPowerAssignmentForm from "./assignment/ManPowerAssignmentForm";
+import AssigningMonitoringManPower from "./assignment/AssigningMonitoringManPower";
+
 import SchedulingAndDeploymentForm from "./schedule/SchedulingAndDeploymentForm";
 import WasteManagementSchedule from "./schedule/WasteManagementSchedule";
 import CreateTentageSchedule from "./schedule/CreateTentageSchedule";
@@ -24,7 +30,7 @@ import MonthlyReport from "./schedule/MonthlyReport";
 
 import Monitoring from "./complaince/Monitoring";
 import MonitoringReport from "./complaince/MonitoringReport";
-import Notification from "./complaince/Notification";
+import NotificationAdd from "./notification/NotificationAdd";
 
 function App() {
   return (
@@ -34,39 +40,57 @@ function App() {
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
-
           <Route
             path="user-registration"
             element={<UserList></UserList>}
           ></Route>
-
           {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
-
           <Route
             path="asset-registration"
             element={<AssetRegistrationForm></AssetRegistrationForm>}
           ></Route>
           <Route path="asset-list" element={<AssetsList></AssetsList>}></Route>
-
           <Route
             path="gis-services"
             element={<GisServices></GisServices>}
           ></Route>
           <Route path="gis-list" element={<GisList></GisList>}></Route>
-
           <Route
             path="gps-fleet-registration"
             element={<GPSFleetRegistration></GPSFleetRegistration>}
           ></Route>
           <Route
-            path="qr-code-assignment"
-            element={<QrCodeAssignmentForm></QrCodeAssignmentForm>}
+            path="vendor-registration"
+            element={<VendorRegistrationForm></VendorRegistrationForm>}
+          ></Route>
+          <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
+          <Route
+            path="vendor-registration"
+            element={<VendorRegistrationForm></VendorRegistrationForm>}
+          ></Route>
+          <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
+          <Route
+            path="vehicle-registration"
+            element={<VehicleRegistrationForm></VehicleRegistrationForm>}
+          ></Route>
+          <Route
+            path="vehicle-list"
+            element={<VehicleList></VehicleList>}
+          ></Route>
+          <Route
+            path="manpower-assignment"
+            element={<ManPowerAssignmentForm></ManPowerAssignmentForm>}
+          ></Route>
+          <Route
+            path="assigning-monitoring-manpower"
+            element={
+              <AssigningMonitoringManPower></AssigningMonitoringManPower>
+            }
           ></Route>
           <Route
             path="asset-allotment"
             element={<AssetAllotment></AssetAllotment>}
           ></Route>
-
           <Route
             path="scheduling-and-deployment"
             element={
@@ -77,7 +101,6 @@ function App() {
             path="waste-management-schedule"
             element={<WasteManagementSchedule></WasteManagementSchedule>}
           ></Route>
-
           <Route
             path="create-tentage-schedule"
             element={<CreateTentageSchedule></CreateTentageSchedule>}
@@ -90,8 +113,11 @@ function App() {
             path="monthly-report"
             element={<MonthlyReport></MonthlyReport>}
           ></Route>
-
           <Route path="monitoring" element={<Monitoring></Monitoring>}></Route>
+          <Route
+            path="notification"
+            element={<NotificationAdd></NotificationAdd>}
+          ></Route>
 
           <Route
             path="monitoring-report/:id"
