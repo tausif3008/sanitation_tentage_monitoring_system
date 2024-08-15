@@ -5364,6 +5364,11 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
+fsevents@^2.3.2, fsevents@~2.3.2:
+  version "2.3.3"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
+  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
+
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -6923,6 +6928,39 @@ klona@^2.0.4, klona@^2.0.5:
   version "2.0.6"
   resolved "https://registry.npmjs.org/klona/-/klona-2.0.6.tgz"
   integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
+
+"kumbh_react_project@file:":
+  version "0.1.0"
+  resolved "file:"
+  dependencies:
+    "@ant-design/icons" "^5.4.0"
+    "@react-google-maps/api" "^2.19.3"
+    "@testing-library/jest-dom" "^5.17.0"
+    "@testing-library/react" "^13.4.0"
+    "@testing-library/user-event" "^13.5.0"
+    "@vis.gl/react-google-maps" "^1.1.0"
+    antd "^5.19.4"
+    apexcharts "^3.52.0"
+    bootstrap "^5.3.3"
+    chart.js "^4.4.3"
+    chartjs-plugin-datalabels "^2.2.0"
+    kumbh_react_project "file:"
+    leaflet "^1.9.4"
+    leaflet-routing-machine "^3.2.12"
+    moment "^2.30.1"
+    qrcode.react "^3.1.0"
+    react-apexcharts "^1.4.1"
+    react-camera-pro "^1.4.0"
+    react-chartjs-2 "^5.2.0"
+    react-countup "^6.5.3"
+    react-dom "^18.3.1"
+    react-fast-marquee "^1.6.5"
+    react-leaflet "^4.2.1"
+    react-router "^6.25.1"
+    react-router-dom "^6.25.1"
+    react-scripts "5.0.1"
+    reactstrap "^9.2.2"
+    web-vitals "^2.1.4"
 
 language-subtag-registry@^0.3.20:
   version "0.3.23"
