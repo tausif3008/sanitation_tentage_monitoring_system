@@ -22,7 +22,6 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
         if (response.ok && result.data) {
           const asset = result.data[0];
 
-          // Set asset details
           setAssetDetails([
             { label: "Assets Name", value: data.assetsName }, // Replace with actual data
             { label: "Assets Code", value: data.assetsCode }, // Replace with actual data
@@ -86,11 +85,13 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
       title: "Answer",
       dataIndex: "answer",
       key: "answer",
+      width: 90,
     },
     {
       title: "Date",
       dataIndex: "dataCreated",
       key: "question",
+      width: 120,
     },
     // Assuming you need columns for 12 days, adjust as needed
   ];
@@ -102,7 +103,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
         compo={
           <Button
             className="mb-2 bg-green-400"
-            onClick={() => setsetAssetInfo()}
+            onClick={() => setsetAssetInfo(null)}
           >
             <ArrowLeftOutlined></ArrowLeftOutlined> Assets Monitoring Listing
           </Button>
@@ -132,7 +133,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
           columns={dateColumns}
           dataSource={questionData}
           pagination={false}
-          scroll={{ x: true }}
+          scroll={{ x: true, y: 350 }}
           bordered
           className="rounded-none"
           loading={loading}

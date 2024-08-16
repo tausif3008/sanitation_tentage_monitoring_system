@@ -135,7 +135,7 @@ const AssetsList = () => {
       {!isAssetList && (
         <>
           <CommonDivider
-            label={"Assets Listing"}
+            label={"Asset Listing"}
             compo={
               <Link to="/asset-registration">
                 <Button className="bg-orange-300 mb-1">Add New Asset</Button>
@@ -153,12 +153,9 @@ const AssetsList = () => {
           <Table
             columns={columns}
             dataSource={filteredData}
+            bordered
             loading={loading}
-            pagination={{
-              pageSize: 10,
-              showSizeChanger: true,
-              pageSizeOptions: ["10", "20", "30"],
-            }}
+            pagination={false}
           />
         </>
       )}
@@ -175,11 +172,7 @@ const AssetsList = () => {
       >
         <div style={{ textAlign: "center" }}>
           {qrCodeUrl ? (
-            <Image
-            width={230}
-              src={qrCodeUrl}
-              alt={qrCodeUrl}
-            />
+            <Image width={230} src={qrCodeUrl} alt={qrCodeUrl} />
           ) : (
             <QRCode value={qrCodeData} />
           )}

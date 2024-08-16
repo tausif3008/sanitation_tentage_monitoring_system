@@ -18,6 +18,7 @@ const columns = (searchText, setSearchText) => [
     title: <div style={{ fontSize: "13px" }}> Sector</div>,
     dataIndex: "sector",
     key: "sector",
+    
   },
   {
     title: <div style={{ fontSize: "13px" }}> Asset Code</div>,
