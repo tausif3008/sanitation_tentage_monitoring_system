@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Input, message, Modal } from "antd";
+import { Table, Button, Input, message, Modal, Image } from "antd";
 import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
 import CommonTable from "../commonComponents/CommonTable";
@@ -37,7 +37,7 @@ const AssetsList = () => {
             assetsCode: item.asset_code || "N/A",
             vendor: item.vendor || "N/A",
             qrCodeUrl:
-              "http://filemanagement.metaxpay.in:8001/" + item.qr_code || "", // Add QR code URL
+              "http://filemanagement.metaxpay.in:8001" + item.qr_code || "", // Add QR code URL
           }));
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
@@ -167,6 +167,7 @@ const AssetsList = () => {
 
       {/* QR Code Modal */}
       <Modal
+        width={300}
         title="QR Code"
         visible={isModalVisible}
         onCancel={handleCancel}
@@ -174,7 +175,11 @@ const AssetsList = () => {
       >
         <div style={{ textAlign: "center" }}>
           {qrCodeUrl ? (
-            <img src={qrCodeUrl} alt="QR Code" style={{ maxWidth: "100%" }} />
+            <Image
+            width={230}
+              src={qrCodeUrl}
+              alt={qrCodeUrl}
+            />
           ) : (
             <QRCode value={qrCodeData} />
           )}
