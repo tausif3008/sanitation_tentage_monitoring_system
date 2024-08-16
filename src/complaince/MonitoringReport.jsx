@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Table, Image, Tag, message } from "antd";
 import { useParams } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const MonitoringReport = ({ data, setsetAssetInfo }) => {
   console.log(data);
 
-  const { id } = useParams(); // Extract id from the URL
   const [assetDetails, setAssetDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +39,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
             // { label: "Longitude", value: "81.888215" }, // Replace with actual data
           ]);
 
-          const date = new Date(data.dataCreated);
+          const date = new Date(asset.date_created);
           const options = { day: "2-digit", month: "short", year: "numeric" };
           const formattedDate = date.toLocaleDateString("en-GB", options);
 
@@ -51,7 +51,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
               question: item.question,
               day1: item.answer ? "Yes" : "No",
               dataCreated: formattedDate,
-              answer: result.data[0].assetdata[index - 1]?.answer ? (
+              answer: item.answer ? (
                 <Tag color="green">
                   <div className="font-semibold">Yes</div>
                 </Tag>
@@ -98,26 +98,26 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
   ];
 
   return (
-    <div className="mx-auto p-3 bg-white shadow-md rounded-lg w-full">
+    <div className="mx-auto p-3 bg-white shadow-md rounded-lg w-full mt-3">
       <CommonDivider
         label={"Monitoring Report"}
         compo={
           <Button
             className="mb-2 bg-green-400"
-            onClick={() => setsetAssetInfo(null)}
+            onClick={() => setsetAssetInfo()}
           >
-            Asset Listing
+            <ArrowLeftOutlined></ArrowLeftOutlined> Assets Monitoring Listing
           </Button>
         }
       ></CommonDivider>
       <div className="mt-4">
-        <Row gutter={[16, 16]} className="mb-1">
+        <div className="flex gap-3">
           {assetDetails.map((item, index) => (
-            <Col span={12} key={index}>
+            <div span={12} key={index}>
               <strong>{item.label}:</strong> {item.value}
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
         <Image
           width={100}
           src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}

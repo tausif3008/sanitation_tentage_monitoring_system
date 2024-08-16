@@ -7,12 +7,12 @@ import QRCode from "qrcode.react";
 const Footer = ({ dict, lang }) => {
   return (
     <div className="text-white">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-center gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-4 lg:grid-cols-4">
         <div className="flex flex-col items-start md:items-center">
           <div>
             <div className="text-base font-semibold mb-2">Contact Us</div>
-            <div className="flex flex-col text-d4 font-semibold text-sm">
-              <span>
+            <div className="flex flex-col text-d4 font-semibold text-sm flex-wrap">
+              <span className="flex-wrap flex break-words">
                 <b>Address:</b> Kumbh Mela Adhikari Triveni Bhawan, Prayagraj,
                 Uttar Pradesh.
               </span>
