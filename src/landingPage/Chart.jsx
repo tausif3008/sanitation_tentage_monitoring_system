@@ -40,7 +40,7 @@ const Chart = () => {
         ],
         borderColor: "rgba(0, 0, 0, 1)",
         borderWidth: 1,
-        data: [120, 85, 90, 50], // Replace these with actual values
+        data: [94, 85, 90, 50], // Replace these with actual values
       },
     ],
   };
@@ -73,7 +73,7 @@ const Chart = () => {
               label += ": ";
             }
             label += context.raw;
-            return label;
+            return label + "%";
           },
         },
       },

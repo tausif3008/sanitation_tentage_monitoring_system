@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
 
 const MonitoringReport = ({ data, setsetAssetInfo }) => {
+  console.log(data);
+
   const { id } = useParams(); // Extract id from the URL
   const [assetDetails, setAssetDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
@@ -50,9 +52,13 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
               day1: item.answer ? "Yes" : "No",
               dataCreated: formattedDate,
               answer: result.data[0].assetdata[index - 1]?.answer ? (
-                <Tag color="green">Yes</Tag>
+                <Tag color="green">
+                  <div className="font-semibold">Yes</div>
+                </Tag>
               ) : (
-                <Tag color="green">No</Tag>
+                <Tag color="red">
+                  <div className="font-semibold">No</div>
+                </Tag>
               ),
               // Add other days if needed, based on your API data or requirements
             };
@@ -71,8 +77,6 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
 
     fetchAssetData();
   }, [data, data.assetId]); // Dependency array includes assetId to refetch data when assetId changes
-
- 
 
   const dateColumns = [
     {
@@ -107,14 +111,18 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
         }
       ></CommonDivider>
       <div className="mt-4">
-        <Row gutter={[16, 16]} className="mb-4">
+        <Row gutter={[16, 16]} className="mb-1">
           {assetDetails.map((item, index) => (
             <Col span={12} key={index}>
               <strong>{item.label}:</strong> {item.value}
             </Col>
           ))}
         </Row>
-        <Image width={100} src={data.qrCodeUrl} alt="QR Code" />
+        <Image
+          width={100}
+          src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}
+          alt="QR Code"
+        />
         <Table
           columns={dateColumns}
           dataSource={questionData}
