@@ -28,16 +28,19 @@ const Monitoring = () => {
         const result = await response.json();
 
         if (response.ok && result.data) {
-          const transformedData = result.data.map((item, index) => ({
-            key: item.id,
-            srNo: index + 1,
-            assetsId: item.id,
-            dataCreated: item.date_created,
-            assetsName: item.asset_name || "N/A",
-            assetsCode: item.asset_code || "N/A",
-            vendor: item.vendor || "N/A",
-            qrCodeUrl: item.qr_code || "", // Add QR code URL
-          }));
+          const transformedData = result.data.map((item, index) => {
+            return {
+              key: item.id,
+              srNo: index + 1,
+              assetsId: item.id,
+              dataCreated: item.date_created,
+              assetsName: item.asset_name || "N/A",
+              assetsCode: item.asset_code || "N/A",
+              vendor: item.vendor || "N/A",
+              qrCodeUrl: item.qr_code || "", // Add QR code URL
+              img: item.asset_image,
+            };
+          });
 
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
@@ -136,10 +139,7 @@ const Monitoring = () => {
 
           {!isAssetList && (
             <>
-              <CommonDivider
-                label={"Assets Monitoring Listing"}
-                
-              />
+              <CommonDivider label={"Assets Monitoring Listing"} />
               <div className="mb-2 flex justify-between items-center">
                 <Search
                   placeholder="Search assets"
@@ -149,15 +149,12 @@ const Monitoring = () => {
                 />
               </div>
               <Table
+                scroll={{ y: 450 }}
                 columns={columns}
                 bordered
                 dataSource={filteredData}
                 loading={loading}
-                pagination={{
-                  pageSize: 10,
-                  showSizeChanger: true,
-                  pageSizeOptions: ["10", "20", "30"],
-                }}
+                pagination={false}
               />
             </>
           )}
