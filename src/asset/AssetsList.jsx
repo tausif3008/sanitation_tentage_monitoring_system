@@ -141,12 +141,11 @@ const AssetsList = () => {
               </Link>
             }
           />
-          <div className="mb-4 flex justify-between items-center">
+          <div className="mb-2 flex justify-between items-center">
             <Search
               placeholder="Search assets"
               onSearch={handleSearch}
               style={{ width: 300 }}
-              className="mr-4 p-2"
             />
           </div>
           <Table
