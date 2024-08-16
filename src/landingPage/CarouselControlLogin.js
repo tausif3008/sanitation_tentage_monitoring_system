@@ -58,10 +58,10 @@ const items = (dict, lang) => {
                       </span>
                       <span className="font-semibold">
                         <Link
-                          to={"https://kashitsolution.com/kumbh-monitoring"}
+                          to={"http://103.86.182.148:3001/dashboard"}
                           className="font-semibold no-underline text-1d"
                         >
-                          https://kashitsolution.com/kumbh-monitoring/
+                          http://103.86.182.148:3001/dashboard
                         </Link>
                       </span>
                     </div>
