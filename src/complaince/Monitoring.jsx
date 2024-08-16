@@ -137,14 +137,8 @@ const Monitoring = () => {
           {!isAssetList && (
             <>
               <CommonDivider
-                label={"Assets Listing"}
-                compo={
-                  <Link to="/asset-registration">
-                    <Button className="bg-orange-300 mb-1">
-                      Add New Asset
-                    </Button>
-                  </Link>
-                }
+                label={"Assets Monitoring Listing"}
+                
               />
               <div className="mb-2 flex justify-between items-center">
                 <Search
