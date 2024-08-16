@@ -98,7 +98,7 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
   ];
 
   return (
-    <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
+    <div className="mx-auto p-3 bg-white shadow-md rounded-lg w-full">
       <CommonDivider
         label={"Monitoring Report"}
         compo={
@@ -132,11 +132,11 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
           className="rounded-none"
           loading={loading}
         />
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <Button type="primary" className="mt-4 rounded-none bg-5c">
             Save Report
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
