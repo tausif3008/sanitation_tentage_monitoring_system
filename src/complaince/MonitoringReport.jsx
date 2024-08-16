@@ -118,16 +118,22 @@ const MonitoringReport = ({ data, setsetAssetInfo }) => {
           ))}
         </div>
         <div className="flex justify-between">
-          <Image
-            width={130}
-            src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}
-            alt="QR Code"
-          />
-          <Image
-            width={130}
-            height={130}
-            src={"http://filemanagement.metaxpay.in:8001" + data.img}
-          ></Image>
+          <div className="flex flex-col text-center font-semibold">
+            <span>QR Code</span>
+            <Image
+              width={130}
+              src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}
+              alt="QR Code"
+            />
+          </div>
+          <div className="flex flex-col text-center font-semibold">
+            <span>Asset Image</span>
+            <Image
+              width={125}
+              height={125}
+              src={"http://filemanagement.metaxpay.in:8001" + data.img}
+            ></Image>
+          </div>
         </div>
         <Table
           columns={dateColumns}

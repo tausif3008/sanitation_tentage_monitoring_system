@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Input, message, Modal, Image } from "antd";
 import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
-import CommonTable from "../commonComponents/CommonTable";
 import CommonDivider from "../commonComponents/CommonDivider";
 
 const { Search } = Input;
