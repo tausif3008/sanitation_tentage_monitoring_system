@@ -97,18 +97,25 @@ const SingleSanitization = ({ className, content }) => {
               <div
                 className={`flex flex-col justify-center items-center w-full`}
               >
-                <Statistic value={content.value.total} formatter={formatter} />
-                <span className="text-2xl">
-                  {content.title === "Sanitization"
-                    ? "Sanitation"
-                    : content.title === "Wastes"
-                    ? "Vehicle"
-                    : content.title}
-                </span>
+                <div
+                  className={`flex flex-col justify-center items-center w-full`}
+                >
+                  <Statistic
+                    value={content.value.total}
+                    formatter={formatter}
+                  />
+                  <span className="text-2xl">
+                    {content.title === "Sanitization"
+                      ? "Sanitation"
+                      : content.title === "Wastes"
+                      ? "Vehicle"
+                      : content.title}
+                  </span>
+                </div>
               </div>
               <div
                 className={
-                  "flex flex-col text-white font-semibold w-full text-sm text-center items-center"
+                  "flex flex-col text-white font-semibold w-full text-sm text-center items-end mr-1"
                 }
               >
                 <PercentageBar
