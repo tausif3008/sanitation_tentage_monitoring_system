@@ -1,1 +1,1 @@
-# sanitation_tentage_monitoring_system
+# tentage_sanitation_monitoring_system
