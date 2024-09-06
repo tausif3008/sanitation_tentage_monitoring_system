@@ -250,7 +250,7 @@ const Navbar = ({ lang, setLang }) => {
   };
 
   return (
-    <div className="px-3 font-openSans">
+    <div className="">
       <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
         <div className="hidden mt-0 lg:flex gap-5  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
           <Link to={"/home"} className="no-underline text-white">

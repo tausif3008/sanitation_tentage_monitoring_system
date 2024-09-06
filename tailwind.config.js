@@ -21,8 +21,10 @@ module.exports = {
         13: "#131313",
         d4: "#d4d4d4",
         ffe: "#ffefd5",
+        orange01:"FF5F00",
       },
       fontFamily: {
+        body: ['"Public Sans"', "Open Sans"],
         roboto: ["Montserrat", "sans-serif"],
         openSans: ["Open Sans", "sans-serif"],
         merriweather: ["Merriweather", "serif"],

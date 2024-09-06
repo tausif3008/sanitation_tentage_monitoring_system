@@ -5,7 +5,13 @@ import img3 from "../assets/Images/kumbh logo.png";
 const NavHead = ({ lang, dict }) => {
   return (
     <div>
-      <div className="font-merriweather grid grid-cols-1 md:grid-cols-4 justify-between md:w-11/12 mt-2 xl:w-10/12 2xl:w-9/12 m-auto mb-2">
+      <div className="bg-[#FF5F00] flex gap-4 justify-center md:justify-start col-span-1 text-white">
+        <div className="grid grid-cols-1 md:grid-cols-4 justify-between md:w-11/12 mt-2 xl:w-10/12 2xl:w-9/12 m-auto mb-2">
+          {" "}
+          gdfgfdg
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 justify-between md:w-11/12 mt-2 xl:w-10/12 2xl:w-9/12 m-auto mb-2">
         <div className="flex gap-4 justify-center md:justify-start col-span-1">
           <img src={img1} className="h-20" alt="" />
           <img src={img3} className="h-20 flex md:hidden" alt="" />

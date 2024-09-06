@@ -36,7 +36,7 @@ const Layout = () => {
 
   
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 font-roboto">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <div>
         <MainNavbar {...props} setLang={setLang}></MainNavbar>
         <div className={`${classWidth}`}>
