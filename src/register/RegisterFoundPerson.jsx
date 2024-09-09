@@ -106,7 +106,6 @@ const MapComponent = () => {
       },
     });
 
-    console.log("New route control:", newRouteControl);
     newRouteControl.addTo(map);
     setRouteControl(newRouteControl);
   };

@@ -4,16 +4,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./dropdown.css";
 
-const DropDown = ({ items, name }) => {
+const DropDown = ({ items, name, text }) => {
   return (
     <Dropdown
-      className="h-full flex items-center justify-center no-underline"
+      className={`h-full flex items-center justify-center no-underline `}
       menu={{
         items,
       }}
     >
       <Link onClick={(e) => e.preventDefault()}>
-        <Space className="text-white">
+        <Space className={` ${text ? "text-black" : "text-white"}`}>
           {name} <DownOutlined />
         </Space>
       </Link>

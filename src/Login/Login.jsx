@@ -1,35 +1,48 @@
-import React, { useState } from "react";
-import { Button, Form, Input, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import loginImage from "../assets/Images/loginImage.jpg";
 import { useNavigate } from "react-router";
 import { DICT } from "../urils/dictionary";
+import { loginFetch } from "../Fetch/Axios";
+import "./login.css";
 
 const Login = () => {
   const localLang = localStorage.getItem("lang");
   const [lang, setLang] = useState(localLang || "en");
+  const [canProceed, setCanProceed] = useState(false);
 
   const [form] = Form.useForm();
-  form.setFieldsValue({ username: "Ramesh", password: "1234" });
-
-  localStorage.setItem(
-    "userCredentials",
-    JSON.stringify({ username: "Ramesh", password: "1234" })
-  );
-
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    if (localStorage.getItem("userCredentials") === JSON.stringify(values)) {
-      localStorage.setItem("loggedIn", true);
-      message.success("Login Successful.");
-      setTimeout(() => {
-        navigate("/welcome-to-lost-and-found-2025");
-      }, 1000);
-    } else {
-      message.success("Something went wrong.");
+  const [loading, setLoading] = useState(false);
+
+  const onFinish = async (values) => {
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("platform", "Web");
+    formData.append("password", values.password);
+
+    setLoading(true);
+    const res = await loginFetch(formData, setCanProceed);
+    if (res) {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const sessionToken = localStorage.getItem("sessionToken");
+      if (sessionToken) {
+        clearInterval(intervalId);
+        navigate("/dashboard");
+      }
+    });
+  }, [canProceed, navigate]);
+
+  useEffect(() => {
+    form.setFieldsValue({ username: "1111111111", password: "123" });
+  }, []);
 
   return (
     <div className="flex m-auto bg-gray-100">
@@ -38,7 +51,7 @@ const Login = () => {
           <div className="w-full h-96 hidden md:flex">
             <img src={loginImage} alt="" className="w-full h-full" />
           </div>
-          <div className="flex h-full flex-col w-full items-center justify-center">
+          <div className="flex h-full flex-col w-full items-center">
             <div className="text-center font-merriweather p-2 font-semibold text-lg flex flex-col items-center w-full m-auto justify-center">
               <div className="text-center font-semibold text-xl w-full col-span-2 flex m-auto justify-center">
                 <div className="flex flex-col">
@@ -47,7 +60,7 @@ const Login = () => {
                   <div className="text-green-800">{DICT.title2[lang]}</div>
                 </div>
               </div>
-              <div className="w-10/12 m-auto">
+              <div className="w-10/12">
                 <Form
                   form={form}
                   initialValues={{
@@ -68,10 +81,9 @@ const Login = () => {
                   >
                     <Input
                       autoComplete="off"
-                      className="eems-ant-input-border"
                       prefix={<UserOutlined></UserOutlined>}
                       placeholder="User Name"
-                      size="large"
+                      className="rounded-none"
                     />
                   </Form.Item>
 
@@ -86,18 +98,18 @@ const Login = () => {
                   >
                     <Input.Password
                       autoComplete="off"
-                      className="eems-ant-input-border"
                       prefix={<LockOutlined></LockOutlined>}
                       placeholder="Password"
-                      size="large"
+                      className="rounded-none"
                     />
                   </Form.Item>
                   <Form.Item noStyle>
                     <div className="flex justify-end">
                       <Button
+                        loading={loading}
                         type="primary"
                         htmlType="submit"
-                        className="bg-orange-400 text-white "
+                        className="bg-orange-400 text-white"
                       >
                         Login
                       </Button>

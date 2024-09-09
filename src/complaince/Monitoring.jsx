@@ -45,6 +45,7 @@ const Monitoring = () => {
           setData(transformedData);
           setFilteredData(transformedData); // Initialize filtered data
         } else {
+          
           message.error(result.message || "Failed to load assets");
         }
       } catch (error) {

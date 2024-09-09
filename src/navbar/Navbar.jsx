@@ -5,6 +5,8 @@ import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import DropDown from "./DropDown";
 import { DICT } from "../urils/dictionary";
+import img1 from "../assets/Images/goup.png";
+import img3 from "../assets/Images/kumbh logo.png";
 
 const register_items = (lang, dict) => {
   return [
@@ -250,9 +252,9 @@ const Navbar = ({ lang, setLang }) => {
   };
 
   return (
-    <div className="px-3 font-openSans">
+    <div className="mx-3 font-openSans">
       <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
-        <div className="hidden mt-0 lg:flex gap-5  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
+        <div className="hidden mt-0 lg:flex gap-2  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
           <Link to={"/home"} className="no-underline text-white">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               {dict.home[lang]}
@@ -307,14 +309,14 @@ const Navbar = ({ lang, setLang }) => {
             ></DropDown>
           </div> */}
 
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               <DropDown
                 items={setting_item(dict, lang)}
                 name={dict.setting[lang]}
               ></DropDown>
             </div>
-          </div> */}
+          </div>
 
           {/* {!logName ? (
             <button onClick={() => handleNavigation("/login")}>
@@ -338,52 +340,70 @@ const Navbar = ({ lang, setLang }) => {
           )} */}
         </div>
 
-        <div className="flex w-10/12 m-auto justify-end lg:hidden">
-          <Button
-            className="flex lg:hidden bg-transparent border-none text-white"
-            onClick={showDrawer}
-          >
-            <MenuOutlined></MenuOutlined>
-          </Button>
+        <div className="flex w-11/12 m-auto justify-between lg:hidden">
+          <div className="justify-end items-center col-span-1 flex lg:hidden">
+            <img src={img3} className="h-10" alt="" />
+            <img src={img1} className="h-10" alt="" />
+          </div>
+          <span className="flex items-center">
+            <Button
+              className="flex lg:hidden bg-transparent border-none text-white"
+              onClick={showDrawer}
+            >
+              <MenuOutlined></MenuOutlined>
+            </Button>
+          </span>
         </div>
 
-        <Drawer onClose={onClose} open={open}>
+        <Drawer
+          onClose={onClose}
+          open={open}
+          title={
+            <div className="text-violet-950 text-lg font-semibold">
+              Tentage and Sanitation Monitoring System
+            </div>
+          }
+        >
           <div className="text-base">
             <Link to={"/dashboard"} className="no-underline text-white">
-              <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+              <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
                 Dashboard{" "}
               </div>
             </Link>
             <Link to={"/home"} className="no-underline text-white">
-              <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+              <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
                 {dict.home[lang]}
               </div>
             </Link>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
+                text={"black"}
                 items={register_items(lang, dict)}
                 name={dict.register[lang]}
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
                 items={assignment_items(lang, dict)}
+                text={"black"}
                 name="Assignment"
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
+                text={"black"}
                 items={schedule_items(lang, dict)}
                 name="Schedule"
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
                 items={complaince_items(lang, dict)}
+                text={"black"}
                 name="Complaince"
               ></DropDown>
             </div>

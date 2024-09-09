@@ -62,7 +62,7 @@ const SingleSanitization = ({ className, content }) => {
     return (
       <div
         className={`flex flex-col ${
-          center ? "justify-end items-end" : "justify-center  items-center "
+          center ? "justify-end items-end" : "justify-center  items-center"
         }w-full`}
       >
         <Statistic value={content.value.total} formatter={formatter} />

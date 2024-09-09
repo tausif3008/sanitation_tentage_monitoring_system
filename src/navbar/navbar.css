@@ -1,11 +1,12 @@
 .ant-drawer-header{
-background: #04a6e2 !important;
+background: rgb(244, 184, 74) !important;
 }
 
 .ant-drawer-body{
-background: #04a6e2;
+background: rgb(239, 206, 144);
 }
 
 .ant-select-selector{
     border-radius: 0px!important;
 }
+

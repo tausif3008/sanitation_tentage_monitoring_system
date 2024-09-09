@@ -3,7 +3,7 @@ import LandingPage from "./landingPage/LandingPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Login/Login";
 import Layout from "./AppLayout/Layout";
-import Dashboard from "./dashboard/Dashboard";
+import Dashboard from "./dashboardNew/Dashboard";
 
 import UserRegistrationForm from "./user/UserRegistrationForm";
 import UserList from "./user/UsersList";
