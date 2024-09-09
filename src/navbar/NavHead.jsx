@@ -178,9 +178,9 @@ const NavHead = ({ lang, dict, setLang }) => {
         <div className="flex items-center">
           <div className="col-md-5">
             {" "}
-            <div className="flex gap-4 justify-center md:justify-start col-span-1">
+            <div className="flex gap-2 justify-center md:justify-start col-span-1 items-center">
               <img src={img1} className="h-20" alt="" />{" "}
-              <div className="text-[#FF9500]">{dict.title2[lang]}</div>
+              <div className="text-[#FF9500] text-lg">{dict.title2[lang]}</div>
               {/* <img src={img3} className="h-20 flex md:hidden" alt="" /> */}
             </div>
           </div>
