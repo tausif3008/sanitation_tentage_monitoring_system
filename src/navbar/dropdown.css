@@ -3,13 +3,13 @@
 }
 
 .ant-dropdown-menu-item:hover{
-    background: #e3f3ac !important;
+    background: #ff5f00 !important;
     color:white !important
 }
 
 
 .ant-dropdown-menu-title-content .text-black:hover{
-    color: green !important;
+    color: #fff !important;
     font-weight: 600;
 }
 

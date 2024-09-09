@@ -1,7 +1,7 @@
 import { MenuOutlined } from "@ant-design/icons";
 import { Drawer, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import "./navbar.css";
+
 import { Link, useNavigate } from "react-router-dom";
 import DropDown from "./DropDown";
 import { DICT } from "../urils/dictionary";
@@ -251,64 +251,66 @@ const Navbar = ({ lang, setLang }) => {
 
   return (
     <div className="">
-      <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
-        <div className="hidden mt-0 lg:flex gap-5  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
-          <Link to={"/home"} className="no-underline text-white">
-            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+      <div className="z-50 w-full flex items-center h-12 m-auto  ">
+        <div className="hidden mt-0 lg:flex gap-1 justify-between items-center z-50 text-black font-semibold h-fit text-sm md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-black">
+          {/* <Link to={"/home"} className="no-underline text-black">
+            <div className="h-10 flex  items-center  px-2">
               {dict.home[lang]}
             </div>
-          </Link>
+          </Link> */}
 
-          <Link className="text-white no-underline " to="/dashboard">
-            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <Link className="text-black no-underline " to="/dashboard">
+            <div className="h-10 flex  items-center  px-2">
               Dashboard{" "}
             </div>
           </Link>
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center  px-2">
             <DropDown
+              className="text-black"
               items={register_items(lang, dict)}
-              name={dict.register[lang]}
+              // name={dict.register[lang]}
+              name="Register"
             ></DropDown>
           </div>
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={assignment_items(lang, dict)}
               name="Assignment"
             ></DropDown>
           </div>
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={schedule_items(lang, dict)}
               name="Schedule"
             ></DropDown>
           </div>
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={complaince_items(lang, dict)}
               name="Complaince"
             ></DropDown>
           </div>
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={reports_items(lang, dict)}
               name="Reports"
             ></DropDown>
           </div>
 
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          {/* <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={waste_items(lang, dict)}
               name="Waste Management"
             ></DropDown>
           </div> */}
 
-          {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+          {/* <div className="h-10 flex  items-center  px-2">
+            <div className="h-10 flex  items-center  px-2">
               <DropDown
                 items={setting_item(dict, lang)}
                 name={dict.setting[lang]}
@@ -318,7 +320,7 @@ const Navbar = ({ lang, setLang }) => {
 
           {/* {!logName ? (
             <button onClick={() => handleNavigation("/login")}>
-              <div className="h-10 flex  items-center hover:bg-ec9 px-1">
+              <div className="h-10 flex  items-center  px-1">
                 Login
               </div>
             </button>
@@ -330,7 +332,7 @@ const Navbar = ({ lang, setLang }) => {
                   handleNavigation("/login");
                 }}
               >
-                <div className="h-10 flex  items-center hover:bg-ec9 px-3">
+                <div className="h-10 flex  items-center  px-3">
                   Logout
                 </div>
               </button>
@@ -340,7 +342,7 @@ const Navbar = ({ lang, setLang }) => {
 
         <div className="flex w-10/12 m-auto justify-end lg:hidden">
           <Button
-            className="flex lg:hidden bg-transparent border-none text-white"
+            className="flex lg:hidden bg-transparent border-none text-black"
             onClick={showDrawer}
           >
             <MenuOutlined></MenuOutlined>
@@ -348,54 +350,56 @@ const Navbar = ({ lang, setLang }) => {
         </div>
 
         <Drawer onClose={onClose} open={open}>
-          <div className="text-base">
-            <Link to={"/dashboard"} className="no-underline text-white">
-              <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+          <div className="text-black">
+            <Link to={"/dashboard"} className="no-underline text-black">
+              <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
                 Dashboard{" "}
               </div>
             </Link>
-            <Link to={"/home"} className="no-underline text-white">
-              <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <Link to={"/home"} className="no-underline text-black">
+              <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
                 {dict.home[lang]}
               </div>
             </Link>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               <DropDown
+                className="text-black"
                 items={register_items(lang, dict)}
                 name={dict.register[lang]}
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               <DropDown
+                className="text-black"
                 items={assignment_items(lang, dict)}
                 name="Assignment"
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               <DropDown
                 items={schedule_items(lang, dict)}
                 name="Schedule"
               ></DropDown>
             </div>
 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               <DropDown
                 items={complaince_items(lang, dict)}
                 name="Complaince"
               ></DropDown>
             </div>
 
-            {/* <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+            {/* <div className="h-10 flex  items-center  px-2">
             <DropDown
               items={waste_items(lang, dict)}
               name="Waste Management"
             ></DropDown>
           </div> */}
 
-            {/* <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            {/* <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               \{" "}
               <DropDown
                 items={setting_item(dict, lang)}
@@ -403,21 +407,21 @@ const Navbar = ({ lang, setLang }) => {
               ></DropDown>
             </div> */}
             {/* 
-            <div className="h-10  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04">
+            <div className="h-10  text-black font-semibold border-b flex items-center  px-3 bg-04">
               {dict.help[lang]}
             </div> */}
 
             {/* 
             <button
               onClick={handleLang}
-              className="h-10 w-full  text-white font-semibold border-b flex items-center hover:bg-ec9 px-3 bg-04"
+              className="h-10 w-full  text-black font-semibold border-b flex items-center  px-3 bg-04"
             >
               A / अ{" "}
             </button> */}
 
             {/* {!logName ? (
               <button onClick={() => handleNavigation("/login")}>
-                <div className="h-10 flex items-center hover:bg-ec9 px-3 text-white font-semibold  ">
+                <div className="h-10 flex items-center  px-3 text-black font-semibold  ">
                   {dict.login[lang]}
                 </div>
               </button>
@@ -429,7 +433,7 @@ const Navbar = ({ lang, setLang }) => {
                     handleNavigation("/login");
                   }}
                 >
-                  <div className="h-10 flex text-white font-semibold  items-center hover:bg-ec9 px-3">
+                  <div className="h-10 flex text-black font-semibold  items-center  px-3">
                     {dict.logout[lang]}
                   </div>
                 </button>

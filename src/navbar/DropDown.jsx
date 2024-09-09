@@ -13,8 +13,8 @@ const DropDown = ({ items, name }) => {
       }}
     >
       <Link onClick={(e) => e.preventDefault()}>
-        <Space className="text-white">
-          {name} <DownOutlined />
+        <Space className="text-black">
+          {name} <DownOutlined width="15" height="15" />
         </Space>
       </Link>
     </Dropdown>

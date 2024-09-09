@@ -5,7 +5,7 @@ const MainNavbar = (props) => {
   return (
     <div>
       <NavHead {...props}></NavHead>
-      <Navbar {...props}></Navbar>
+      {/* <Navbar {...props}></Navbar> */}
     </div>
   );
 };
