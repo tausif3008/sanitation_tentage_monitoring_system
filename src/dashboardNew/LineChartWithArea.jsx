@@ -1,6 +1,6 @@
-import { min } from "moment/moment";
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import MapData from "./MapData";
 
 const LineChartWithArea = () => {
   const [data, setData] = useState([
@@ -149,11 +149,11 @@ const LineChartWithArea = () => {
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span>Fully Functional</span>
-                  <span>${facilityDetails.functional}</span>
+                  <span>${facilityDetails["Fully Functional"]}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span>Cleanliness Index</span>
-                  <span>${facilityDetails.cleanliness}</span>
+                  <span>${facilityDetails["Cleanliness Index"]}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span>Avg. Response time</span>
@@ -161,7 +161,7 @@ const LineChartWithArea = () => {
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span>Incident reported</span>
-                  <span>${facilityDetails.incidents}</span>
+                  <span>${facilityDetails["Incident Reported"]}</span>
                 </div>
               </div>
             </div>`;
@@ -176,19 +176,21 @@ const LineChartWithArea = () => {
 
   return (
     <div>
-      <style>
-        {`
+      <div className="pr-2 pt-1">
+        <style>
+          {`
           .apexcharts-tooltip-text-y-label {
             display: none !important;
           }
         `}
-      </style>
-      <ReactApexChart
-        options={chartData.options}
-        series={chartData.series}
-        type="area"
-        height={350}
-      />
+        </style>
+        <ReactApexChart
+          options={chartData.options}
+          series={chartData.series}
+          type="area"
+          height={360}
+        />
+      </div>
     </div>
   );
 };

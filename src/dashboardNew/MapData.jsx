@@ -1,10 +1,7 @@
-import { Anchor } from "antd";
 import React, { useEffect, useRef, useState } from "react";
-import toilet from "../assets/MonitoringImages/Dashboard/toilet.png";
-import tentage from "../assets/MonitoringImages/Dashboard/tentage.png";
-import location from "../assets/MonitoringImages/Dashboard/location.png";
-import wsVhe from "../assets/MonitoringImages/Dashboard/wsVhe.png";
-import waste from "../assets/MonitoringImages/Dashboard/waste.png";
+import toilet from "../assets/MonitoringImages/Dashboard/requireCliningToilet.png";
+import cleanedIcon from "../assets/MonitoringImages/Dashboard/ClinedToilets.png";
+import UnderMaintenanceIcon from "../assets/MonitoringImages/Dashboard/UnderMaintenanceToilet.png";
 
 import {
   MapContainer,
@@ -38,58 +35,49 @@ const defaultIcon = L.icon({
 });
 
 const toiletIconsMap = L.icon({
-  iconUrl: toilet,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconUrl: cleanedIcon,
+  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
   iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
 
-const tentageIcon = L.icon({
-  iconUrl: tentage,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [24, 41],
+const toiletIconCleaningRequire = L.icon({
+  iconUrl: toilet,
+  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
+  iconSize: [24, 25],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
+const underMaintenanceIcon = L.icon({
+  iconUrl: UnderMaintenanceIcon,
+  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
+  iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
 
 // Nearby places
-const toiletIcon = [
+const toiletLatLong = [
   { id: 1, name: "Toilet 1", lat: 25.4314, lng: 81.8785 },
   { id: 2, name: "Toilet 2", lat: 25.4268, lng: 81.8862 },
+  { id: 3, name: "Toilet 3", lat: 25.4268, lng: 81.8162 },
 ];
 
-const tentagePlaces = [
-  { id: 3, name: "Tent 3", lat: 25.4325, lng: 81.884 },
-  { id: 4, name: "Tent 4", lat: 25.4448, lng: 81.8698 },
+const toiletLatLongRequire = [
+  { id: 4, name: "Toilet 4", lat: 25.4314, lng: 81.8548 },
+  { id: 5, name: "Toilet 5", lat: 25.4314, lng: 81.8548 },
+  { id: 6, name: "Toilet 6", lat: 25.4368, lng: 81.8729 },
+  { id: 7, name: "Toilet 7", lat: 25.4268, lng: 81.8269 },
 ];
 
-// Nearby places
-const wastesPlaces = [
-  { id: 1, name: "Bin 1", lat: 25.452, lng: 81.8538 },
-  { id: 2, name: "Bin 2", lat: 25.4472, lng: 81.8665 },
+const toiletLatLongMaintenance = [
+  { id: 8, name: "Toilet 4", lat: 25.4614, lng: 81.8758 },
+  { id: 9, name: "Toilet 5", lat: 25.4714, lng: 81.8648 },
+  { id: 10, name: "Toilet 6", lat: 25.4068, lng: 81.8229 },
+  { id: 11, name: "Toilet 7", lat: 25.4468, lng: 81.8169 },
 ];
-
-const wastesIcon = L.icon({
-  iconUrl: wsVhe,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [24, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
-const wastesPlacesV = [
-  { id: 3, name: "Vehicle 1", lat: 25.4365, lng: 81.814 },
-  { id: 4, name: "Vehicle 2", lat: 25.4548, lng: 81.8198 },
-];
-
-const wasteIcon = L.icon({
-  iconUrl: waste,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [23, 25],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
 
 const UserLocationMarker = ({ setUserLocation }) => {
   const map = useMapEvents({
@@ -120,7 +108,7 @@ const UserLocationMarker = ({ setUserLocation }) => {
   return null;
 };
 
-const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
+const MapComponent = ({ tentage = true }) => {
   const mapRef = useRef(null);
   const [userLocation, setUserLocation] = useState({
     lat: 25.435,
@@ -163,29 +151,46 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
   };
 
   return (
-    <MapContainer
-      center={[userLocation.lat, userLocation.lng]}
-      zoom={13}
-      style={{ height: "330px", width: "100%" }}
-      whenCreated={(mapInstance) => {
-        mapRef.current = mapInstance;
-      }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {/* <UserLocationMarker setUserLocation={setUserLocation} /> */}
-      {userLocation && (
-        <Marker
-          position={[userLocation.lat, userLocation.lng]}
-          icon={defaultIcon}
-        >
-          <Popup>You are here</Popup>
-        </Marker>
-      )}
-      {sanitization &&
-        toiletIcon.map((place, index) => (
+    <div>
+      <div className="flex justify-between">
+        <div className="text-xl font-semibold p-2">Locations Of Sanitation</div>
+        <div className="flex  text-sm gap-3 items-center justify-end p-1">
+          <div className="flex gap-1">
+            <div className="h-full flex items-center">Require Cleaning:</div>
+            <img className="h-5 w-5" src={toilet} alt="" />
+          </div>{" "}
+          <div className="flex gap-1">
+            <span className="h-full flex items-center">Cleaned:</span>
+            <img className="h-5 w-5" src={cleanedIcon} alt="" />
+          </div>{" "}
+          <div className="flex gap-1">
+            <span className="h-full flex items-center">Under Maintenance:</span>
+            <img className="h-5 w-5" src={UnderMaintenanceIcon} alt="" />
+          </div>
+        </div>
+      </div>
+      <MapContainer
+        center={[userLocation.lat, userLocation.lng]}
+        zoom={13}
+        style={{ height: "360px", width: "100%" }}
+        whenCreated={(mapInstance) => {
+          mapRef.current = mapInstance;
+        }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {/* <UserLocationMarker setUserLocation={setUserLocation} /> */}
+        {userLocation && (
+          <Marker
+            position={[userLocation.lat, userLocation.lng]}
+            icon={defaultIcon}
+          >
+            <Popup>You are here</Popup>
+          </Marker>
+        )}
+        {toiletLatLong.map((place, index) => (
           <Marker
             key={index + place}
             position={[place.lat, place.lng]}
@@ -197,13 +202,11 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
             <Popup>{place.name}</Popup>
           </Marker>
         ))}
-
-      {tentage &&
-        tentagePlaces.map((place, index) => (
+        {toiletLatLongRequire.map((place, index) => (
           <Marker
             key={index + place}
             position={[place.lat, place.lng]}
-            icon={tentageIcon}
+            icon={toiletIconCleaningRequire}
             eventHandlers={{
               click: () => handleMarkerClick(place.lat, place.lng),
             }}
@@ -211,13 +214,11 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
             <Popup>{place.name}</Popup>
           </Marker>
         ))}
-
-      {bin &&
-        wastesPlaces.map((place, index) => (
+        {toiletLatLongMaintenance.map((place, index) => (
           <Marker
             key={index + place}
             position={[place.lat, place.lng]}
-            icon={wasteIcon}
+            icon={underMaintenanceIcon}
             eventHandlers={{
               click: () => handleMarkerClick(place.lat, place.lng),
             }}
@@ -225,20 +226,7 @@ const MapComponent = ({ tentage, wastes, sanitization, bin }) => {
             <Popup>{place.name}</Popup>
           </Marker>
         ))}
-
-      {wastes &&
-        wastesPlacesV.map((place, index) => (
-          <Marker
-            key={index + place}
-            position={[place.lat, place.lng]}
-            icon={wastesIcon}
-            eventHandlers={{
-              click: () => handleMarkerClick(place.lat, place.lng),
-            }}
-          >
-            <Popup>{place.name}</Popup>
-          </Marker>
-        ))}
-    </MapContainer>
+      </MapContainer>
+    </div>
   );
 };

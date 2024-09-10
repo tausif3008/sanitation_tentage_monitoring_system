@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import StackedColumnChart from "../Charts/StackedColumnChart";
 import DistributedColumnChart from "../Charts/DistributedColumnChart";
-import MapData from "./MapData";
+import MapData from "../dashboardNew/MapData.jsx";
 import { useOutletContext } from "react-router";
 import GroupCheckBox from "../commonComponents/GroupCheckBox";
 import ListMaker from "./ListMaker";

@@ -12,7 +12,7 @@ root.render(
       components: {
         Table: {
           borderColor: "#b5f5ec",
-          headerBg: "#389e0d",
+          headerBg: "orange",
           cellPaddingBlock: 5,
           headerColor: "white",
           rowHoverBg: "#f6ffed",
