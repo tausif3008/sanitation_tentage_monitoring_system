@@ -72,10 +72,9 @@ const ResponseTimeChart = () => {
     },
   ];
   return (
-    <div style={{ width: "100%", height: "100%" }} className="p-2">
+    <div className="w-full p-2">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
-
         <div className="flex gap-3 ">
           <div>
             <DatePicker size="large"></DatePicker>

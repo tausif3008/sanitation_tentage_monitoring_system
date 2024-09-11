@@ -37,17 +37,19 @@ const Dashboard = () => {
       <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md">
         <IncidentsReported></IncidentsReported>
       </div>
-      <div className="lg:col-span-2  lg:flex col-span-4 bg-white shadow-md">
+      <div className="lg:col-span-2  lg:flex col-span-4 bg-white shadow-md mb-3 lg:mb-0 h-full">
         <ResponseTimeChart></ResponseTimeChart>
       </div>
-      <div className="col-span-4">
+      <div className="col-span-4 mt-10 sm:mt-0 w-full ">
         <DashboardCalender></DashboardCalender>
       </div>
-      <div className="col-span-4 lg:col-span-2 flex gap-2 flex-col">
+      <div className="col-span-4 lg:col-span-2 flex gap-2 flex-col ">
         <div className="">
           <TeamPerformance></TeamPerformance>
         </div>
-        <AverageResponseTimeChart></AverageResponseTimeChart>
+        <div>
+          <AverageResponseTimeChart></AverageResponseTimeChart>
+        </div>
       </div>
       <div className="lg:col-span-1 col-span-2 flex gap-2 flex-col">
         <div className="col-span-1 flex-wrap " style={{ height: "425px" }}>

@@ -158,12 +158,12 @@ const MapComponent = ({ tentage = true }) => {
           <div className="flex gap-1 justify-center items-center">
             <div className="h-full flex items-center">Require Cleaning:</div>
             <img className="h-5 w-5" src={toilet} alt="" />
-          </div>{" "}
-          <div className="flex gap-1">
+          </div>
+          <div className="flex gap-1 justify-center items-center">
             <span className="h-full flex items-center">Cleaned:</span>
             <img className="h-5 w-5" src={cleanedIcon} alt="" />
           </div>{" "}
-          <div className="flex gap-1">
+          <div className="flex gap-1 justify-center items-center">
             <span className="h-full flex items-center">Under Maintenance:</span>
             <img className="h-5 w-5" src={UnderMaintenanceIcon} alt="" />
           </div>

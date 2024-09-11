@@ -6,7 +6,6 @@ const IncidentsReported = () => {
   const chartOptions = {
     chart: {
       type: "donut",
-      height: "100%",
     },
     labels: ["A", "B", "C", "D"],
     legend: {
@@ -54,17 +53,17 @@ const IncidentsReported = () => {
   const chartSeries = [40, 20, 25, 15];
 
   return (
-    <div
-      className="pie-chart flex flex-col h-full"
-      style={{ width: "100%", height: "100%" }}
-    >
+    <div className="pie-chart flex flex-col h-full w-full">
       <DashboardTitle title="Incidents Reported" />
-      <ReactApexChart
-        options={chartOptions}
-        series={chartSeries}
-        type="donut"
-        height={240}
-      />
+      <div className="flex justify-center items-center w-full">
+        <ReactApexChart
+          options={chartOptions}
+          series={chartSeries}
+          type="donut"
+          height={290}
+          width={280}
+        />
+      </div>
       <div className="flex justify-center items-center text-center font-semibold p-2 mt-auto">
         Number of sanitation related incidents reported in last 24hrs
       </div>

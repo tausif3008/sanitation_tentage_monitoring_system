@@ -61,23 +61,25 @@ const AverageResponseTimeChart = () => {
       data: [0, 0, 0, 10, 0, 4, 10], // Replace with actual data for Overdue Time
     },
   ];
+
   return (
     <div className="bg-white p-2  shadow-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
         <div className="flex gap-3">
           <Select
-            size="large"
+            size="middle"
             placeholder="Select Team"
             options={[{ label: "Team Alpha", title: "teal-alpha" }]}
           ></Select>
           <div>
-            <DatePicker size="large"></DatePicker>
+            <DatePicker size="middle"></DatePicker>
           </div>
         </div>
       </div>
-      <div style={{ width: "100%", height: "100%" }} className="flex gap-9">
-        <div className="w-9/12">
+
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+        <div className="w-full sm:col-span-3">
           <ReactApexChart
             options={options}
             series={series}
@@ -85,7 +87,10 @@ const AverageResponseTimeChart = () => {
             height={300}
           />
         </div>
-        <TeamPerformanceGauge></TeamPerformanceGauge>
+
+        <div className="flex justify-center items-center sm:col-span-2 ">
+          <TeamPerformanceGauge></TeamPerformanceGauge>
+        </div>
       </div>
     </div>
   );

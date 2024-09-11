@@ -200,65 +200,45 @@ const DashboardCalender = () => {
   };
 
   const [selectedDate, setSelectedDate] = useState("05/10/2025");
-  
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   return (
-    <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 -mt-12 sm:mt-0">
-      <div
-        className="flex flex-col gap-2  lg:bg-white w-full shadow-md"
-        style={{ height: "570px" }}
-      >
-        <div className="mb-2 flex justify-center flex-col m-auto w-full pt-2 bg-white">
-          <Button className="bg-blue-700 text-white w-56 flex p-0 m-auto mb-2">
-            <div className="hover:background-orange-500 hover:text-blue-600 w-full">
-              <PlusOutlined></PlusOutlined> Add Task
-            </div>
+    <div className="grid gap-2 lg:grid-cols-7 -mt-12 sm:mt-0 w-full">
+      <div className="bg-white p-2 w-full lg:col-span-5 shadow-md">
+        <div className="bg-white p-2 rounded w-full border mb-2 flex items-center justify-between gap-3 flex-row-reverse">
+          <Button className="bg-lime-500 text-white">
+            <PlusOutlined></PlusOutlined> Add Tasks
           </Button>
-          <div className="flex justify-center items-center w-full p-2 h-full">
-            <div
-              style={wrapperStyle}
-              className="flex justify-center items-center w-full"
+          <div>
+            <div>Filter</div>
+            <Checkbox.Group
+              onChange={onChange}
+              className="flex lsm:flex-col  overflow-y-scroll w-full"
             >
-              <Cal fullscreen={false} onPanelChange={onPanelChange} />
-            </div>
+              <div id="all">
+                <Checkbox value="all">View All</Checkbox>
+              </div>
+              <div id="omega">
+                <Checkbox value="omega">Team Omega</Checkbox>
+              </div>
+              <div id="sigma">
+                <Checkbox value="sigma">Team Sigma</Checkbox>
+              </div>
+              <div id="delta">
+                <Checkbox value="delta">Team Delta</Checkbox>
+              </div>
+              <div id="phoenix">
+                <Checkbox value="phoenix">Team Phoenix</Checkbox>
+              </div>
+              <div id="titan">
+                <Checkbox value="titan">Team Titan</Checkbox>
+              </div>
+            </Checkbox.Group>
           </div>
         </div>
-
-        <div className="bg-white p-2 rounded h-full" style={{}}>
-          <div>Filter</div>
-          <Checkbox.Group
-            style={{
-              width: "100%",
-            }}
-            onChange={onChange}
-            className="flex lsm:flex-col  overflow-y-scroll"
-          >
-            <div id="all">
-              <Checkbox value="all">View All</Checkbox>
-            </div>
-            <div id="omega">
-              <Checkbox value="omega">Team Omega</Checkbox>
-            </div>
-            <div id="sigma">
-              <Checkbox value="sigma">Team Sigma</Checkbox>
-            </div>
-            <div id="delta">
-              <Checkbox value="delta">Team Delta</Checkbox>
-            </div>
-            <div id="phoenix">
-              <Checkbox value="phoenix">Team Phoenix</Checkbox>
-            </div>
-            <div id="titan">
-              <Checkbox value="titan">Team Titan</Checkbox>
-            </div>
-          </Checkbox.Group>
-        </div>
-      </div>
-
-      <div className="bg-white p-2 w-full lg:col-span-2  shadow-md">
         <Calendar
           localizer={localizer}
           events={events}
@@ -269,10 +249,10 @@ const DashboardCalender = () => {
         />
       </div>
 
-      <div className="hidden lg:flex w-full  shadow-md">
+      <div className="hidden lg:flex w-full  col-span-2 xl:col-span-2 shadow-md">
         <div
           className="bg-white flex flex-col w-full"
-          style={{ height: "570px" }}
+          style={{ height: "640px" }}
         >
           <DashboardTitle title="Response Time"></DashboardTitle>
           <div className="border-b mb-2"></div>
@@ -284,9 +264,9 @@ const DashboardCalender = () => {
               pagination={{
                 defaultCurrent: 20,
                 total: dataSource.length,
-                pageSize: 12,
+                pageSize: 14,
               }}
-              scroll={{ x: 300 }}
+              scroll={{ x: 200 }}
             />
           </div>
         </div>

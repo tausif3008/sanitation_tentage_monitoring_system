@@ -104,6 +104,7 @@ const LineChartWithArea = () => {
       },
       stroke: {
         curve: "straight",
+        width:2
       },
       colors: ["#91caff", "#4096ff"], // Line colors, also applied to the fill automatically
       title: {
@@ -176,7 +177,9 @@ const LineChartWithArea = () => {
         },
       },
       legend: {
-        position: "top",
+         position: "top", // Legend position at the top
+      horizontalAlign: "left", // Alig
+
       },
     },
   };
@@ -195,7 +198,8 @@ const LineChartWithArea = () => {
           options={chartData.options}
           series={chartData.series}
           type="area"
-          height={360}
+          height={350}
+          style={{ marginTop: "-5px" }}
         />
       </div>
     </div>

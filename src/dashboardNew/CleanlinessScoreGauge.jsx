@@ -47,6 +47,7 @@ const GaugeChart = () => {
         series={series}
         type="radialBar"
         height={350}
+        width={350}
       />
     </div>
   );
@@ -56,7 +57,7 @@ const CleanlinessScoreGauge = () => {
   return (
     <div className="h-full flex flex-col">
       <DashboardTitle title="Cleanliness Score"></DashboardTitle>
-      <div className="-mt-7">
+      <div className="-mt-7 flex w-full justify-center">
         <GaugeChart />
       </div>
       <div className="flex justify-center items-center text-center font-semibold p-2 mt-auto">

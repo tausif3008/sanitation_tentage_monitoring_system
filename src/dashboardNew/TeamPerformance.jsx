@@ -83,41 +83,41 @@ const TeamPerformance = () => {
     <div className="bg-white p-2  shadow-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
-
         <div className="flex gap-3 ">
           <Select
-            size="large"
+            size="middle"
             placeholder="Select Team"
             options={[{ label: "Team Alpha", title: "teal-alpha" }]}
           ></Select>
           <div>
-            <DatePicker size="large"></DatePicker>
+            <DatePicker size="middle"></DatePicker>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-between gap-10">
-        <div className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-3 justify-between gap-10">
+        <div className="w-full col-span-2">
           <TaskChart></TaskChart>
         </div>
-
-        <div className="grid grid-cols-5 w-64 mt-7">
-          {numbers.map((el) => {
-            return (
-              <>
-                <div className="col-span-1">
-                  <div
-                    className="h-3 w-3 rounded-full mt-1"
-                    style={{ backgroundColor: el.color }}
-                  ></div>
-                </div>
-                <div className="col-span-4">
-                  <div className="lg:text-lg">{el.task}</div>
-                  <div className="lg:text-lg font-semibold">{el.val}</div>
-                </div>
-              </>
-            );
-          })}
+        <div className="justify-center hidden sm:flex">
+          <div className="grid grid-cols-5 w-64 lg:mt-7">
+            {numbers.map((el) => {
+              return (
+                <>
+                  <div className="col-span-1">
+                    <div
+                      className="h-3 w-3 rounded-full mt-1"
+                      style={{ backgroundColor: el.color }}
+                    ></div>
+                  </div>
+                  <div className="col-span-4">
+                    <div className="lg:text-lg">{el.task}</div>
+                    <div className="lg:text-lg font-semibold">{el.val}</div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
