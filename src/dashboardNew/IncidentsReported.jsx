@@ -6,15 +6,13 @@ const IncidentsReported = () => {
   const chartOptions = {
     chart: {
       type: "donut",
+      height: "100%",
     },
     labels: ["A", "B", "C", "D"],
     responsive: [
       {
         breakpoint: 480,
         options: {
-          chart: {
-            width: 500,
-          },
           legend: {
             position: "bottom",
           },
@@ -24,7 +22,7 @@ const IncidentsReported = () => {
     plotOptions: {
       pie: {
         donut: {
-          size: "60%", // Adjust this size to control the space for text
+          // size: "60%", // Adjust this size to control the space for text
         },
       },
     },
@@ -52,15 +50,18 @@ const IncidentsReported = () => {
   const chartSeries = [40, 20, 25, 15];
 
   return (
-    <div className="pie-chart">
+    <div
+      className="pie-chart flex flex-col h-full"
+      style={{ width: "100%", height: "100%" }}
+    >
       <DashboardTitle title="Incidents Reported" />
       <ReactApexChart
         options={chartOptions}
         series={chartSeries}
-        height={350}
         type="donut"
+        height={220}
       />
-      <div className="flex justify-center items-center text-center font-semibold p-2">
+      <div className="flex justify-center items-center text-center font-semibold p-2 mt-auto">
         Number of sanitation related incidents reported in last 24hrs
       </div>
     </div>

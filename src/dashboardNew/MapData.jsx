@@ -152,10 +152,10 @@ const MapComponent = ({ tentage = true }) => {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap">
         <div className="text-xl font-semibold p-2">Locations Of Sanitation</div>
         <div className="flex  text-sm gap-3 items-center justify-end p-1">
-          <div className="flex gap-1">
+          <div className="flex gap-1 justify-center items-center">
             <div className="h-full flex items-center">Require Cleaning:</div>
             <img className="h-5 w-5" src={toilet} alt="" />
           </div>{" "}
@@ -172,7 +172,7 @@ const MapComponent = ({ tentage = true }) => {
       <MapContainer
         center={[userLocation.lat, userLocation.lng]}
         zoom={13}
-        style={{ height: "360px", width: "100%" }}
+        style={{ height: "400px", width: "100%", zIndex: 1 }}
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
         }}
@@ -182,14 +182,7 @@ const MapComponent = ({ tentage = true }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {/* <UserLocationMarker setUserLocation={setUserLocation} /> */}
-        {userLocation && (
-          <Marker
-            position={[userLocation.lat, userLocation.lng]}
-            icon={defaultIcon}
-          >
-            <Popup>You are here</Popup>
-          </Marker>
-        )}
+
         {toiletLatLong.map((place, index) => (
           <Marker
             key={index + place}

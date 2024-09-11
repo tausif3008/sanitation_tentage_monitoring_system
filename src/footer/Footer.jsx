@@ -1,29 +1,35 @@
 import React from "react";
-import fb from "../assets/Images/icons/facebook.png";
-import insta from "../assets/Images/insta.png";
-import linkedIn from "../assets/Images/icons/linkedIN.png";
 import QRCode from "qrcode.react";
+import {
+  EnvironmentOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import { DICT } from "../urils/dictionary";
 
-const Footer = ({ dict, lang }) => {
+const Footer = ({ lang = "en" }) => {
+  const dict = DICT;
   return (
-    <div className="text-white">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-4 lg:grid-cols-4">
+    <div className="">
+      <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-3 justify-between  gap-10 gap-y-8  lg:grid-cols-4">
         <div className="flex flex-col items-start md:items-center">
           <div>
-            <div className="text-base font-semibold mb-2">Contact Us</div>
-            <div className="flex flex-col text-d4 font-semibold text-sm flex-wrap">
-              <span className="flex-wrap flex break-words">
-                <b>Address:</b> Kumbh Mela Adhikari Triveni Bhawan, Prayagraj,
-                Uttar Pradesh.
+            <div className=" text-base font-semibold mb-2 text-orange-400">
+              {dict.emmergency_no[lang]}
+            </div>
+            <div className="flex flex-col font-semibold text-sm">
+              <span>
+                <RightOutlined /> {dict.police[lang]} : 100
               </span>
               <span>
-                <b>Email:</b> support@kumbhmonitoringsystem.in
+                <RightOutlined /> {dict.ambulance[lang]} : 108{" "}
               </span>
               <span>
-                <b>Phone:</b> +919876543210
+                <RightOutlined /> {dict.helpline[lang]} : 1098
               </span>
               <span>
-                <b>Emergency:</b> 1920
+                <RightOutlined /> {dict.fire[lang]} : 101
               </span>
             </div>
           </div>
@@ -31,67 +37,73 @@ const Footer = ({ dict, lang }) => {
 
         <div className="flex flex-col items-start md:items-center">
           <div>
-            <div className="text-base font-semibold mb-2">
+            <div className=" text-base font-semibold mb-2 text-orange-400">
               {dict.web_links[lang]}
             </div>
-            <div className="flex flex-col text-d4 text-sm font-semibold">
-              <a
-                href="#"
-                className="hover:underline no-underline text-white cursor-pointer"
-              >
-                FAQ
-              </a>
-              <a
-                href="#"
-                className="hover:underline no-underline text-white cursor-pointer"
-              >
-                Community Forum
-              </a>
-              <a
-                href="#"
-                className="hover:underline no-underline text-white cursor-pointer"
-              >
-                Technical Support
-              </a>
-              <a
-                href="#"
-                className="hover:underline no-underline text-white cursor-pointer"
-              >
-                Citizen Feedback
-              </a>
+            <div className="flex flex-col text-sm font-semibold">
+              <span>
+                <RightOutlined /> {dict.up_police[lang]}
+              </span>
+              <span>
+                <RightOutlined /> {dict.faq[lang]}
+              </span>
+              <span>
+                <RightOutlined /> {dict.community_forum[lang]}
+              </span>
+              <span>
+                <RightOutlined /> {dict.technical_support[lang]}
+              </span>
+              <span>
+                <RightOutlined /> {dict.citizen_feedback[lang]}
+              </span>
             </div>
           </div>
         </div>
-
-        <div className="flex flex-col items-start md:items-center">
+        <div className="flex text-sm flex-col w-full items-start">
           <div>
-            <div className="text-base font-semibold mb-2">
+            <div className="text-base font-semibold mb-2 text-orange-400">
               {dict.contact[lang]}
             </div>
-            <div className="flex text-d4 gap-2 text-lg font-semibold">
-              <span className="h-5">
-                <img src={linkedIn} className="h-full" alt="" />
-              </span>
-              <span className="h-5">
-                <img src={fb} alt="" className="h-full" />
-              </span>
-              <span className="h-5">
-                <img src={insta} alt="" className="h-full" />
-              </span>
+          </div>
+          <div className="w-full font-semibold">
+            <div className="flex gap-2">
+              <div className="font-semibold">
+                <EnvironmentOutlined className="text-orange-400 text-lg" />{" "}
+              </div>
+              <div className="break-words w-full">
+                {dict.address_footer[lang]}
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="font-semibold">
+                <MailOutlined className="text-orange-400 text-lg" />{" "}
+              </div>
+              <div className="break-words w-full inline-block">
+                {dict.email_footer[lang]}
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="font-semibold">
+                <PhoneOutlined
+                  className="text-orange-400 
+              xt-lg"
+                />{" "}
+              </div>
+              <div className="break-words w-full inline-block">
+                {dict.phone_number[lang]}{" "}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col items-start md:items-center">
           <div>
-            <div className="text-base font-semibold mb-2">Download App</div>
-            <a
-              href="https://kumbhpocv2/"
-              className="hover:underline cursor-pointer no-underline text-white"
-            >
-              Link: https://kumbhpocv2/
-            </a>
-            <div className="flex flex-col w-fit p-2 bg-violet-200 rounded-lg mt-2">
+            <div className=" text-base font-semibold mb-2 text-orange-400">
+              {dict.scan_qr[lang]}
+            </div>
+            <div className="flex flex-col w-fit p-2 bg-violet-200 rounded-lg">
               <QRCode
                 size={70}
                 value={"https://kumbhlostandfound.in/kumbh-v2/"}

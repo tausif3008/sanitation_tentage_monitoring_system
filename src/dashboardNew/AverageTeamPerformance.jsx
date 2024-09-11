@@ -2,8 +2,9 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import DashboardTitle from "./DashboardTitle";
 import { DatePicker, Select } from "antd";
+import TeamPerformanceGauge from "./TeamPerformanceGauge.jsx";
 
-const ResponseTimeChart = () => {
+const AverageResponseTimeChart = () => {
   const options = {
     chart: {
       type: "bar",
@@ -29,18 +30,7 @@ const ResponseTimeChart = () => {
       enabled: false,
     },
     xaxis: {
-      categories: [
-        "Type 1",
-        "Type 2",
-        "Type 3",
-        "Type 4",
-        "Type 5",
-        "Type 6",
-        "Type 7",
-        "Type 8",
-        "Type 9",
-        "Type 10",
-      ],
+      categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     },
     yaxis: {
       title: {
@@ -64,32 +54,41 @@ const ResponseTimeChart = () => {
   const series = [
     {
       name: "Assigned Time",
-      data: [30, 40, 45, 50, 49, 60, 70, 50, 20, 70], // Replace with actual data for Assigned Time
+      data: [30, 40, 45, 50, 49, 60, 70], // Replace with actual data for Assigned Time
     },
     {
       name: "Overdue Time",
-      data: [0, 0, 0, 10, 0, 4, 10, 0, 0, 10], // Replace with actual data for Overdue Time
+      data: [0, 0, 0, 10, 0, 4, 10], // Replace with actual data for Overdue Time
     },
   ];
   return (
-    <div style={{ width: "100%", height: "100%" }} className="p-2">
+    <div className="bg-white p-2  shadow-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
-
-        <div className="flex gap-3 ">
+        <div className="flex gap-3">
+          <Select
+            size="large"
+            placeholder="Select Team"
+            options={[{ label: "Team Alpha", title: "teal-alpha" }]}
+          ></Select>
           <div>
             <DatePicker size="large"></DatePicker>
           </div>
         </div>
       </div>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="bar"
-        height={300}
-      />
+      <div style={{ width: "100%", height: "100%" }} className="flex gap-9">
+        <div className="w-9/12">
+          <ReactApexChart
+            options={options}
+            series={series}
+            type="bar"
+            height={300}
+          />
+        </div>
+        <TeamPerformanceGauge></TeamPerformanceGauge>
+      </div>
     </div>
   );
 };
 
-export default ResponseTimeChart;
+export default AverageResponseTimeChart;

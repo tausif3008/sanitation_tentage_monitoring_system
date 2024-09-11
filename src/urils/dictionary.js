@@ -2,7 +2,11 @@ export const DICT = {
   title1: { hi: "कुंभ मेला 2025", en: "Kumbh Mela 2025" },
   title2: {
     hi: "खोया और पाया खोज प्रणाली",
-    en: "Tentage and Sanitation Monitoring System",
+    en: "LOST & FOUND TRACKING SYSTEM ",
+  },
+  dashboard: {
+    en: "Dashboard",
+    hi: "डैशबोर्ड",
   },
   home: {
     hi: "मुख्य पृष्ठ",
@@ -124,10 +128,12 @@ export const DICT = {
   info_missing: {
     en: (
       <>
-        <li>Sector 14 -Near Bridge No. 14</li>
-        <li>Sector 17 - Near Police Chowki Central </li>
-        <li>Sector 17 - Near Police Post Utari</li>
-        <li>Sector 18 - Opposite Parmarth Niketan</li>
+        <li className="hover:text-ec">Sector 14 -Near Bridge No. 14</li>
+        <li className="hover:text-ec">
+          Sector 17 - Near Police Chowki Central{" "}
+        </li>
+        <li className="hover:text-ec">Sector 17 - Near Police Post Utari</li>
+        <li className="hover:text-ec">Sector 18 - Opposite Parmarth Niketan</li>
       </>
     ),
     hi: (
@@ -217,8 +223,8 @@ export const DICT = {
     hi: "क्या करें और क्या न करें",
   },
   web_links: {
-    en: "Web Links",
-    hi: "वेब लिंक",
+    en: "Useful Links",
+    hi: "उपयोगी लिंक",
   },
   kumbh_mela: {
     en: "Kumbhmela",
@@ -228,9 +234,47 @@ export const DICT = {
     en: "UP Police",
     hi: "उत्तर प्रदेश पुलिस",
   },
+  faq: {
+    en: "FAQ",
+    hi: "अक्सर पूछे जाने वाले प्रश्न",
+  },
+  community_forum: {
+    en: "Community Forum",
+    hi: "सामुदायिक मंच",
+  },
+  technical_support: {
+    en: "Technical Support",
+    hi: "तकनीकी सहायता",
+  },
+  citizen_feedback: {
+    en: "Citizen Feedback",
+    hi: "नागरिक प्रतिक्रिया",
+  },
   contact: {
     en: "Contact",
     hi: "संपर्क",
+  },
+  address: {
+    en: "Address",
+    hi: "पता",
+  },
+
+  address_footer: {
+    en: "Kumbh Mela Adhikari Triveni Bhawan, Prayagraj, Uttar Pradesh.",
+    hi: "कुंभ मेला अधिकारी त्रिवेणी भवन, प्रयागराज, उत्तर प्रदेश।",
+  },
+  email_footer: {
+    en: "support@kumbhmonitoringsystem.in",
+    hi: "support@kumbhmonitoringsystem.in",
+  },
+  phone: { en: "Phone", hi: "फ़ोन" },
+  phone_number: {
+    en: "+919876543210",
+    hi: "+919876543210",
+  },
+  emmergency: {
+    en: "Emmergency",
+    hi: "आपातकाल",
   },
   scan_qr: {
     en: "Scan QR",
@@ -252,5 +296,14 @@ export const DICT = {
     en: "Age",
     hi: "उम्र",
   },
-  // -------------
+  emmergency_no: {
+    en: "Emmergency No.",
+    hi: "आपातकालीन नंबर",
+  },
+  ambulance: { hi: "एम्बुलेंस", en: "Ambulance" },
+  fire: { hi: "आग", en: "Fire" },
+  helpline: {
+    en: "Helpline",
+    hi: "हेल्पलाइन",
+  },
 };

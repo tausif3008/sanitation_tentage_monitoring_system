@@ -17,7 +17,6 @@ const GaugeChart = () => {
         },
         dataLabels: {
           name: {
-            offsetY: -10,
             show: true,
             color: "#888",
             fontSize: "17px",
@@ -55,10 +54,12 @@ const GaugeChart = () => {
 
 const CleanlinessScoreGauge = () => {
   return (
-    <div>
+    <div className="h-full flex flex-col">
       <DashboardTitle title="Cleanliness Score"></DashboardTitle>
-      <GaugeChart />
-      <div className="flex justify-center items-center text-center font-semibold p-2">
+      <div className="-mt-7">
+        <GaugeChart />
+      </div>
+      <div className="flex justify-center items-center text-center font-semibold p-2 mt-auto">
         Overall cleanliness level across all facilities
       </div>
     </div>

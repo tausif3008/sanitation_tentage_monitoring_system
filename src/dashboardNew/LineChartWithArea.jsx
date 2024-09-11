@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import MapData from "./MapData";
 
 const LineChartWithArea = () => {
   const [data, setData] = useState([
@@ -82,30 +81,31 @@ const LineChartWithArea = () => {
     series: [
       {
         name: "Total",
-        data: [54000, 53000, 55000, 52000, 54000, 51000, 53000, 55000, 52000], // Replace with your actual data
+        data: [54000, 53000, 55000, 52000, 54000, 50000, 53000, 52000, 53000], // Replace with your actual data
       },
       {
         name: "Operational",
-        data: [51330, 52000, 50000, 48000, 53000, 49000, 47000, 49000, 51000], // Replace with your actual data
+        data: [52000, 49000, 52000, 49000, 52000, 48000, 50000, 50000, 49000], // Replace with your actual data
       },
     ],
     options: {
       chart: {
-        type: "area", // Set chart type to 'area'
+        type: "area",
         height: 350,
-        toolbar: {
-          show: true,
+        animations: {
+          enabled: false,
+        },
+        zoom: {
+          enabled: false,
         },
       },
-      fill: {
-        type: "solid", // Solid fill
-        opacity: 0.4, // Adjust opacity as needed (higher value for more solid color)
+      dataLabels: {
+        enabled: false,
       },
       stroke: {
-        curve: "smooth", // Smooth curve for the lines
-        width: 2, // Line width
+        curve: "straight",
       },
-      colors: ["#10B981", "#3B82F6"], // Line colors, also applied to the fill automatically
+      colors: ["#91caff", "#4096ff"], // Line colors, also applied to the fill automatically
       title: {
         text: "Sanitation",
         align: "left",
@@ -126,11 +126,18 @@ const LineChartWithArea = () => {
         //   text: "Facility Type",
         // },
       },
-      // yaxis: {
-      //   title: {
-      //     text: "Number of Facilities",
-      //   },
-      // },
+      markers: {
+        size: 5,
+        hover: {
+          size: 9,
+        },
+      },
+      yaxis: {
+        // title: {
+        //   text: "Number of Facilities",
+        // },
+        min: 45000,
+      },
       tooltip: {
         // shared: false, // Disable shared tooltip
         y: {

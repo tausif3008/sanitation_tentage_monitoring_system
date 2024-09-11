@@ -5,14 +5,14 @@ const FacilityDetailsForm = () => {
   const onFinish = (values) => {};
   return (
     <div
-      className="p-3 rounded bg-yellow-50 bg-[#FF95000D]"
+      className="p-3 rounded bg-yellow-50"
       style={{
         boxShadow:
           "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
       }}
     >
-      <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
-        <div className="grid grid-cols-6 gap-2">
+      <Form onFinish={onFinish}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 flex-wrap gap-2">
           <Form.Item noStyle name="facility_id">
             <Input size="large" placeholder="Facility ID" />
           </Form.Item>
@@ -37,7 +37,7 @@ const FacilityDetailsForm = () => {
             <Input size="large" placeholder="Vendor" />
           </Form.Item>
 
-          <div className="col-span-6 flex justify-end ">
+          <div className="flex justify-end col-span-2 md:col-span-3 lg:col-span-6">
             <Button
               size="large"
               type="primary"

@@ -43,3 +43,9 @@
 #titan .ant-checkbox-inner {
   background-color: pink !important; /* Light blue background */
 }
+
+.rbc-btn-group button{
+  border:none;
+  font-size: 14px;
+  padding: 3px;
+}

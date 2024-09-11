@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Tooltip } from "antd";
 import React from "react";
 
 const TypeList = () => {
@@ -8,7 +8,20 @@ const TypeList = () => {
       dataIndex: "type",
       key: "type",
       render: (el) => {
-        return <div className=" w-10">{el}</div>;
+        return (
+          <div className="flex justify-between w-full">
+            <span>{el}</span>
+            <Tooltip
+              title={<div className="text-black">Toilet with septic tank</div>}
+              placement="bottomLeft"
+              color={"white"}
+            >
+              <span className="font-semibold w-4 h-4 rounded-full text-white bg-yellow-400 flex text-center justify-center align-items-center p-1">
+                i
+              </span>
+            </Tooltip>
+          </div>
+        );
       },
     },
     {
@@ -48,7 +61,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 2",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -56,7 +69,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 3",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -64,7 +77,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 4",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -72,7 +85,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 5",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -80,7 +93,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 6",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -88,7 +101,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 7",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -96,7 +109,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 8",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -104,7 +117,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 9",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -112,7 +125,7 @@ const TypeList = () => {
     },
     {
       key: "1",
-      type: "Type 1",
+      type: "Type 10",
       total: "6000",
       age: 32,
       functional: "5000",
@@ -125,7 +138,7 @@ const TypeList = () => {
         columns={columns}
         dataSource={data}
         pagination={false}
-        scroll={{ x: 300 }}
+        scroll={{ x: 400, y: 350 }}
       ></Table>
     </div>
   );
