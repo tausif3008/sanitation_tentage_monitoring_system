@@ -9,6 +9,10 @@ const IncidentsReported = () => {
       height: "100%",
     },
     labels: ["A", "B", "C", "D"],
+    legend: {
+      show: false, // Hide the legend
+    },
+
     responsive: [
       {
         breakpoint: 480,
@@ -59,7 +63,7 @@ const IncidentsReported = () => {
         options={chartOptions}
         series={chartSeries}
         type="donut"
-        height={220}
+        height={240}
       />
       <div className="flex justify-center items-center text-center font-semibold p-2 mt-auto">
         Number of sanitation related incidents reported in last 24hrs
