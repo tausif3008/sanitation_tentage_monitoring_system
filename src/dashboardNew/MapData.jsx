@@ -17,7 +17,7 @@ import "leaflet-routing-machine";
 
 const MapData = (props) => {
   return (
-    <div>
+    <div className="rounded-md">
       <MapComponent {...props}></MapComponent>
     </div>
   );

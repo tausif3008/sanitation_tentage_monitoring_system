@@ -1,11 +1,11 @@
 import React from "react";
 import FacilityDetailsForm from "./FacilityDetailsForm";
-import DashboardTitle from "./DashboardTitle";
+import DashboardTitle from "../DashboardTitle";
 import FacilityDetailsTable from "./FacilityDetailsTable";
 
 const FacilityDetails = () => {
   return (
-    <div>
+    <div className="rounded-md">
       <DashboardTitle
         title={"Facility Status & Details Panel"}
       ></DashboardTitle>

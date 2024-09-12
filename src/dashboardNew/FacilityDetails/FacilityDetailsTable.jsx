@@ -1,10 +1,10 @@
 import { Table } from "antd";
 import React from "react";
-import DashboardClock from "../assets/MonitoringImages/Dashboard/DashboardClock.png";
-import clenderIcon from "../assets/MonitoringImages/Dashboard/DachboardCalenderIcon.png";
-import requireCleaning from "../assets/MonitoringImages/Dashboard/requireCleaning_b_icon.png";
-import cleanedIcon from "../assets/MonitoringImages/Dashboard/cleaned_bucket_icon.png";
-import maintenance_icon from "../assets/MonitoringImages/Dashboard/maintenance_bucket_icon.png";
+import DashboardClock from "./../../assets/MonitoringImages/Dashboard/DashboardClock.png";
+import clenderIcon from "./../../assets/MonitoringImages/Dashboard/DachboardCalenderIcon.png";
+import requireCleaning from "./../../assets/MonitoringImages/Dashboard/requireCleaning_b_icon.png";
+import cleanedIcon from "./../../assets/MonitoringImages/Dashboard/cleaned_bucket_icon.png";
+import maintenance_icon from "./../../assets/MonitoringImages/Dashboard/maintenance_bucket_icon.png";
 
 const FacilityDetailsTable = () => {
   const dataSource = [

@@ -1,9 +1,8 @@
-import { Affix } from "antd";
 import React from "react";
 import LineChartWithArea from "./LineChartWithArea";
 import TypeList from "./TypeList";
 import MapData from "./MapData";
-import FacilityDetails from "./FacilityDetails";
+import FacilityDetails from "./FacilityDetails/FacilityDetails";
 import CleanlinessScoreGauge from "./CleanlinessScoreGauge";
 import ResponseTimeChart from "./ResponseTimeChart";
 import IncidentsReported from "./IncidentsReported";
@@ -15,6 +14,7 @@ import Alerts from "./Alerts";
 import TaskSchedule from "./TaskSchedule";
 import phone from "../assets/Dashboard/phone.png";
 import phoneIcon from "../assets/Dashboard/phone-alt.png";
+import PerformanceMatrix from "./PerformanceMatrix/PerformanceMatrix";
 
 const Dashboard = () => {
   return (
@@ -25,10 +25,10 @@ const Dashboard = () => {
       <div className="w-full border lg:col-span-1 col-span-4 shadow-md bg-white rounded-md">
         <TypeList></TypeList>
       </div>
-      <div className="col-span-4 shadow-md bg-white h-auto">
+      <div className="col-span-4 shadow-md bg-white h-auto rounded-md">
         <FacilityDetails></FacilityDetails>
       </div>
-      <div className="col-span-4 shadow-md bg-white">
+      <div className="col-span-4 shadow-md bg-white rounded-md">
         <MapData></MapData>
       </div>
       <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md rounded-md">
@@ -66,7 +66,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div
-        className="col-span-4 md:col-span-2 flex lg:hidden w-full flex-wrap "
+        className="col-span-4 sm:col-span-2 flex lg:hidden w-full flex-wrap "
         style={{ height: "425px" }}
       >
         <Alerts></Alerts>
@@ -75,6 +75,11 @@ const Dashboard = () => {
       <div className="lg:col-span-1 col-span-4 ">
         <TaskSchedule></TaskSchedule>
       </div>
+
+      <div className="col-span-4 shadow-md bg-white h-auto rounded-md">
+        <PerformanceMatrix></PerformanceMatrix>
+      </div>
+
       <div className="col-span-4 ">
         <div className="flex flex-col  shadow-md  sm:flex-row text-center mt-3 items-center border-2 border-orange-500 w-fit p-3 m-auto ">
           <span className="mr-8 text-xl font-semibold text-orange-400">

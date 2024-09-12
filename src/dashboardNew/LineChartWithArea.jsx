@@ -185,7 +185,7 @@ const LineChartWithArea = () => {
 
   return (
     <div className="rounded-md">
-      <div className="pr-2 pt-1">
+      <div className="pr-2 pt-2">
         <style>
           {`
           .apexcharts-tooltip-text-y-label {
