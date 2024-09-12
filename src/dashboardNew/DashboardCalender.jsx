@@ -263,6 +263,7 @@ const DashboardCalender = () => {
               columns={columns}
               pagination={{
                 defaultCurrent: 20,
+                current: 1,
                 total: dataSource.length,
                 pageSize: 14,
               }}

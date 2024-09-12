@@ -2,7 +2,7 @@ import React from "react";
 
 function Alerts() {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 pt-2 h-full">
+    <div className="bg-white rounded-lg shadow-md p-4 pt-2 h-full w-full">
       <h2 className="text-lg font-bold mb-2">Alerts</h2>
       <div className="space-y-4">
         <div className="flex flex-col items-start justify-start bg-sky-50 p-2 rounded-md">

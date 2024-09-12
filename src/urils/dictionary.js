@@ -2,7 +2,7 @@ export const DICT = {
   title1: { hi: "कुंभ मेला 2025", en: "Kumbh Mela 2025" },
   title2: {
     hi: "खोया और पाया खोज प्रणाली",
-    en: "LOST & FOUND TRACKING SYSTEM ",
+    en: "Tentage and Sanitation Monitoring System ",
   },
   dashboard: {
     en: "Dashboard",
