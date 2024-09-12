@@ -104,7 +104,7 @@ const LineChartWithArea = () => {
       },
       stroke: {
         curve: "straight",
-        width:2
+        width: 2,
       },
       colors: ["#91caff", "#4096ff"], // Line colors, also applied to the fill automatically
       title: {
@@ -177,15 +177,14 @@ const LineChartWithArea = () => {
         },
       },
       legend: {
-         position: "top", // Legend position at the top
-      horizontalAlign: "left", // Alig
-
+        position: "top", // Legend position at the top
+        horizontalAlign: "left", // Alig
       },
     },
   };
 
   return (
-    <div>
+    <div className="rounded-md">
       <div className="pr-2 pt-1">
         <style>
           {`

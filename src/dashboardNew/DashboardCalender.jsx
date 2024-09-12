@@ -206,8 +206,8 @@ const DashboardCalender = () => {
   };
 
   return (
-    <div className="grid gap-2 lg:grid-cols-7 -mt-12 sm:mt-0 w-full">
-      <div className="bg-white p-2 w-full lg:col-span-5 shadow-md">
+    <div className="grid gap-2 lg:grid-cols-7 -mt-12 sm:mt-0 w-full rounded-md">
+      <div className="bg-white p-2 w-full lg:col-span-5 shadow-md rounded-md">
         <div className="bg-white p-2 rounded w-full border mb-2 flex items-center justify-between gap-3 flex-row-reverse">
           <Button className="bg-lime-500 text-white">
             <PlusOutlined></PlusOutlined> Add Tasks
@@ -249,9 +249,9 @@ const DashboardCalender = () => {
         />
       </div>
 
-      <div className="hidden lg:flex w-full  col-span-2 xl:col-span-2 shadow-md">
+      <div className="hidden lg:flex w-full  col-span-2 xl:col-span-2 shadow-md rounded-md">
         <div
-          className="bg-white flex flex-col w-full"
+          className="bg-white flex flex-col w-full rounded-md"
           style={{ height: "640px" }}
         >
           <DashboardTitle title="Response Time"></DashboardTitle>

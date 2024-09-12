@@ -53,7 +53,7 @@ const IncidentsReported = () => {
   const chartSeries = [40, 20, 25, 15];
 
   return (
-    <div className="pie-chart flex flex-col h-full w-full">
+    <div className="pie-chart flex flex-col h-full w-full rounded-md">
       <DashboardTitle title="Incidents Reported" />
       <div className="flex justify-center items-center w-full">
         <ReactApexChart

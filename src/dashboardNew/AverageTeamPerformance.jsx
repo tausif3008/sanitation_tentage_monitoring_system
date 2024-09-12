@@ -63,7 +63,7 @@ const AverageResponseTimeChart = () => {
   ];
 
   return (
-    <div className="bg-white p-2  shadow-md">
+    <div className="bg-white p-2  shadow-md rounded-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
         <div className="flex gap-3">
@@ -78,7 +78,7 @@ const AverageResponseTimeChart = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 rounded-md">
         <div className="w-full sm:col-span-3">
           <ReactApexChart
             options={options}
@@ -88,7 +88,7 @@ const AverageResponseTimeChart = () => {
           />
         </div>
 
-        <div className="flex justify-center items-center sm:col-span-2 ">
+        <div className="flex justify-center items-center sm:col-span-2 rounded-md ">
           <TeamPerformanceGauge></TeamPerformanceGauge>
         </div>
       </div>

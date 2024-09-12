@@ -55,7 +55,7 @@ const GaugeChart = () => {
 
 const CleanlinessScoreGauge = () => {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col rounded-md">
       <DashboardTitle title="Cleanliness Score"></DashboardTitle>
       <div className="-mt-7 flex w-full justify-center">
         <GaugeChart />

@@ -19,10 +19,10 @@ import phoneIcon from "../assets/Dashboard/phone-alt.png";
 const Dashboard = () => {
   return (
     <div className="grid grid-cols-4 mx-3 mt-3 gap-3 ">
-      <div className="lg:col-span-3 col-span-4 border shadow-md bg-white">
+      <div className="lg:col-span-3 col-span-4 border shadow-md bg-white rounded-md">
         <LineChartWithArea></LineChartWithArea>
       </div>
-      <div className="w-full border lg:col-span-1 col-span-4 shadow-md bg-white">
+      <div className="w-full border lg:col-span-1 col-span-4 shadow-md bg-white rounded-md">
         <TypeList></TypeList>
       </div>
       <div className="col-span-4 shadow-md bg-white h-auto">
@@ -31,19 +31,19 @@ const Dashboard = () => {
       <div className="col-span-4 shadow-md bg-white">
         <MapData></MapData>
       </div>
-      <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md">
+      <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md rounded-md">
         <CleanlinessScoreGauge></CleanlinessScoreGauge>
       </div>
-      <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md">
+      <div className="sm:col-span-2 lg:col-span-1 col-span-4 bg-white shadow-md rounded-md">
         <IncidentsReported></IncidentsReported>
       </div>
-      <div className="lg:col-span-2  lg:flex col-span-4 bg-white shadow-md mb-3 lg:mb-0 h-full">
+      <div className="lg:col-span-2  lg:flex col-span-4 bg-white shadow-md mb-3 lg:mb-0 h-full rounded-md">
         <ResponseTimeChart></ResponseTimeChart>
       </div>
-      <div className="col-span-4 mt-10 sm:mt-0 w-full ">
+      <div className="col-span-4 mt-10 sm:mt-0 w-full rounded-md ">
         <DashboardCalender></DashboardCalender>
       </div>
-      <div className="col-span-4 lg:col-span-2 flex gap-2 flex-col ">
+      <div className="col-span-4 lg:col-span-2 flex gap-2 flex-col rounded-md">
         <div className="">
           <TeamPerformance></TeamPerformance>
         </div>
@@ -59,7 +59,7 @@ const Dashboard = () => {
           <Notifications></Notifications>
         </div>
         <div
-          className="col-span-2  hidden lg:flex w-full border flex-wrap rounded-md"
+          className="col-span-2  hidden lg:flex w-full flex-wrap rounded-md"
           style={{ height: "375px" }}
         >
           <Alerts></Alerts>

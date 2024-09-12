@@ -133,7 +133,7 @@ const TypeList = () => {
     },
   ];
   return (
-    <div>
+    <div className="rounded-md">
       <Table
         columns={columns}
         dataSource={data}

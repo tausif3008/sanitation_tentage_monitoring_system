@@ -80,7 +80,7 @@ const numbers = [
 
 const TeamPerformance = () => {
   return (
-    <div className="bg-white p-2  shadow-md">
+    <div className="bg-white p-2  shadow-md rounded-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
         <div className="flex gap-3 ">
@@ -95,7 +95,7 @@ const TeamPerformance = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 justify-between gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 justify-between gap-10 rounded-md">
         <div className="w-full col-span-2">
           <TaskChart></TaskChart>
         </div>

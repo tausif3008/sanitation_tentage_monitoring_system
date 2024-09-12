@@ -72,7 +72,7 @@ const ResponseTimeChart = () => {
     },
   ];
   return (
-    <div className="w-full p-2">
+    <div className="w-full p-2 rounded-md">
       <div className="flex justify-between flex-wrap">
         <DashboardTitle title="Team Performance"></DashboardTitle>
         <div className="flex gap-3 ">
