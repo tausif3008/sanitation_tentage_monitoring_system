@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const LineChartWithArea = () => {
+const LineChartWithArea = ({ title = false, total, operational }) => {
   const [data, setData] = useState([
     {
       type: "Type 1",
@@ -51,61 +51,17 @@ const LineChartWithArea = () => {
       "Avg. Response Time": "1.30 hrs",
       "Incident Reported": 5,
     },
-    {
-      type: "Type 7",
-      "Toilet With Septic Tank": 530,
-      "Fully Functional": 520,
-      "Cleanliness Index": 520,
-      "Avg. Response Time": "1.30 hrs",
-      "Incident Reported": 5,
-    },
-    {
-      type: "Type 8",
-      "Toilet With Septic Tank": 530,
-      "Fully Functional": 520,
-      "Cleanliness Index": 520,
-      "Avg. Response Time": "1.30 hrs",
-      "Incident Reported": 5,
-    },
-    {
-      type: "Type 9",
-      "Toilet With Septic Tank": 530,
-      "Fully Functional": 520,
-      "Cleanliness Index": 520,
-      "Avg. Response Time": "1.30 hrs",
-      "Incident Reported": 5,
-    },
-    {
-      type: "Type 9",
-      "Toilet With Septic Tank": 530,
-      "Fully Functional": 520,
-      "Cleanliness Index": 520,
-      "Avg. Response Time": "1.30 hrs",
-      "Incident Reported": 5,
-    },
-    {
-      type: "Type 10",
-      "Toilet With Septic Tank": 530,
-      "Fully Functional": 520,
-      "Cleanliness Index": 520,
-      "Avg. Response Time": "1.30 hrs",
-      "Incident Reported": 5,
-    },
   ]);
 
   const chartData = {
     series: [
       {
         name: "Total",
-        data: [
-          54000, 53000, 55000, 52000, 54000, 50000, 53000, 52000, 53000, 52000,
-        ], // Replace with your actual data
+        data: [4800, 5100, 580, 5600, 4800, 5000], // Replace with your actual data
       },
       {
         name: "Operational",
-        data: [
-          52000, 49000, 52000, 49000, 52000, 48000, 50000, 50000, 49000, 46000,
-        ], // Replace with your actual data
+        data: [4200, 5000, 580, 5400, 4800, 4663], // Replace with your actual data
       },
     ],
     options: {
@@ -128,7 +84,7 @@ const LineChartWithArea = () => {
       },
       colors: ["#91caff", "#4096ff"], // Line colors, also applied to the fill automatically
       title: {
-        text: "Sanitation",
+        text: title || "Sanitation",
         align: "left",
       },
       xaxis: {
@@ -158,7 +114,7 @@ const LineChartWithArea = () => {
         // title: {
         //   text: "Number of Facilities",
         // },
-        min: 45000,
+        min: total ? 0 : 45000,
       },
       tooltip: {
         // shared: false, // Disable shared tooltip

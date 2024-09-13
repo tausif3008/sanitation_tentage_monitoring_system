@@ -57,3 +57,7 @@ body {
 #gauge-chart text{
 fill: black !important;
 }
+
+.ant-table-column-sort .ant-table-column-sorters{
+  color:black !important;
+}

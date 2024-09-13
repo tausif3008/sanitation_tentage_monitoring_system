@@ -3,9 +3,7 @@ import LandingPage from "./landingPage/LandingPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Login/Login";
 import Layout from "./AppLayout/Layout";
-import Dashboard from "./dashboardNew/Dashboard";
 
-import UserRegistrationForm from "./user/UserRegistrationForm";
 import UserList from "./user/UsersList";
 import AssetRegistrationForm from "./asset/AssetRegistrationForm";
 import AssetsList from "./asset/AssetsList";
@@ -31,6 +29,9 @@ import MonthlyReport from "./schedule/MonthlyReport";
 import Monitoring from "./complaince/Monitoring";
 import MonitoringReport from "./complaince/MonitoringReport";
 import NotificationAdd from "./notification/NotificationAdd";
+import WastesDashboard from "./WasteDashboard/WastesDashboard";
+import Dashboard from "./dashboardNew/Dashboard";
+import TentageDashboard from "./TentageDashboard/TentageDashboard";
 
 function App() {
   return (
@@ -39,6 +40,15 @@ function App() {
         <Route path="/" element={<Navigate to="/home" />}></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+          <Route
+            path="/tentage-dashboard"
+            element={<TentageDashboard></TentageDashboard>}
+          ></Route>
+
+          <Route
+            path="/waste-dashboard"
+            element={<WastesDashboard></WastesDashboard>}
+          ></Route>
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
           <Route
             path="user-registration"

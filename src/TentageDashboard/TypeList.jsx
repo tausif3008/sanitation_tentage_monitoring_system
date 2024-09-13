@@ -54,92 +54,59 @@ const TypeList = ({ tentage }) => {
     {
       key: "1",
       type: "Type 1",
-      total: "54000",
+      total: "4800",
       age: 32,
-      functional: "52000",
+      functional: "4200",
       res_time: "1.5 Hrs",
     },
     {
       key: "1",
       type: "Type 2",
-      total: "53000",
+      total: "5100",
       age: 32,
-      functional: "49000",
+      functional: "5000",
       res_time: "1.5 Hrs",
     },
     {
       key: "1",
       type: "Type 3",
-      total: "55000",
+      total: "580",
       age: 32,
-      functional: "52000",
+      functional: "580",
       res_time: "1.5 Hrs",
     },
     {
       key: "1",
       type: "Type 4",
-      total: "52000",
+      total: "5600",
       age: 32,
-      functional: "49000",
+      functional: "5450",
       res_time: "1.5 Hrs",
     },
     {
       key: "1",
       type: "Type 5",
-      total: "54000",
+      total: "5000",
       age: 32,
-      functional: "52000",
+      functional: "4800",
       res_time: "1.5 Hrs",
     },
     {
       key: "1",
       type: "Type 6",
-      total: "50000",
+      total: "5000",
       age: 32,
-      functional: "48000",
-      res_time: "1.5 Hrs",
-    },
-    {
-      key: "1",
-      type: "Type 7",
-      total: "52000",
-      age: 32,
-      functional: "50000",
-      res_time: "1.5 Hrs",
-    },
-    {
-      key: "1",
-      type: "Type 8",
-      total: "53000",
-      age: 32,
-      functional: "49000",
-      res_time: "1.5 Hrs",
-    },
-    {
-      key: "1",
-      type: "Type 9",
-      total: "52000",
-      age: 32,
-      functional: "46000",
-      res_time: "1.5 Hrs",
-    },
-    {
-      key: "1",
-      type: "Type 10",
-      total: "52000",
-      age: 32,
-      functional: "49000",
+      functional: "4663",
       res_time: "1.5 Hrs",
     },
   ];
-
   return (
     <div className="rounded-md">
       <Table
         columns={columns}
         dataSource={data}
         pagination={false}
-        scroll={{ x: 400, y: 350 }}
+        scroll={{ x: 400 }}
       ></Table>
     </div>
   );

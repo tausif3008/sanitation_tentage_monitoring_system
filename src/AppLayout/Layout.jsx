@@ -24,7 +24,10 @@ const Layout = () => {
   const location = useLocation();
   useEffect(() => {
     if (location.pathname) {
-      const wFullCondition = location.pathname.split("/").includes("dashboard");
+      const wFullCondition =
+        location.pathname.split("/").includes("dashboard") ||
+        location.pathname === "/waste-dashboard" ||
+        location.pathname === "/tentage-dashboard";
       if (!wFullCondition) {
         setClassWidth(
           "md:w-10/12 w-11/12 xs:w-9/12 xl:w-10/12 2xl:w-9/12 flex flex-col m-auto"
@@ -35,7 +38,6 @@ const Layout = () => {
     }
   }, [location]);
 
-  
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 font-roboto">
       <div>

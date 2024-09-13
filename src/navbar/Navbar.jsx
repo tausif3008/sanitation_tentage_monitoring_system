@@ -66,6 +66,44 @@ const register_items = (lang, dict) => {
   ];
 };
 
+const dashboards = (lang, dict) => {
+  return [
+    {
+      key: "2",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/dashboard"
+        >
+          Sanitation Dashboard
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/waste-dashboard"
+        >
+          Waste Dashboard
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/tentage-dashboard"
+        >
+          Tentage Dashboard
+        </Link>
+      ),
+    },
+  ];
+};
+
 const assignment_items = (lang, dict) => {
   return [
     {
@@ -261,11 +299,18 @@ const Navbar = ({ lang, setLang }) => {
             </div>
           </Link>
 
-          <Link className="text-white no-underline " to="/dashboard">
+          {/* <Link className="text-white no-underline " to="/dashboard">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               Dashboard{" "}
             </div>
-          </Link>
+          </Link> */}
+
+          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+            <DropDown
+              items={dashboards(lang, dict)}
+              name={"Dashboard"}
+            ></DropDown>
+          </div>
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown

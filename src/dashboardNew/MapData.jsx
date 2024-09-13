@@ -25,10 +25,8 @@ const MapData = (props) => {
 
 export default MapData;
 
-// Built-in Leaflet icon for markers
 const defaultIcon = L.icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/128/535/535137.png",
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
   iconSize: [40, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -36,7 +34,6 @@ const defaultIcon = L.icon({
 
 const toiletIconsMap = L.icon({
   iconUrl: cleanedIcon,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
   iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -44,7 +41,6 @@ const toiletIconsMap = L.icon({
 
 const toiletIconCleaningRequire = L.icon({
   iconUrl: toilet,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
   iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -52,61 +48,135 @@ const toiletIconCleaningRequire = L.icon({
 
 const underMaintenanceIcon = L.icon({
   iconUrl: UnderMaintenanceIcon,
-  // shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/,
   iconSize: [24, 25],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
 
-// Nearby places
+// Updated toilet data
 const toiletLatLong = [
-  { id: 1, name: "Toilet 1", lat: 25.4314, lng: 81.8785 },
-  { id: 2, name: "Toilet 2", lat: 25.4268, lng: 81.8862 },
-  { id: 3, name: "Toilet 3", lat: 25.4268, lng: 81.8162 },
+  {
+    id: "TOI12459",
+    name: "Toilet 1",
+    lat: 25.4314,
+    lng: 81.8785,
+    type: "Portable Toilet",
+    lastClean: "10:37 AM",
+    nextSchedule: "12:37 PM",
+    team: "Team Alpha",
+    responseTime: "15 min",
+    status: "Requires cleaning",
+  },
+  {
+    id: "TOI12460",
+    name: "Toilet 2",
+    lat: 25.4268,
+    lng: 81.8862,
+    type: "Permanent Toilet",
+    lastClean: "09:30 AM",
+    nextSchedule: "11:30 AM",
+    team: "Team Bravo",
+    responseTime: "18 min",
+    status: "Cleaned",
+  },
+  {
+    id: "TOI12461",
+    name: "Toilet 3",
+    lat: 25.4268,
+    lng: 81.8162,
+    type: "Septic Tank Toilet",
+    lastClean: "08:45 AM",
+    nextSchedule: "10:45 AM",
+    team: "Team Alpha",
+    responseTime: "12 min",
+    status: "Under Maintenance",
+  },
+  {
+    id: "TOI12462",
+    name: "Toilet 4",
+    lat: 25.4314,
+    lng: 81.8548,
+    type: "Portable Toilet",
+    lastClean: "10:00 AM",
+    nextSchedule: "12:00 PM",
+    team: "Team Charlie",
+    responseTime: "16 min",
+    status: "Cleaned",
+  },
+  {
+    id: "TOI12463",
+    name: "Toilet 5",
+    lat: 25.4368,
+    lng: 81.8729,
+    type: "Permanent Toilet",
+    lastClean: "07:45 AM",
+    nextSchedule: "09:45 AM",
+    team: "Team Delta",
+    responseTime: "19 min",
+    status: "Requires cleaning",
+  },
+  {
+    id: "TOI12464",
+    name: "Toilet 6",
+    lat: 25.4268,
+    lng: 81.8269,
+    type: "Septic Tank Toilet",
+    lastClean: "06:30 AM",
+    nextSchedule: "08:30 AM",
+    team: "Team Alpha",
+    responseTime: "14 min",
+    status: "Under Maintenance",
+  },
+  {
+    id: "TOI12465",
+    name: "Toilet 7",
+    lat: 25.4468,
+    lng: 81.8169,
+    type: "Portable Toilet",
+    lastClean: "11:00 AM",
+    nextSchedule: "01:00 PM",
+    team: "Team Bravo",
+    responseTime: "13 min",
+    status: "Requires cleaning",
+  },
+  {
+    id: "TOI12466",
+    name: "Toilet 8",
+    lat: 25.4514,
+    lng: 81.8645,
+    type: "Permanent Toilet",
+    lastClean: "09:15 AM",
+    nextSchedule: "11:15 AM",
+    team: "Team Delta",
+    responseTime: "20 min",
+    status: "Cleaned",
+  },
+  {
+    id: "TOI12467",
+    name: "Toilet 9",
+    lat: 25.4212,
+    lng: 81.8548,
+    type: "Septic Tank Toilet",
+    lastClean: "07:50 AM",
+    nextSchedule: "09:50 AM",
+    team: "Team Charlie",
+    responseTime: "17 min",
+    status: "Under Maintenance",
+  },
+  {
+    id: "TOI12468",
+    name: "Toilet 10",
+    lat: 25.4618,
+    lng: 81.8765,
+    type: "Portable Toilet",
+    lastClean: "06:45 AM",
+    nextSchedule: "08:45 AM",
+    team: "Team Alpha",
+    responseTime: "12 min",
+    status: "Requires cleaning",
+  },
 ];
 
-const toiletLatLongRequire = [
-  { id: 4, name: "Toilet 4", lat: 25.4314, lng: 81.8548 },
-  { id: 5, name: "Toilet 5", lat: 25.4314, lng: 81.8548 },
-  { id: 6, name: "Toilet 6", lat: 25.4368, lng: 81.8729 },
-  { id: 7, name: "Toilet 7", lat: 25.4268, lng: 81.8269 },
-];
-
-const toiletLatLongMaintenance = [
-  { id: 8, name: "Toilet 4", lat: 25.4614, lng: 81.8758 },
-  { id: 9, name: "Toilet 5", lat: 25.4714, lng: 81.8648 },
-  { id: 10, name: "Toilet 6", lat: 25.4068, lng: 81.8229 },
-  { id: 11, name: "Toilet 7", lat: 25.4468, lng: 81.8169 },
-];
-
-const UserLocationMarker = ({ setUserLocation }) => {
-  const map = useMapEvents({
-    locationfound: (e) => {
-      setUserLocation(e.latlng);
-      if (map) {
-        map.setView(e.latlng, 16);
-        L.marker(e.latlng, { icon: defaultIcon })
-          .addTo(map)
-          .bindPopup("You are here")
-          .openPopup();
-      }
-    },
-    locationerror: () => {
-      alert("Could not access your location.");
-    },
-  });
-
-  useEffect(() => {
-    if (map) {
-      map.locate({
-        setView: true,
-        maxZoom: 5,
-      });
-    }
-  }, [map]);
-
-  return null;
-};
 
 const MapComponent = ({ tentage = true }) => {
   const mapRef = useRef(null);
@@ -115,17 +185,6 @@ const MapComponent = ({ tentage = true }) => {
     lng: 81.8807,
   });
   const [routeControl, setRouteControl] = useState(null);
-
-  useEffect(() => {
-    if (mapRef.current && userLocation) {
-      if (routeControl) {
-        routeControl.setWaypoints([
-          L.latLng(userLocation.lat, userLocation.lng),
-          L.latLng(userLocation.lat, userLocation.lng),
-        ]);
-      }
-    }
-  }, [userLocation, routeControl]);
 
   const handleMarkerClick = (lat, lng) => {
     if (!mapRef.current) {
@@ -150,11 +209,38 @@ const MapComponent = ({ tentage = true }) => {
     setRouteControl(newRouteControl);
   };
 
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Requires cleaning":
+        return {
+          backgroundColor: "yellow",
+          padding: "5px",
+          borderRadius: "5px",
+        };
+      case "Cleaned":
+        return {
+          backgroundColor: "green",
+          padding: "5px",
+          borderRadius: "5px",
+          color: "white",
+        };
+      case "Under Maintenance":
+        return {
+          backgroundColor: "red",
+          padding: "5px",
+          borderRadius: "5px",
+          color: "white",
+        };
+      default:
+        return {};
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between flex-wrap">
         <div className="text-xl font-semibold p-2">Locations Of Sanitation</div>
-        <div className="flex  text-sm gap-3 items-center justify-end p-1">
+        <div className="flex text-sm gap-3 items-center justify-end p-1">
           <div className="flex gap-1 justify-center items-center">
             <div className="h-full flex items-center">Require Cleaning:</div>
             <img className="h-5 w-5" src={toilet} alt="" />
@@ -162,7 +248,7 @@ const MapComponent = ({ tentage = true }) => {
           <div className="flex gap-1 justify-center items-center">
             <span className="h-full flex items-center">Cleaned:</span>
             <img className="h-5 w-5" src={cleanedIcon} alt="" />
-          </div>{" "}
+          </div>
           <div className="flex gap-1 justify-center items-center">
             <span className="h-full flex items-center">Under Maintenance:</span>
             <img className="h-5 w-5" src={UnderMaintenanceIcon} alt="" />
@@ -170,9 +256,11 @@ const MapComponent = ({ tentage = true }) => {
         </div>
       </div>
       <MapContainer
-        center={[userLocation.lat, userLocation.lng]}
+        center={[25.4358, 81.8463]}
         zoom={13}
-        style={{ height: "400px", width: "100%", zIndex: 1 }}
+        minZoom={10}
+        maxZoom={18}
+        style={{ height: "425px", width: "100%", zIndex: 1 }}
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
         }}
@@ -181,42 +269,38 @@ const MapComponent = ({ tentage = true }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* <UserLocationMarker setUserLocation={setUserLocation} /> */}
-
         {toiletLatLong.map((place, index) => (
           <Marker
             key={index + place}
             position={[place.lat, place.lng]}
-            icon={toiletIconsMap}
+            icon={
+              place.status === "Requires cleaning"
+                ? toiletIconCleaningRequire
+                : place.status === "Under Maintenance"
+                ? underMaintenanceIcon
+                : toiletIconsMap
+            }
             eventHandlers={{
               click: () => handleMarkerClick(place.lat, place.lng),
             }}
           >
-            <Popup>{place.name}</Popup>
-          </Marker>
-        ))}
-        {toiletLatLongRequire.map((place, index) => (
-          <Marker
-            key={index + place}
-            position={[place.lat, place.lng]}
-            icon={toiletIconCleaningRequire}
-            eventHandlers={{
-              click: () => handleMarkerClick(place.lat, place.lng),
-            }}
-          >
-            <Popup>{place.name}</Popup>
-          </Marker>
-        ))}
-        {toiletLatLongMaintenance.map((place, index) => (
-          <Marker
-            key={index + place}
-            position={[place.lat, place.lng]}
-            icon={underMaintenanceIcon}
-            eventHandlers={{
-              click: () => handleMarkerClick(place.lat, place.lng),
-            }}
-          >
-            <Popup>{place.name}</Popup>
+            <Popup>
+              <div>
+                <strong>#{place.id}</strong>
+                <br />
+                <span>{place.type}</span>
+                <br />
+                <span>Last Clean: {place.lastClean}</span>
+                <br />
+                <span>Next Schedule: {place.nextSchedule}</span>
+                <br />
+                <span>Team: {place.team}</span>
+                <br />
+                <span>Average response time: {place.responseTime}</span>
+                <br />
+                <span className="flex mt-1"  style={getStatusStyle(place.status)}>{place.status}</span>
+              </div>
+            </Popup>
           </Marker>
         ))}
       </MapContainer>
