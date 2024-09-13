@@ -410,11 +410,14 @@ const Navbar = ({ lang, setLang }) => {
           }
         >
           <div className="text-base">
-            <Link to={"/dashboard"} className="no-underline text-white">
-              <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
-                Dashboard{" "}
-              </div>
-            </Link>
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
+              <DropDown
+                text={"black"}
+                items={dashboards(lang, dict)}
+                name={"Dashboard"}
+              ></DropDown>
+            </div>
+
             <Link to={"/home"} className="no-underline text-white">
               <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
                 {dict.home[lang]}
