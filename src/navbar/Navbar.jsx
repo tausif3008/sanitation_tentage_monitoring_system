@@ -84,9 +84,9 @@ const dashboards = (lang, dict) => {
       label: (
         <Link
           className="text-black no-underline hover:text-green"
-          to="/waste-dashboard"
+          to="/tentage-dashboard"
         >
-          Waste Dashboard
+          Tentage Dashboard
         </Link>
       ),
     },
@@ -95,9 +95,9 @@ const dashboards = (lang, dict) => {
       label: (
         <Link
           className="text-black no-underline hover:text-green"
-          to="/tentage-dashboard"
+          to="/waste-dashboard"
         >
-          Tentage Dashboard
+          Waste Dashboard
         </Link>
       ),
     },

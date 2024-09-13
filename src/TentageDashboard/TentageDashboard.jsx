@@ -15,6 +15,7 @@ import phoneIcon from "../assets/Dashboard/phone-alt.png";
 import PerformanceMatrix from "./PerformanceMatrix/PerformanceMatrix";
 import TypeList from "./TypeList";
 import FacilityDetails from "./FacilityDetails/FacilityDetails";
+import TaskDetails from "./TaskDetails/TaskDetails";
 
 const total = [5000, 4000, 5500, 4300, 5200, 4310];
 const operational = [4000, 3500, 4500, 4300, 4800, 4110];
@@ -48,7 +49,7 @@ const TentageDashboard = () => {
         <ResponseTimeChart></ResponseTimeChart>
       </div>
       <div className="col-span-4 mt-10 sm:mt-0 w-full rounded-md ">
-        <DashboardCalender></DashboardCalender>
+        <TaskDetails></TaskDetails>
       </div>
       <div className="col-span-4 lg:col-span-2 flex gap-2 flex-col rounded-md">
         <div className="">
