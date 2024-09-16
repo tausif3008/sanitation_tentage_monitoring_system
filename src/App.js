@@ -32,6 +32,7 @@ import NotificationAdd from "./notification/NotificationAdd";
 import WastesDashboard from "./WasteDashboard/WastesDashboard";
 import Dashboard from "./dashboardNew/Dashboard";
 import TentageDashboard from "./TentageDashboard/TentageDashboard";
+import IncidentDashboard from "./IncidentDashborad/IncidentDashboard";
 
 function App() {
   return (
@@ -49,6 +50,12 @@ function App() {
             path="/waste-dashboard"
             element={<WastesDashboard></WastesDashboard>}
           ></Route>
+
+          <Route
+            path="/incident-dashboard"
+            element={<IncidentDashboard></IncidentDashboard>}
+          ></Route>
+
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
           <Route
             path="user-registration"

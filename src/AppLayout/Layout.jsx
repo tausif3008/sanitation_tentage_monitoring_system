@@ -5,6 +5,7 @@ import MainNavbar from "../navbar/MainNavbar";
 import CopyWrite from "../footer/Copywrite";
 import { DICT } from "../urils/dictionary";
 import footerBg from "../assets/Dashboard/footerBg.png";
+import { Dropdown, Select } from "antd";
 
 const Layout = () => {
   const localLang = localStorage.getItem("lang");
@@ -26,8 +27,7 @@ const Layout = () => {
     if (location.pathname) {
       const wFullCondition =
         location.pathname.split("/").includes("dashboard") ||
-        location.pathname === "/waste-dashboard" ||
-        location.pathname === "/tentage-dashboard";
+        location.pathname.split("-").includes("dashboard");
       if (!wFullCondition) {
         setClassWidth(
           "md:w-10/12 w-11/12 xs:w-9/12 xl:w-10/12 2xl:w-9/12 flex flex-col m-auto"

@@ -101,6 +101,17 @@ const dashboards = (lang, dict) => {
         </Link>
       ),
     },
+    {
+      key: "4",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/incident-dashboard"
+        >
+          Incident Dashboard
+        </Link>
+      ),
+    },
   ];
 };
 
