@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Input, message, Modal, Image } from "antd";
-import { Link } from "react-router-dom";
-import QRCode from "qrcode.react";
+import { useNavigate } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
 
 const { Search } = Input;
@@ -10,171 +9,179 @@ const AssetsList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
-  const [isAssetList, setIsAssetList] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // State for success message
-  const [isModalVisible, setIsModalVisible] = useState(false); // State for Modal visibility
-  const [qrCodeData, setQrCodeData] = useState(""); // State for QR code data
-  const [qrCodeUrl, setQrCodeUrl] = useState(""); // State for QR code image URL
-
-  const [assestInfo, setAssestInfo] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const navigate = useNavigate(); // Hook to navigate
 
   useEffect(() => {
     const fetchAssets = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          "http://filemanagement.metaxpay.in:8001/asset-list/"
-        );
+        const response = await fetch("https://kumbhtsmonitoring.in/php-api/asset/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "YunHu873jHds83hRujGJKd873",
+            "x-api-version": "1.0.1",
+            "x-platform": "Web",
+            "x-access-token": localStorage.getItem("sessionToken") || "",
+          }
+        });
+
         const result = await response.json();
 
-        if (response.ok && result.data) {
-          const transformedData = result.data.map((item, index) => ({
-            key: item.id,
+        if (response.ok && result.data && Array.isArray(result.data.listings)) {
+          const transformedData = result.data.listings.map((item, index) => ({
+            key: item.assets_id,
             srNo: index + 1,
-            assetsId: item.id,
-            assetsName: item.asset_name || "N/A",
-            assetsCode: item.asset_code || "N/A",
-            vendor: item.vendor || "N/A",
-            qrCodeUrl:
-              "http://filemanagement.metaxpay.in:8001" + item.qr_code || "", // Add QR code URL
+            ...item,
           }));
           setData(transformedData);
-          setFilteredData(transformedData); // Initialize filtered data
+          setFilteredData(transformedData);
         } else {
-          message.error(result.message || "Failed to load assets");
+          message.error(result.message || "Failed to fetch assets. Data format may not be an array.");
         }
       } catch (error) {
-        message.error(
-          error.message || "An error occurred while fetching the assets"
-        );
+        message.error("Error fetching assets: " + error.message);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchAssets();
-
-    const queryParams = new URLSearchParams(window.location.search);
-    if (queryParams.get("status") === "success") {
-      setSuccessMessage("Asset Registered Successfully");
-      setTimeout(() => {
-        setSuccessMessage(""); // Hide the message after 3 seconds
-      }, 3000);
-    }
   }, []);
 
   const handleSearch = (value) => {
-    const filtered = data.filter(
-      (item) =>
-        item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
-        item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
-        item.vendor.toLowerCase().includes(value.toLowerCase())
+    const filtered = data.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
 
-  const showQrCode = (record) => {
-    setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
-    setQrCodeUrl(record.qrCodeUrl); // Set the QR code URL
-    setIsModalVisible(true); // Show the modal
+  const handleQRCodeClick = (qrCode) => {
+    if (qrCode) {
+      setQrCodeUrl(`https://kumbhtsmonitoring.in/${qrCode}`);
+      setIsModalVisible(true);
+    } else {
+      message.warning("QR Code not available.");
+    }
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false); // Hide the modal
+  const handleNewAssetClick = () => {
+    navigate("/asset-registration"); // Navigate to the Asset Registration page
   };
 
   const columns = [
     {
-      title: "Assets Name",
-      dataIndex: "assetsName",
-      key: "assetsName",
+      title: "Sr No",
+      dataIndex: "srNo",
+      key: "srNo",
     },
     {
-      title: "Assets Code",
-      dataIndex: "assetsCode",
-      key: "assetsCode",
+      title: "Asset Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Vendor",
-      dataIndex: "vendor",
-      key: "vendor",
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
     },
     {
-      title: "Action",
-      key: "action",
+      title: "Vendor Asset Code",
+      dataIndex: "vendor_asset_code",
+      key: "vendor_asset_code",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Asset Type",
+      dataIndex: "asset_type_name",
+      key: "asset_type_name",
+    },
+    {
+      title: "Location (Lat, Long)",
+      render: (text, record) => `${record.latitude || 'N/A'}, ${record.longitude || 'N/A'}`,
+      key: "location",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "QR Code",
       render: (text, record) => (
-        <div>
-          <Button type="link" onClick={() => showQrCode(record)}>
-            QR
-          </Button>
-          <Button type="link">View</Button>
-          <Button type="link">Edit</Button>
-          {/* <Button type="link">Delete</Button> */}
-        </div>
+        <Button type="link" onClick={() => handleQRCodeClick(record.qr_code)}>
+          View QR Code
+        </Button>
       ),
+      key: "qrCode",
+    },
+    {
+      title: "Photo",
+      render: (text, record) => (
+        record.photo ? (
+          <Image
+            width={50}
+            src={`https://kumbhtsmonitoring.in/${record.photo}`}
+            alt="Asset"
+          />
+        ) : (
+          "No Image"
+        )
+      ),
+      key: "photo",
+    },
+    {
+      title: "Tagged At",
+      dataIndex: "tagged_at",
+      key: "tagged_at",
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
     },
   ];
 
   return (
-    <div className="">
-      {/* Success Message */}
-      {successMessage && (
-        <div
-          style={{
-            textAlign: "center",
-            color: "green",
-            fontWeight: "bold",
-            marginBottom: "20px",
-          }}
+    <div>
+      <h1>Assets List</h1>
+      <CommonDivider />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <Search
+          placeholder="Search by asset name"
+          onSearch={handleSearch}
+          style={{ width: 200 }}
+        />
+        <Button
+          type="primary"
+          onClick={handleNewAssetClick}
         >
-          {successMessage}
-        </div>
-      )}
-
-      {!isAssetList && (
-        <>
-          <CommonDivider
-            label={"Asset Listing"}
-            compo={
-              <Link to="/asset-registration">
-                <Button className="bg-orange-300 mb-1">Add New Asset</Button>
-              </Link>
-            }
-          />
-          <div className="mb-2 flex justify-between items-center">
-            <Search
-              placeholder="Search assets"
-              onSearch={handleSearch}
-              style={{ width: 300 }}
-            />
-          </div>
-          <Table
-            columns={columns}
-            dataSource={filteredData}
-            bordered
-            loading={loading}
-            pagination={false}
-          />
-        </>
-      )}
-      {/* Replace this with another component/form if needed */}
-      {isAssetList && <div>Other Component/Form</div>}
-
-      {/* QR Code Modal */}
+          Add New Asset
+        </Button>
+      </div>
+      <Table
+        columns={columns}
+        dataSource={filteredData}
+        loading={loading}
+        rowKey="key"
+      />
       <Modal
-        width={300}
-        title="QR Code"
         visible={isModalVisible}
-        onCancel={handleCancel}
+        onCancel={() => setIsModalVisible(false)}
         footer={null}
+        title="QR Code"
       >
-        <div style={{ textAlign: "center" }}>
-          {qrCodeUrl ? (
-            <Image width={230} src={qrCodeUrl} alt={qrCodeUrl} />
-          ) : (
-            <QRCode value={qrCodeData} />
-          )}
-        </div>
+        {qrCodeUrl ? (
+          <Image src={qrCodeUrl} alt="QR Code" />
+        ) : (
+          <p>No QR Code available</p>
+        )}
       </Modal>
     </div>
   );

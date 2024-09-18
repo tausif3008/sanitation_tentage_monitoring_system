@@ -261,6 +261,14 @@ const setting_item = (dict, lang) => {
         </Link>
       ),
     },
+    {
+      key: "3",
+      label: (
+        <Link className="text-black no-underline hover:text-green" to="/logout">
+          Logout
+        </Link>
+      ),
+    },
   ];
 };
 
