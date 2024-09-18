@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -20,6 +20,37 @@ const AssetRegistrationForm = () => {
   const [subTypes, setSubTypes] = useState([]);
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState(false);
   const [qrCodeData, setQrCodeData] = useState(null);
+  const [vendors, setVendors] = useState([]); // State for vendors
+
+  useEffect(() => {
+    // Fetch the vendor list on component mount
+    const fetchVendors = async () => {
+      try {
+        const response = await fetch("https://kumbhtsmonitoring.in/php-api/users?user_type_id=8", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "YunHu873jHds83hRujGJKd873",
+            "x-api-version": "1.0.1",
+            "x-platform": "Web",
+            "x-access-token": localStorage.getItem("sessionToken") || "",
+          }
+        });
+    
+        const result = await response.json();
+    
+        if (response.ok && result.data && result.data.users && Array.isArray(result.data.users)) {
+          setVendors(result.data.users); // Set vendors to state
+        } else {
+          message.error("Failed to fetch vendors.");
+        }
+      } catch (error) {
+        message.error("Error fetching vendors: " + error.message);
+      }
+    };
+    
+    fetchVendors();
+  }, []);
 
   const handleChange = ({ fileList }) => {
     if (fileList.length > 0 && fileList[0].originFileObj) {
@@ -58,12 +89,18 @@ const AssetRegistrationForm = () => {
   };
 
   const onFinish = async (values) => {
+    // Ensure vendor_id is included
+    const vendor = vendors.find(v => v.name === values.vendor);
+    if (vendor) {
+      values.vendor_id = vendor.id;
+    }
+
     // Remove assetSubType from the payload
     delete values.assetSubType;
 
     try {
       const response = await fetch(
-        "http://filemanagement.metaxpay.in:8001/create-asset/",
+        "https://kumbhtsmonitoring.in/php-api/asset/entry/",
         {
           method: "POST",
           headers: {
@@ -109,11 +146,11 @@ const AssetRegistrationForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Assets Name</div>}
-            name="asset_name"
-            rules={[{ required: true, message: "Please enter Assets Name" }]}
+            name="name"
+            rules={[{ required: true, message: "Please enter Asset Name" }]}
             className="mb-4"
           >
-            <Input placeholder="Enter Assets Name" className="rounded-none" />
+            <Input placeholder="Enter Asset Name" className="rounded-none" />
           </Form.Item>
           <Form.Item
             label={<div className="font-semibold">Vendor</div>}
@@ -122,18 +159,18 @@ const AssetRegistrationForm = () => {
             className="mb-4"
           >
             <Select placeholder="Select Vendor" className="rounded-none">
-              <Option value="Vendor 1">Vendor 1</Option>
-              <Option value="Vendor 2">Vendor 2</Option>
-              <Option value="Vendor 3">Vendor 3</Option>
-              <Option value="Vendor 4">Vendor 4</Option>
-              <Option value="Vendor 5">Vendor 5</Option>
+              {vendors.map((vendor) => (
+                <Option key={vendor.id} value={vendor.name}>
+                  {vendor.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Asset Type</div>}
-            name="asset_type"
+            name="asset_type_id"
             rules={[{ required: true, message: "Please select an Asset Type" }]}
             className="mb-4"
           >
@@ -170,17 +207,18 @@ const AssetRegistrationForm = () => {
         </div>
         <div className="grid grid-cols-1 gap-x-5">
           <Form.Item
-            label={<div className="font-semibold">Assets Description</div>}
-            name="asset_desc"
+            label={<div className="font-semibold">Description</div>}
+            name="description"
+            rules={[{ required: true, message: "Please enter a Description" }]}
             className="mb-4"
           >
-            <TextArea rows={2} placeholder="Enter Assets Description" />
+            <TextArea rows={2} placeholder="Enter Asset Description" />
           </Form.Item>
         </div>
         {/* <div className="grid grid-cols-1 gap-x-5">
           <Form.Item
             name="photo"
-            label="Photo of Assets"
+            label="Photo of Asset"
             valuePropName="fileList"
             getValueFromEvent={(e) => e.fileList}
           >

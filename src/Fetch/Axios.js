@@ -1,7 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
 
-const baseUrl = "https://kumbhlostandfound.in/kumbh-v2/php-api/html/api";
+const baseUrl = "https://kumbhtsmonitoring.in/php-api";
 
 const loginFetch = async (data, setCanProceed) => {
   const url = baseUrl + "/login";
@@ -13,49 +13,46 @@ const loginFetch = async (data, setCanProceed) => {
     "x-platform": "Web",
   };
 
-  const res = await axios
-    .post(url, data, { headers })
-    .then((response) => {
-      if (response.data.success) {
-        localStorage.setItem("sessionToken", response.data.sessionToken);
-        localStorage.setItem(
-          "sessionData",
-          JSON.stringify(response.data.data.sessionData[0])
-        );
-
-        setCanProceed(true);
-        return response.data.success;
-      } else {
-        message.info(response.data.message);
-        return "error";
-      }
-    })
-    .catch((error) => {
-      message.info("Something went wrong!");
+  try {
+    const response = await axios.post(url, data, { headers });
+    if (response.data.success) {
+      localStorage.setItem("sessionToken", response.data.sessionToken);
+      localStorage.setItem("sessionData", JSON.stringify(response.data.data.sessionData[0]));
+      setCanProceed(true);
+      return response.data.success;
+    } else {
+      message.info(response.data.message);
       return "error";
-    });
-  console.log("response", res);
-
-  return res;
+    }
+  } catch (error) {
+    message.error("Something went wrong!");
+    return "error";
+  }
 };
 
-const postFaceDetection = async (path, formData) => {
-  const url = `http://103.86.182.148:8001/api/version_0/authentication/${path}/`;
-
-  const headers = {
-    "Content-Type": "multipart/form-data",
-  };
-
-  const response = await axios
-    .post(url, formData, { headers })
-    .then((res) => {
-      return res.data;
-    })
-    .catch((error) => {
-      // message.error("Something went wrong!");
-      return null;
-    });
-  return response;
+const logoutFetch = async () => {
+  try {
+    const sessionToken = localStorage.getItem("sessionToken");
+    if (sessionToken) {
+      const response = await axios.delete(baseUrl + "/logout", {
+        headers: {
+          "x-api-key": "YunHu873jHds83hRujGJKd873",
+          "x-api-version": "1.0.1",
+          "x-platform": "Web",
+          "x-access-token": sessionToken,
+        },
+      });
+      if (response.status === 200) {
+        localStorage.removeItem("sessionToken");
+        localStorage.removeItem("sessionData");
+        return true;
+      }
+    }
+    return false;
+  } catch (error) {
+    console.error("Logout failed:", error);
+    return false;
+  }
 };
 
 const postData = async (formData, urlLast = "", extraHeaders) => {
@@ -145,4 +142,4 @@ const getData = async (urlLast, extraHeaders, params = "") => {
   return res;
 };
 
-export { loginFetch, postData, getData, postFaceDetection, putData };
+export { loginFetch, logoutFetch, postData, getData, putData };
