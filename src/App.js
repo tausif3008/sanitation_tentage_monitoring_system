@@ -33,14 +33,22 @@ import WastesDashboard from "./WasteDashboard/WastesDashboard";
 import Dashboard from "./dashboardNew/Dashboard";
 import TentageDashboard from "./TentageDashboard/TentageDashboard";
 import IncidentDashboard from "./IncidentDashborad/IncidentDashboard";
+import AppError from "./AppError";
+import DMSDashboard from "./DMSDashboard/DMSDashboard";
 
 function App() {
+  const loggedIn = localStorage.getItem("sessionToken");
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />}></Route>
+        {!loggedIn && (
+          <Route path="/" element={<Navigate to="/home" />}></Route>
+        )}
         <Route path="/" element={<Layout></Layout>}>
-          <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+          {loggedIn && (
+            <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+          )}
           <Route
             path="/tentage-dashboard"
             element={<TentageDashboard></TentageDashboard>}
@@ -54,6 +62,11 @@ function App() {
           <Route
             path="/incident-dashboard"
             element={<IncidentDashboard></IncidentDashboard>}
+          ></Route>
+
+          <Route
+            path="/DMS-dashboard"
+            element={<DMSDashboard></DMSDashboard>}
           ></Route>
 
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
@@ -141,6 +154,7 @@ function App() {
             element={<MonitoringReport></MonitoringReport>}
           ></Route>
         </Route>
+        <Route path="*" element={<AppError></AppError>}></Route>
         <Route path="login" element={<Login></Login>}></Route>
       </Routes>
     </BrowserRouter>

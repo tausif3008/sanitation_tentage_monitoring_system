@@ -4,8 +4,8 @@ import img3 from "../assets/Images/kumbh logo.png";
 
 const NavHead = ({ lang, dict }) => {
   return (
-    <div className="relative top-0">
-      <div className="font-merriweather flex lg:grid grid-cols-1 md:grid-cols-4 justify-between md:w-11/12 mt-2 xl:w-10/12 2xl:w-9/12 m-auto mb-2 h-20">
+    <div className="relative top-0 mx-3">
+      <div className="font-merriweather flex lg:grid grid-cols-1 md:grid-cols-4 justify-between w-full m-auto mb-2 h-20">
         <div className="gap-4 justify-center md:justify-start col-span-1 hidden lg:flex">
           <img src={img1} className="h-20" alt="" />
         </div>

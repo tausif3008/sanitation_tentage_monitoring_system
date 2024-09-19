@@ -42,7 +42,7 @@ const Login = () => {
 
   useEffect(() => {
     form.setFieldsValue({ username: "9017827198", password: "1234" });
-  }, []);
+  }, [form]);
 
   return (
     <div className="flex m-auto bg-gray-100">

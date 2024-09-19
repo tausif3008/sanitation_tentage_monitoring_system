@@ -112,6 +112,17 @@ const dashboards = (lang, dict) => {
         </Link>
       ),
     },
+    {
+      key: "5",
+      label: (
+        <Link
+          className="text-black no-underline hover:text-green"
+          to="/DMS-dashboard"
+        >
+          DMS Dashboard
+        </Link>
+      ),
+    },
   ];
 };
 
@@ -139,7 +150,7 @@ const assignment_items = (lang, dict) => {
   ];
 };
 
-const schedule_items = (lang, dict) => {
+const schedule_items = (lang, dict, navigate) => {
   return [
     // {
     //   key: "1",
@@ -243,8 +254,8 @@ const reports_items = (lang, dict) => {
   ];
 };
 
-const setting_item = (dict, lang) => {
-  return [
+const setting_item = (dict, lang, navigate) => {
+  const list = [
     {
       key: "1",
       label: (
@@ -261,20 +272,44 @@ const setting_item = (dict, lang) => {
         </Link>
       ),
     },
-    {
-      key: "3",
-      label: (
-        <Link className="text-black no-underline hover:text-green" to="/logout">
-          Logout
-        </Link>
-      ),
-    },
   ];
+
+  localStorage.getItem("sessionToken")
+    ? list.push({
+        key: "3",
+        label: (
+          <div
+            className="text-black no-underline hover:text-green"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/home");
+            }}
+          >
+            Logout
+          </div>
+        ),
+      })
+    : list.push({
+        key: "3",
+        label: (
+          <div
+            className="text-black no-underline hover:text-green"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Login
+          </div>
+        ),
+      });
+
+  return list;
 };
 
 const Navbar = ({ lang, setLang }) => {
   const dict = DICT;
 
+  const loggedIn = localStorage.getItem("sessionToken");
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -286,13 +321,8 @@ const Navbar = ({ lang, setLang }) => {
   };
 
   const navigate = useNavigate();
-  const handleNavigation = (link) => {
-    navigate(link);
-  };
 
   const [logName, setLogName] = useState(false);
-
-  const loggedIn = localStorage.getItem("loggedIn");
 
   useEffect(() => {
     if (loggedIn) {
@@ -311,12 +341,14 @@ const Navbar = ({ lang, setLang }) => {
   return (
     <div className="mx-3 font-openSans">
       <div className="bg-orange-400  z-50 w-full flex items-center h-12 m-auto  justify-center ">
-        <div className="hidden mt-0 lg:flex gap-2  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white md:w-11/12 xl:w-10/12 2xl:w-9/12 lg:text-base">
-          <Link to={"/home"} className="no-underline text-white">
-            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-              {dict.home[lang]}
-            </div>
-          </Link>
+        <div className="hidden mt-0 lg:flex gap-2  bg-orange-400 justify-between items-center z-50 text-base font-semibold h-fit text-white w-full lg:text-base">
+          {!loggedIn && (
+            <Link to={"/home"} className="no-underline text-white">
+              <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+                {dict.home[lang]}
+              </div>
+            </Link>
+          )}
 
           {/* <Link className="text-white no-underline " to="/dashboard">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
@@ -324,13 +356,14 @@ const Navbar = ({ lang, setLang }) => {
             </div>
           </Link> */}
 
-          <div className="h-10 flex  items-center hover:bg-ec9 px-2">
-            <DropDown
-              items={dashboards(lang, dict)}
-              name={"Dashboard"}
-            ></DropDown>
-          </div>
-
+          {loggedIn && (
+            <div className="h-10 flex  items-center hover:bg-ec9 px-2">
+              <DropDown
+                items={dashboards(lang, dict)}
+                name={"Dashboard"}
+              ></DropDown>
+            </div>
+          )}
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
               items={register_items(lang, dict)}
@@ -347,7 +380,7 @@ const Navbar = ({ lang, setLang }) => {
 
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <DropDown
-              items={schedule_items(lang, dict)}
+              items={schedule_items(lang, dict, navigate)}
               name="Schedule"
             ></DropDown>
           </div>
@@ -376,7 +409,7 @@ const Navbar = ({ lang, setLang }) => {
           <div className="h-10 flex  items-center hover:bg-ec9 px-2">
             <div className="h-10 flex  items-center hover:bg-ec9 px-2">
               <DropDown
-                items={setting_item(dict, lang)}
+                items={setting_item(dict, lang, navigate)}
                 name={dict.setting[lang]}
               ></DropDown>
             </div>
@@ -429,20 +462,23 @@ const Navbar = ({ lang, setLang }) => {
           }
         >
           <div className="text-base">
-            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
-              <DropDown
-                text={"black"}
-                items={dashboards(lang, dict)}
-                name={"Dashboard"}
-              ></DropDown>
-            </div>
-
-            <Link to={"/home"} className="no-underline text-white">
+            {loggedIn && (
               <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
-                {dict.home[lang]}
+                <DropDown
+                  text={"black"}
+                  items={dashboards(lang, dict)}
+                  name={"Dashboard"}
+                ></DropDown>
               </div>
-            </Link>
+            )}
 
+            {!loggedIn && (
+              <Link to={"/home"} className="no-underline text-white">
+                <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
+                  {dict.home[lang]}
+                </div>
+              </Link>
+            )}
             <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
                 text={"black"}
@@ -462,7 +498,7 @@ const Navbar = ({ lang, setLang }) => {
             <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
               <DropDown
                 text={"black"}
-                items={schedule_items(lang, dict)}
+                items={schedule_items(lang, dict, navigate)}
                 name="Schedule"
               ></DropDown>
             </div>
@@ -472,6 +508,22 @@ const Navbar = ({ lang, setLang }) => {
                 items={complaince_items(lang, dict)}
                 text={"black"}
                 name="Complaince"
+              ></DropDown>
+            </div>
+
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
+              <DropDown
+                text={"black"}
+                items={reports_items(lang, dict)}
+                name="Reports"
+              ></DropDown>
+            </div>
+
+            <div className="h-10 text-black font-semibold border-b flex items-center hover:bg-orange-300  hover:text-white px-3 ">
+              <DropDown
+                text={"black"}
+                items={setting_item(dict, lang, navigate)}
+                name={dict.setting[lang]}
               ></DropDown>
             </div>
 

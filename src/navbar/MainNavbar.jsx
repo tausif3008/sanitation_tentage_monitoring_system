@@ -23,12 +23,12 @@ const MainNavbar = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className="w-full mt-2  m-auto">
       <NavHead {...props}></NavHead>
       <div
         className={`${
           isSticky
-            ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50 transition-all navbar-transition"
+            ? "fixed top-0 left-0 w-full shadow-lg z-50 transition-all navbar-transition"
             : ""
         }`}
         style={{ transition: "10s" }}
