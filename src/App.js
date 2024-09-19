@@ -42,13 +42,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {!loggedIn && (
-          <Route path="/" element={<Navigate to="/home" />}></Route>
-        )}
+        <Route path="/" element={<Navigate to={"/home"} />}></Route>
         <Route path="/" element={<Layout></Layout>}>
-          {loggedIn && (
-            <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-          )}
+          <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route
             path="/tentage-dashboard"
             element={<TentageDashboard></TentageDashboard>}
@@ -69,7 +65,10 @@ function App() {
             element={<DMSDashboard></DMSDashboard>}
           ></Route>
 
-          <Route path="/home" element={<LandingPage></LandingPage>}></Route>
+          {!loggedIn && (
+            <Route path="/home" element={<LandingPage></LandingPage>}></Route>
+          )}
+
           <Route
             path="user-registration"
             element={<UserList></UserList>}

@@ -6,6 +6,7 @@ import DocumentDetails from "./DocumetDetails";
 import DocumentStatus from "./DocumentStatus";
 import Document from "./Documents/Document";
 import SavedDocuments from "./SavedDocuments";
+import RecentActivities from "./RecentActivities";
 
 const DMSDashboard = () => {
   return (
@@ -18,11 +19,16 @@ const DMSDashboard = () => {
           <DocumentDetails></DocumentDetails>
         </div>
       </div>
-      <div className="col-span-3 bg-white shadow-md rounded">
+      <div className="col-span-4 bg-white shadow-md rounded">
         <Document></Document>
       </div>
-      <div className="col-span-1">
-        <SavedDocuments></SavedDocuments>
+      <div className="col-span-4 grid grid-rows-2 gap-1 flex-col">
+        <div className="h-[250px] overflow-y-scroll">
+          <SavedDocuments></SavedDocuments>
+        </div>
+        <div className="h-[265px] overflow-y-scroll">
+          <RecentActivities></RecentActivities>
+        </div>
       </div>
     </div>
   );
