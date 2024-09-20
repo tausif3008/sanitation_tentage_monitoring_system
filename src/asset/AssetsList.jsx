@@ -60,7 +60,9 @@ const AssetsList = () => {
 
   const handleQRCodeClick = (qrCode) => {
     if (qrCode) {
-      setQrCodeUrl(`https://kumbhtsmonitoring.in/${qrCode}`);
+      setQrCodeUrl(
+        `https://kumbhtsmonitoring.in/php-api/${qrCode}`
+      );
       setIsModalVisible(true);
     } else {
       message.warning("QR Code not available.");
@@ -83,7 +85,7 @@ const AssetsList = () => {
       key: "name",
     },
     {
-      title: "Code",
+      title: "QR Value",
       dataIndex: "code",
       key: "code",
     },
@@ -127,8 +129,8 @@ const AssetsList = () => {
         record.photo ? (
           <Image
             width={50}
-            src={`https://kumbhtsmonitoring.in/${record.photo}`}
-            alt="Asset"
+            src={`https://kumbhtsmonitoring.in/php-api/${record.photo}`}
+            alt="Asset Photo"
           />
         ) : (
           "No Image"
