@@ -130,7 +130,7 @@ const AssetsList = () => {
           <Image
             width={50}
             src={`https://kumbhtsmonitoring.in/php-api/${record.photo}`}
-            alt="Asset Photo"
+            alt="Assets Photo"
           />
         ) : (
           "No Image"
