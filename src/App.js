@@ -43,7 +43,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to={"/home"} />}></Route>
+        <Route
+          path="/"
+          element={
+            loggedIn ? (
+              <Navigate to={"/dashboard"}></Navigate>
+            ) : (
+              <Navigate to={"/home"} />
+            )
+          }
+        ></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
 
@@ -72,9 +81,7 @@ function App() {
             element={<SLADashboard></SLADashboard>}
           ></Route>
 
-          {!loggedIn && (
-            <Route path="/home" element={<LandingPage></LandingPage>}></Route>
-          )}
+          <Route path="/home" element={<LandingPage></LandingPage>}></Route>
 
           <Route
             path="user-registration"

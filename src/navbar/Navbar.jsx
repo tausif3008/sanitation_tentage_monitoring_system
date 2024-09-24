@@ -348,6 +348,8 @@ const Navbar = ({ lang, setLang }) => {
     const titleName = location.pathname.split("/").join("").split("-")[0];
     if (titleName === "dashboard") {
       setTitle("Sanitation");
+    } else if (titleName === "home") {
+      setTitle("");
     } else {
       setTitle(titleName);
     }
