@@ -6,7 +6,9 @@ const CopyWrite = ({ lang = "en" }) => {
   return (
     <footer className="h-12 w-full flex items-center text-center justify-center bg-orange-400 text-white font-semibold font-roboto">
       <div className="md:w-10/12 w-9/12 xl:w-10/12 2xl:w-9/12 text- flex items-center justify-center m-auto">
-        {dict.last_footer[lang]}
+        {/* {dict.last_footer[lang]} */}
+        Copyright © Pryagraj Mela Authority 2024-2025, Developed by Kash IT
+        Solutions
       </div>
     </footer>
   );

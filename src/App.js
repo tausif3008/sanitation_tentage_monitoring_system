@@ -35,6 +35,7 @@ import TentageDashboard from "./TentageDashboard/TentageDashboard";
 import IncidentDashboard from "./IncidentDashborad/IncidentDashboard";
 import AppError from "./AppError";
 import DMSDashboard from "./DMSDashboard/DMSDashboard";
+import SLADashboard from "./SLADashboard/SLADashboard";
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");
@@ -45,6 +46,7 @@ function App() {
         <Route path="/" element={<Navigate to={"/home"} />}></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
+
           <Route
             path="/tentage-dashboard"
             element={<TentageDashboard></TentageDashboard>}
@@ -65,6 +67,11 @@ function App() {
             element={<DMSDashboard></DMSDashboard>}
           ></Route>
 
+          <Route
+            path="/SLA-dashboard"
+            element={<SLADashboard></SLADashboard>}
+          ></Route>
+
           {!loggedIn && (
             <Route path="/home" element={<LandingPage></LandingPage>}></Route>
           )}
@@ -74,6 +81,7 @@ function App() {
             element={<UserList></UserList>}
           ></Route>
           {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
+
           <Route
             path="asset-registration"
             element={<AssetRegistrationForm></AssetRegistrationForm>}

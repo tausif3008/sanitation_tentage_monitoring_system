@@ -1,24 +1,56 @@
 import React from "react";
-import img1 from "../assets/Images/goup.png";
-import img3 from "../assets/Images/kumbh logo.png";
+import { NotificationFilled, SearchOutlined } from "@ant-design/icons";
+import { Badge, Select } from "antd";
 
 const NavHead = ({ lang, dict }) => {
-  return (
-    <div className="relative top-0 mx-3">
-      <div className="font-merriweather flex lg:grid grid-cols-1 md:grid-cols-4 justify-between w-full m-auto mb-2 h-20">
-        <div className="gap-4 justify-center md:justify-start col-span-1 hidden lg:flex">
-          <img src={img1} className="h-20" alt="" />
-        </div>
+  const myDate = new Date();
 
-        <div className="text-center font-semibold text-xl w-full col-span-2 flex m-auto justify-center">
-          <div className="flex flex-col">
-            <div className="text-orange-500">{dict.title1[lang]}</div>
-            <hr className="mt-1 mb-1 text-yellow-900" />
-            <div className="text-green-800">{dict.title2[lang]}</div>
+  // Format the date
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  const formattedDate = myDate.toLocaleDateString("en-GB", options);
+
+  return (
+    <div
+      className="relative top-0 mx-3 bg-orange-400"
+    >
+      <div className="font-merriweather flex justify-around w-full m-auto p-2 px-4">
+        <div className="text-center font-semibold text-xl w-full col-span-2 flex m-auto justify-between">
+          <div
+            className="text-sm font-thin p-1 flex justify-center items-center rounded"
+            style={{ background: "#EBECED", fontFamily: "Notino, sans-serif" }}
+          >
+            {formattedDate}
           </div>
-        </div>
-        <div className="justify-end items-center col-span-1 hidden lg:flex">
-          <img src={img3} className="h-20 hidden md:flex" alt="" />
+          <div className="text-white font-nutino">Kumbh Mela 2025</div>
+          <div className="flex gap-2">
+            <div>
+              <Select
+                className="rounded-md"
+                defaultValue={"en"}
+                options={[
+                  { label: "ENG", value: "en" },
+                  { label: "Hindi", value: "hn" },
+                ]}
+              ></Select>
+            </div>
+            <div className=" bg-white flex justify-center items-center rounded w-12">
+              <div className="">
+                <Badge size="small" status="success" offset={[7, 0]} count={5}>
+                  <NotificationFilled className="text-black"></NotificationFilled>
+                </Badge>
+              </div>
+            </div>
+            <div className=" bg-white flex justify-center items-center rounded w-12 px-3">
+              <div className="">
+                <SearchOutlined className="text-black"></SearchOutlined>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

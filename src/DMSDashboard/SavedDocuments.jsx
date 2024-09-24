@@ -12,7 +12,7 @@ const SavedDocuments = () => {
   ];
 
   return (
-    <div className=" bg-white rounded-lg shadow-md p-3 w-full">
+    <div className="rounded-lg  p-3 w-full">
       <h3 className="text-lg font-bold">Saved Documents</h3>
       <hr className="border-dashed mt-0" />
 

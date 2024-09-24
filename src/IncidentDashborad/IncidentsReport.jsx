@@ -34,21 +34,19 @@ const IncidentsReport = () => {
         enabled: false,
       },
     },
-      plotOptions:{
+    plotOptions: {
       pie: {
         dataLabels: {
           offset: -12, // Adjust this to move the labels closer or further from the center
         },
       },
-      },
-    
+    },
     responsive: [
       {
         breakpoint: 480,
         options: {
           chart: {
-                width: 300,
-              
+            width: 300,
           },
           legend: {
             position: "bottom",

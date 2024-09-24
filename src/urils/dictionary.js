@@ -281,7 +281,7 @@ export const DICT = {
     hi: "क्यूआर कोड स्कैन करें",
   },
   last_footer: {
-    en: "Copyright © 2024 Kash IT Solutions Limited, Pune",
+    en: "Copyright © Pryagraj Mela Authority 2024-2025, Developed by Kash IT Solutions",
     hi: "कॉपीराइट © 2024 काश आईटी सॉल्यूशंस लिमिटेड, पुणे",
   },
   setting: {

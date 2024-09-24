@@ -25,14 +25,14 @@ const RecentActivities = () => {
   ];
 
   return (
-    <div className=" bg-white rounded-lg shadow-lg p-3">
+    <div className="h-full p-3 border">
       <h3 className="text-xl font-bold mb-2">Recent Activities</h3>
       <hr className="border-dashed mt-0" />
 
       {activities.map((activity) => (
         <div
           key={activity.id}
-          className="bg-gray-50  rounded-lg flex justify-between items-center mb-2"
+          className="bg-gray-50 rounded-lg flex justify-between items-center mb-2"
         >
           <div>
             <div className="text-gray-700 font-semibold">
@@ -47,7 +47,8 @@ const RecentActivities = () => {
           </div>
         </div>
       ))}
-      <button className="bg-lime-500 hover:bg-orange-600 text-white font-semibold flex m-auto  py-1 px-4 rounded-full ">
+
+      <button className="bg-lime-500 hover:bg-orange-600 text-white font-semibold flex mt-auto  m-auto  py-1 px-4 rounded-full ">
         View All
       </button>
     </div>
