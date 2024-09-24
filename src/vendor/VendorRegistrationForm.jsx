@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Divider } from "antd";
+import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,7 +23,7 @@ const VendorRegistrationForm = () => {
 
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
-      <div className="text-d9 text-2xl  flex items-end justify-between ">
+      <div className="text-d9 text-2xl flex items-end justify-between">
         <div className="font-bold">Vendor Registration</div>
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
@@ -38,25 +38,66 @@ const VendorRegistrationForm = () => {
           >
             <Input placeholder="Enter vendor name" className="rounded-none " />
           </Form.Item>
+
           <Form.Item
-            label={<div className="font-semibold">Department</div>}
-            name="department"
-            rules={[{ required: true, message: "Please enter department" }]}
-            className="mb-4"
-          >
-            <Input placeholder="Enter department" className="rounded-none " />
-          </Form.Item>
-          <Form.Item
-            label={<div className="font-semibold">Sub Department</div>}
-            name="subDepartment"
-            rules={[{ required: true, message: "Please enter sub department" }]}
+            label={<div className="font-semibold">Work Order Number</div>}
+            name="workOrderNumber"
+            rules={[
+              { required: true, message: "Please enter work order number" },
+            ]}
             className="mb-4"
           >
             <Input
-              placeholder="Enter sub department"
-              className="rounded-none "
+              placeholder="Enter work order number"
+              className="rounded-none"
             />
           </Form.Item>
+
+          <Form.Item
+            label={<div className="font-semibold">Date of Allocation</div>}
+            name="dateOfAllocation"
+            rules={[
+              { required: true, message: "Please select date of allocation" },
+            ]}
+            className="mb-4"
+          >
+            <DatePicker className="w-full rounded-none" />
+          </Form.Item>
+
+          <Form.Item
+            label={<div className="font-semibold">Department</div>}
+            name="department"
+            rules={[{ required: true, message: "Please select a department" }]}
+            className="mb-4"
+          >
+            <Select placeholder="Select department" className="rounded-none">
+              <Option value="sanitation">Sanitation</Option>
+              <Option value="tentage">Tentage</Option>
+              {/* <Option value="waste">Waste Managment</Option> */}
+              {/* Add more options as required */}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label={<div className="font-semibold">Sub Department</div>}
+            name="subDepartment"
+            rules={[
+              { required: true, message: "Please select sub departments" },
+            ]}
+            className="mb-4"
+          >
+            <Select
+              mode="multiple"
+              placeholder="Select sub departments"
+              className="rounded-none"
+            >
+              <Option value="cleaning">Cleaning</Option>
+              <Option value="maintenance">Maintenance</Option>
+              <Option value="support">Support</Option>
+              {/* Add more options as needed */}
+            </Select>
+          </Form.Item>
+
           <Form.Item
             label={<div className="font-semibold">Contact Number</div>}
             name="contactNumber"
@@ -74,6 +115,7 @@ const VendorRegistrationForm = () => {
               className="rounded-none "
             />
           </Form.Item>
+
           <Form.Item
             label={<div className="font-semibold">Email ID</div>}
             name="email"
@@ -85,6 +127,7 @@ const VendorRegistrationForm = () => {
           >
             <Input placeholder="Enter email" className="rounded-none " />
           </Form.Item>
+
           <Form.Item
             label={<div className="font-semibold">Address</div>}
             name="address"
