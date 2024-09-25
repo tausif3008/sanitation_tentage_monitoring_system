@@ -16,8 +16,8 @@ import VendorList from "./vendor/VendorList";
 import VehicleRegistrationForm from "./vehicle/VehicleRegistrationForm";
 import VehicleList from "./vehicle/VehicleList";
 
-import SubDepartmentForm from "./SubDepartment/SubDepartmentRegistrationForm";
-import SubDepartmentList from "./SubDepartment/SubDepartmentList";
+import AssetSubTypeForm from "./SubDepartment/AssetSubTypeForm";
+import AssetSubTypeList from "./SubDepartment/AssetSubTypeList";
 
 import GPSFleetRegistration from "./gis/GPSFleetRegistration";
 import ManPowerAssignmentForm from "./assignment/ManPowerAssignmentForm";
@@ -104,10 +104,10 @@ function App() {
           ></Route>
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route
-            path="sub-department-registration"
-            element={<SubDepartmentForm></SubDepartmentForm>}
+            path="asset-sub-type-registration"
+            element={<AssetSubTypeForm></AssetSubTypeForm>}
           ></Route>
-          <Route path="sub-department-list" element={<SubDepartmentList />} />
+          <Route path="asset-sub-type-list" element={<AssetSubTypeList />} />
 
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route

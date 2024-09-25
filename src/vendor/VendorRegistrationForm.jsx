@@ -72,7 +72,7 @@ const VendorRegistrationForm = () => {
           <Form.Item
             label={<div className="font-semibold">Address</div>}
             name="address"
-            rules={[{ required: true, message: "Please enter address" }]}
+            rules={[{ required: false, message: "Please enter address" }]}
             className="mb-6"
           >
             <Input.TextArea rows={1} placeholder="Enter address" />
@@ -106,7 +106,6 @@ const VendorRegistrationForm = () => {
                     </Select>
                   </Form.Item>
 
-                  {/* Change Sub Department to Department Type */}
                   <Form.Item
                     {...restField}
                     name={[name, "departmentType"]}
@@ -127,6 +126,73 @@ const VendorRegistrationForm = () => {
                       <Option value="administrative">Administrative</Option>
                       {/* Add more options as needed */}
                     </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "contractNumber"]}
+                    fieldKey={[fieldKey, "contractNumber"]}
+                    label={<div className="font-semibold">Contract Number</div>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select a contract number",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select contract number"
+                      className="rounded-none"
+                    >
+                      <Option value="CN001">CN001</Option>
+                      <Option value="CN002">CN002</Option>
+                      <Option value="CN003">CN003</Option>
+                      {/* Add more contract numbers as required */}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "managerContact1"]}
+                    fieldKey={[fieldKey, "managerContact1"]}
+                    label={
+                      <div className="font-semibold">Manager Contact 1</div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter manager contact number 1",
+                      },
+                      {
+                        pattern: /^[0-9]{10}$/,
+                        message: "Please enter a valid 10-digit contact number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter manager contact number 1"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "managerContact2"]}
+                    fieldKey={[fieldKey, "managerContact2"]}
+                    label={
+                      <div className="font-semibold">Manager Contact 2</div>
+                    }
+                    rules={[
+                      {
+                        pattern: /^[0-9]{10}$/,
+                        message: "Please enter a valid 10-digit contact number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter manager contact number 2 (optional)"
+                      className="rounded-none"
+                    />
                   </Form.Item>
 
                   <Form.Item
@@ -166,7 +232,6 @@ const VendorRegistrationForm = () => {
                     <DatePicker className="w-full rounded-none" />
                   </Form.Item>
 
-                  {/* Add Total Allotted Quantity */}
                   <Form.Item
                     {...restField}
                     name={[name, "totalAllottedQuantity"]}
@@ -193,19 +258,18 @@ const VendorRegistrationForm = () => {
                     />
                   </Form.Item>
 
-                  {/* Add Proposed Location/Sectors for Deployment */}
                   <Form.Item
                     {...restField}
                     name={[name, "proposedLocationSectors"]}
                     fieldKey={[fieldKey, "proposedLocationSectors"]}
                     label={
                       <div className="font-semibold">
-                        Proposed Location/Sectors for Deployment
+                        Proposed Sectors for Deployment
                       </div>
                     }
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please enter proposed location/sectors",
                       },
                     ]}
