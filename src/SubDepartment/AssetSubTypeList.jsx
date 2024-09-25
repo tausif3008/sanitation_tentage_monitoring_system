@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Table, message, Divider, Input, Button } from "antd";
 import { Link } from "react-router-dom";
+import * as XLSX from "xlsx"; // Import xlsx for Excel generation
 
 const BASE_URL = "https://kumbhtsmonitoring.in/php-api/";
 
-const SubDepartmentList = () => {
+const AssetSubTypeList = () => {
   const [assetTypes, setAssetTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,13 +77,35 @@ const SubDepartmentList = () => {
     },
   ];
 
+  // Function to download the filtered data as an Excel file
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData); // Convert data to a sheet
+    const workbook = XLSX.utils.book_new(); // Create a new workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sub Departments"); // Append sheet to workbook
+
+    // Set column names (optional, based on the `columns` field)
+    XLSX.utils.sheet_add_aoa(
+      worksheet,
+      [["ID", "Name", "Description", "Questions", "Status"]],
+      { origin: "A1" }
+    );
+
+    // Write and download the Excel file
+    XLSX.writeFile(workbook, "SubType_List.xlsx");
+  };
+
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Sub Department List</div>
-        <Link to="/sub-department-registration">
-          <Button type="primary">Add New Sub Department</Button>
-        </Link>
+        <div className="font-bold">Sub Type List</div>
+        <div className="flex items-center gap-4">
+          <Link to="/asset-sub-type-registration">
+            <Button type="primary">Add New Asset Sub Type</Button>
+          </Link>
+          <Button type="default" onClick={downloadExcel}>
+            Download Excel
+          </Button>
+        </div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
 
@@ -105,4 +128,4 @@ const SubDepartmentList = () => {
   );
 };
 
-export default SubDepartmentList;
+export default AssetSubTypeList;
