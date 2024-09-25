@@ -16,6 +16,9 @@ import VendorList from "./vendor/VendorList";
 import VehicleRegistrationForm from "./vehicle/VehicleRegistrationForm";
 import VehicleList from "./vehicle/VehicleList";
 
+import SubDepartmentForm from "./SubDepartment/SubDepartmentRegistrationForm";
+import SubDepartmentList from "./SubDepartment/SubDepartmentList";
+
 import GPSFleetRegistration from "./gis/GPSFleetRegistration";
 import ManPowerAssignmentForm from "./assignment/ManPowerAssignmentForm";
 import AssigningMonitoringManPower from "./assignment/AssigningMonitoringManPower";
@@ -55,40 +58,32 @@ function App() {
         ></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-
           <Route
             path="/tentage-dashboard"
             element={<TentageDashboard></TentageDashboard>}
           ></Route>
-
           <Route
             path="/waste-dashboard"
             element={<WastesDashboard></WastesDashboard>}
           ></Route>
-
           <Route
             path="/incident-dashboard"
             element={<IncidentDashboard></IncidentDashboard>}
           ></Route>
-
           <Route
             path="/DMS-dashboard"
             element={<DMSDashboard></DMSDashboard>}
           ></Route>
-
           <Route
             path="/SLA-dashboard"
             element={<SLADashboard></SLADashboard>}
           ></Route>
-
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
-
           <Route
             path="user-registration"
             element={<UserList></UserList>}
           ></Route>
           {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
-
           <Route
             path="asset-registration"
             element={<AssetRegistrationForm></AssetRegistrationForm>}
@@ -109,9 +104,11 @@ function App() {
           ></Route>
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route
-            path="vendor-registration"
-            element={<VendorRegistrationForm></VendorRegistrationForm>}
+            path="sub-department-registration"
+            element={<SubDepartmentForm></SubDepartmentForm>}
           ></Route>
+          <Route path="sub-department-list" element={<SubDepartmentList />} />
+
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route
             path="vehicle-registration"
@@ -162,7 +159,6 @@ function App() {
             path="notification"
             element={<NotificationAdd></NotificationAdd>}
           ></Route>
-
           <Route
             path="monitoring-report/:id"
             element={<MonitoringReport></MonitoringReport>}
