@@ -15,16 +15,14 @@ const NavHead = ({ lang, dict }) => {
   const formattedDate = myDate.toLocaleDateString("en-GB", options);
 
   return (
-    <div
-      className="relative top-0 mx-3 bg-orange-400"
-    >
+    <div className="relative top-0 mx-3 bg-orange-400 font-nutino">
       <div className="font-merriweather flex justify-around w-full m-auto p-2 px-4">
         <div className="text-center font-semibold text-xl w-full col-span-2 flex m-auto justify-between">
           <div
-            className="text-sm font-thin p-1 flex justify-center items-center rounded"
-            style={{ background: "#EBECED", fontFamily: "Notino, sans-serif" }}
+            className="text-sm font-thin p-1 flex justify-center items-center rounded "
+            style={{ background: "#EBECED" }}
           >
-            {formattedDate}
+            <span className="text-sm">{formattedDate}</span>{" "}
           </div>
           <div className="text-white font-nutino">Kumbh Mela 2025</div>
           <div className="flex gap-2">

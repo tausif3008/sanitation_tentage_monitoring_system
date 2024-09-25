@@ -22,9 +22,12 @@ const Login = () => {
     formData.append("username", values.username);
     formData.append("platform", "Web");
     formData.append("password", values.password);
-
     setLoading(true);
+
     const res = await loginFetch(formData, setCanProceed);
+    // localStorage.setItem(res);
+    console.log(res);
+
     if (res) {
       setLoading(false);
     }
@@ -42,6 +45,10 @@ const Login = () => {
 
   useEffect(() => {
     form.setFieldsValue({ username: "9017827198", password: "1234" });
+
+    return () => {
+      form.resetFields();
+    };
   }, [form]);
 
   return (

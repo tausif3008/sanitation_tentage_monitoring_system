@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -19,7 +19,6 @@ const UserRegistrationForm = () => {
 
   const handleChange = ({ fileList }) => {
     if (fileList.length > 0 && fileList[0].originFileObj) {
-      // Convert the file to base64
       const file = fileList[0].originFileObj;
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -46,6 +45,10 @@ const UserRegistrationForm = () => {
       JSON.stringify(localUserRegistration)
     );
   };
+
+  useEffect(() => {
+    form.resetFields();
+  }, [form]);
 
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">

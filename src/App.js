@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Login/Login";
 import Layout from "./AppLayout/Layout";
 
-import UserList from "./user/UsersList";
+import UserList from "./register/user/UsersList";
 import AssetRegistrationForm from "./asset/AssetRegistrationForm";
 import AssetsList from "./asset/AssetsList";
 import AssetAllotment from "./asset/AssetAllotment";
@@ -82,11 +82,11 @@ function App() {
           ></Route>
 
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
-
           <Route
-            path="user-registration"
+            path="user/:page?/:per_page?"
             element={<UserList></UserList>}
           ></Route>
+
           {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
 
           <Route

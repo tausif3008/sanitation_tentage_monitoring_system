@@ -1,25 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Image, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserRegistrationForm from "./UserRegistrationForm";
-import CommonTable from "../commonComponents/CommonTable";
-import CommonDivider from "../commonComponents/CommonDivider";
-
-const data = [
-  {
-    name: "Sudarshan",
-    email: "sudarshanmane2110@gmail.com",
-    contactNumber: "9370105149",
-    age: 24,
-    gender: "Male",
-    address: "Opposite of incometax department, behind s kumar wadewale",
-    username: "sudarshan",
-    password: "123456",
-    assignRole: "mis",
-    assignCenter: "center1",
-    image: "blob:http://localhost:3000/4c04d16c-b3de-45d0-ab3c-54de81e1fdc4",
-  },
-];
+import CommonTable from "../../commonComponents/CommonTable";
+import CommonDivider from "../../commonComponents/CommonDivider";
+import { getData } from "../../Fetch/Axios";
+import URLS from "../../urils/URLS";
 
 const columns = [
   {
@@ -83,9 +69,44 @@ const columns = [
 ];
 
 const UserList = () => {
-  const usersLocal = JSON.parse(localStorage.getItem("userRegistration")) || [];
   const [isUserList, setIsUserList] = useState(false);
-  const [userList, setUserList] = useState(usersLocal);
+  const [userDetails, setUserDetails] = useState({
+    list: [],
+    pageLength: 25,
+    currentPage: 1,
+  });
+
+  const params = useParams();
+
+  const getUsers = async () => {
+    let uri = URLS.users.path + "/?";
+    if (params.page) {
+      uri = uri + params.page;
+    } else if (params.per_page) {
+      uri = uri + "&" + params.per_page;
+    }
+
+    const extraHeaders = { "x-api-version": URLS.users.version };
+    const res = await getData(uri, extraHeaders);
+
+    if (res) {
+      const data = res.data;
+      const pagination = data.paging;
+      console.log(data, pagination[0]);
+
+      setUserDetails(() => {
+        return {
+          list: data.users,
+          pageLength: data.paging[0].length,
+          currentPage: data.paging[0].currentPage,
+        };
+      });
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, [params]);
 
   return (
     <div className="">
@@ -102,9 +123,14 @@ const UserList = () => {
               </Button>
             }
           ></CommonDivider>
+
           <CommonTable
+            uri={URLS.users.path}
             columns={columns}
-            dataSource={[...userList, ...userList, ...userList, ...userList]}
+            dataSource={userDetails.list}
+            currentPage={userDetails.currentPage}
+            pageLength={userDetails.pageLength}
+            setUserDetails={setUserDetails}
           ></CommonTable>
         </>
       )}

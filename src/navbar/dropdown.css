@@ -1,7 +1,3 @@
-.ant-dropdown-menu-item, .ant-dropdown-menu-title-content, .ant-dropdown-menu-item-only-child, .ant-dropdown, .ant-dropdown-menu{
-    border-radius: 0px !important;
-}
-
 .ant-dropdown-menu-item:hover{
     background: #e3f3ac !important;
     color:white !important
