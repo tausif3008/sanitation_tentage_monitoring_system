@@ -16,6 +16,9 @@ import VendorList from "./vendor/VendorList";
 import VehicleRegistrationForm from "./vehicle/VehicleRegistrationForm";
 import VehicleList from "./vehicle/VehicleList";
 
+import AssetSubTypeForm from "./SubDepartment/AssetSubTypeForm";
+import AssetSubTypeList from "./SubDepartment/AssetSubTypeList";
+
 import GPSFleetRegistration from "./gis/GPSFleetRegistration";
 import ManPowerAssignmentForm from "./assignment/ManPowerAssignmentForm";
 import AssigningMonitoringManPower from "./assignment/AssigningMonitoringManPower";
@@ -55,32 +58,26 @@ function App() {
         ></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-
           <Route
             path="/tentage-dashboard"
             element={<TentageDashboard></TentageDashboard>}
           ></Route>
-
           <Route
             path="/waste-dashboard"
             element={<WastesDashboard></WastesDashboard>}
           ></Route>
-
           <Route
             path="/incident-dashboard"
             element={<IncidentDashboard></IncidentDashboard>}
           ></Route>
-
           <Route
             path="/DMS-dashboard"
             element={<DMSDashboard></DMSDashboard>}
           ></Route>
-
           <Route
             path="/SLA-dashboard"
             element={<SLADashboard></SLADashboard>}
           ></Route>
-
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
           <Route
             path="user/:page?/:per_page?"
@@ -88,7 +85,6 @@ function App() {
           ></Route>
 
           {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
-
           <Route
             path="asset-registration"
             element={<AssetRegistrationForm></AssetRegistrationForm>}
@@ -109,9 +105,11 @@ function App() {
           ></Route>
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route
-            path="vendor-registration"
-            element={<VendorRegistrationForm></VendorRegistrationForm>}
+            path="asset-sub-type-registration"
+            element={<AssetSubTypeForm></AssetSubTypeForm>}
           ></Route>
+          <Route path="asset-sub-type-list" element={<AssetSubTypeList />} />
+
           <Route path="vendor-list" element={<VendorList></VendorList>}></Route>
           <Route
             path="vehicle-registration"
@@ -162,7 +160,6 @@ function App() {
             path="notification"
             element={<NotificationAdd></NotificationAdd>}
           ></Route>
-
           <Route
             path="monitoring-report/:id"
             element={<MonitoringReport></MonitoringReport>}

@@ -45,13 +45,22 @@ const register_items = (lang, dict) => {
     {
       key: "6",
       label: (
+        <Link className="text-black no-underline" to="/asset-sub-type-list">
+          Sub Type Registration
+        </Link>
+      ),
+    },
+
+    {
+      key: "7",
+      label: (
         <Link className="text-black no-underline" to="/vendor-registration">
           Vendor Registration
         </Link>
       ),
     },
     {
-      key: "7",
+      key: "8",
       label: (
         <Link className="text-black no-underline" to="/vehicle-registration">
           Vehicle Registration

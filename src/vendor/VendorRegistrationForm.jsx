@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const VendorRegistrationForm = () => {
   const [form] = Form.useForm();
@@ -40,65 +40,6 @@ const VendorRegistrationForm = () => {
           </Form.Item>
 
           <Form.Item
-            label={<div className="font-semibold">Work Order Number</div>}
-            name="workOrderNumber"
-            rules={[
-              { required: true, message: "Please enter work order number" },
-            ]}
-            className="mb-4"
-          >
-            <Input
-              placeholder="Enter work order number"
-              className="rounded-none"
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={<div className="font-semibold">Date of Allocation</div>}
-            name="dateOfAllocation"
-            rules={[
-              { required: true, message: "Please select date of allocation" },
-            ]}
-            className="mb-4"
-          >
-            <DatePicker className="w-full rounded-none" />
-          </Form.Item>
-
-          <Form.Item
-            label={<div className="font-semibold">Department</div>}
-            name="department"
-            rules={[{ required: true, message: "Please select a department" }]}
-            className="mb-4"
-          >
-            <Select placeholder="Select department" className="rounded-none">
-              <Option value="sanitation">Sanitation</Option>
-              <Option value="tentage">Tentage</Option>
-              {/* <Option value="waste">Waste Managment</Option> */}
-              {/* Add more options as required */}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label={<div className="font-semibold">Sub Department</div>}
-            name="subDepartment"
-            rules={[
-              { required: true, message: "Please select sub departments" },
-            ]}
-            className="mb-4"
-          >
-            <Select
-              mode="multiple"
-              placeholder="Select sub departments"
-              className="rounded-none"
-            >
-              <Option value="cleaning">Cleaning</Option>
-              <Option value="maintenance">Maintenance</Option>
-              <Option value="support">Support</Option>
-              {/* Add more options as needed */}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
             label={<div className="font-semibold">Contact Number</div>}
             name="contactNumber"
             rules={[
@@ -131,12 +72,236 @@ const VendorRegistrationForm = () => {
           <Form.Item
             label={<div className="font-semibold">Address</div>}
             name="address"
-            rules={[{ required: true, message: "Please enter address" }]}
+            rules={[{ required: false, message: "Please enter address" }]}
             className="mb-6"
           >
-            <TextArea rows={1} placeholder="Enter address" />
+            <Input.TextArea rows={1} placeholder="Enter address" />
           </Form.Item>
         </div>
+
+        <Form.List name="vendorDetails">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, fieldKey, ...restField }) => (
+                <div
+                  key={key}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-5 mb-3"
+                >
+                  <Form.Item
+                    {...restField}
+                    name={[name, "department"]}
+                    fieldKey={[fieldKey, "department"]}
+                    label={<div className="font-semibold">Department</div>}
+                    rules={[
+                      { required: true, message: "Please select a department" },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select department"
+                      className="rounded-none"
+                    >
+                      <Option value="sanitation">Sanitation</Option>
+                      <Option value="tentage">Tentage</Option>
+                      {/* Add more options as required */}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "departmentType"]}
+                    fieldKey={[fieldKey, "departmentType"]}
+                    label={<div className="font-semibold">Department Type</div>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select department type",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select department type"
+                      className="rounded-none"
+                    >
+                      <Option value="operational">Operational</Option>
+                      <Option value="administrative">Administrative</Option>
+                      {/* Add more options as needed */}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "contractNumber"]}
+                    fieldKey={[fieldKey, "contractNumber"]}
+                    label={<div className="font-semibold">Contract Number</div>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select a contract number",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select contract number"
+                      className="rounded-none"
+                    >
+                      <Option value="CN001">CN001</Option>
+                      <Option value="CN002">CN002</Option>
+                      <Option value="CN003">CN003</Option>
+                      {/* Add more contract numbers as required */}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "managerContact1"]}
+                    fieldKey={[fieldKey, "managerContact1"]}
+                    label={
+                      <div className="font-semibold">Manager Contact 1</div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter manager contact number 1",
+                      },
+                      {
+                        pattern: /^[0-9]{10}$/,
+                        message: "Please enter a valid 10-digit contact number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter manager contact number 1"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "managerContact2"]}
+                    fieldKey={[fieldKey, "managerContact2"]}
+                    label={
+                      <div className="font-semibold">Manager Contact 2</div>
+                    }
+                    rules={[
+                      {
+                        pattern: /^[0-9]{10}$/,
+                        message: "Please enter a valid 10-digit contact number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter manager contact number 2 (optional)"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "workOrderNumber"]}
+                    fieldKey={[fieldKey, "workOrderNumber"]}
+                    label={
+                      <div className="font-semibold">Work Order Number</div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter work order number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter work order number"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "dateOfAllocation"]}
+                    fieldKey={[fieldKey, "dateOfAllocation"]}
+                    label={
+                      <div className="font-semibold">Date of Allocation</div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select date of allocation",
+                      },
+                    ]}
+                  >
+                    <DatePicker className="w-full rounded-none" />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "totalAllottedQuantity"]}
+                    fieldKey={[fieldKey, "totalAllottedQuantity"]}
+                    label={
+                      <div className="font-semibold">
+                        Total Allotted Quantity
+                      </div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter allotted quantity",
+                      },
+                      {
+                        pattern: /^[0-9]+$/,
+                        message: "Please enter a valid number",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter total allotted quantity"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    {...restField}
+                    name={[name, "proposedLocationSectors"]}
+                    fieldKey={[fieldKey, "proposedLocationSectors"]}
+                    label={
+                      <div className="font-semibold">
+                        Proposed Sectors for Deployment
+                      </div>
+                    }
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please enter proposed location/sectors",
+                      },
+                    ]}
+                  >
+                    <Input.TextArea
+                      rows={1}
+                      placeholder="Enter proposed location/sectors"
+                      className="rounded-none"
+                    />
+                  </Form.Item>
+
+                  <MinusCircleOutlined
+                    onClick={() => remove(name)}
+                    className="text-red-500 cursor-pointer mt-8"
+                  />
+                </div>
+              ))}
+
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Add Department Details
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+
         <div className="flex justify-end">
           <Form.Item>
             <Button
