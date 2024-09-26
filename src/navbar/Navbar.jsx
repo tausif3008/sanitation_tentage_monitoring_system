@@ -13,7 +13,7 @@ const register_items = (lang, dict) => {
     {
       key: "2",
       label: (
-        <Link className="text-black no-underline hover:text-green" to="/user">
+        <Link className="text-black no-underline hover:text-green" to="/users">
           User Registration
         </Link>
       ),

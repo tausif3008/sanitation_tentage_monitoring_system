@@ -15,7 +15,7 @@ const CommonTable = ({
 
   const handlePageChange = (pageNumber, per_page) => {
     console.log(pageNumber, per_page);
-    let path = uri + "page=" + pageNumber + "&per_page=" + per_page;
+    let path = uri + "?page=" + pageNumber + "&per_page=" + per_page;
     console.log(path);
     navigate(path);
   };

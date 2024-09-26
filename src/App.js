@@ -80,7 +80,7 @@ function App() {
           ></Route>
           <Route path="/home" element={<LandingPage></LandingPage>}></Route>
           <Route
-            path="user/:page?/:per_page?"
+            path="users/:page?/:per_page?"
             element={<UserList></UserList>}
           ></Route>
 
