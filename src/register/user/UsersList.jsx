@@ -80,11 +80,13 @@ const UserList = () => {
 
   const getUsers = async () => {
     let uri = URLS.users.path + "/?";
+    console.log(uri);
     if (params.page) {
       uri = uri + params.page;
     } else if (params.per_page) {
       uri = uri + "&" + params.per_page;
     }
+    console.log("seturl == ",uri);
 
     const extraHeaders = { "x-api-version": URLS.users.version };
     const res = await getData(uri, extraHeaders);
