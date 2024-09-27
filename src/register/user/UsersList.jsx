@@ -117,13 +117,8 @@ const UserList = () => {
 
   const dispatch = useDispatch();
 
-  const handleAddItem = () => {
-    dispatch(increment({ val: 10 }));
-  };
-
   return (
     <div className="">
-      <Button onClick={handleAddItem}> </Button>
       {!isUserList && (
         <>
           <CommonDivider

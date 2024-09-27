@@ -21,9 +21,9 @@ const CommonTable = ({ columns, uri, details, loading }) => {
         pagination={false}
       />
       <Pagination
-        showQuickJumper
         className="mt-2"
         align="end"
+        showQuickJumper
         current={details.currentPage}
         total={details.totalRecords}
         pageSize={details.pageLength}
