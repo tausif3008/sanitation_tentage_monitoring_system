@@ -5,8 +5,8 @@ import { useNavigate } from "react-router";
 const CommonTable = ({ columns, uri, details, loading }) => {
   const navigate = useNavigate();
 
-  const handlePageChange = (pageNumber, per_page) => {
-    let path = uri + "/page=" + pageNumber + "&per_page=" + per_page;
+  const handlePageChange = (pageNumber, page) => {
+    let path = uri + "/page=" + pageNumber + "&per_page=" + page;
     navigate(path);
   };
 
