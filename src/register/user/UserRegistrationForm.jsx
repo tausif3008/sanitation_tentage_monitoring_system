@@ -1,51 +1,58 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Divider,
-  InputNumber,
-  Upload,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
+import { Form, Input, Button, Select, Divider } from "antd";
+import CountryStateCity from "../../commonComponents/CountryStateCity";
+import optionsMaker from "../../urils/OptionMaker";
+import { getData, postData } from "../../Fetch/Axios";
+import URLS from "../../urils/URLS";
+import { getFormData } from "../../urils/getFormData";
 
 const UserRegistrationForm = () => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-  const [previewImage, setPreviewImage] = useState(null);
+  const [selectedVillageId, setSelectedVillageId] = useState();
 
-  const handleChange = ({ fileList }) => {
-    if (fileList.length > 0 && fileList[0].originFileObj) {
-      const file = fileList[0].originFileObj;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64String = reader.result;
-        setPreviewImage(base64String); // Use the base64 string for preview
-      };
-    } else {
-      setPreviewImage(null);
+  const onFinish = async (values) => {
+    setLoading(true);
+    if (values.city_id) {
+      values.city_id = JSON.parse(values.city_id).city_id;
+    }
+
+    if (values.country_id) {
+      values.country_id = JSON.parse(values.country_id).country_id;
+    }
+
+    if (values.state_id) {
+      values.state_id = JSON.parse(values.state_id).state_id;
+    }
+
+    const res = await postData(getFormData(values), URLS.register.path, {
+      version: URLS.register.version,
+    });
+
+    if (res) {
+      setLoading(false);
+      if (res.data.success) {
+        form.resetFields();
+      }
     }
   };
 
-  const onFinish = (values) => {
-    values.image = previewImage;
-
-    const localUserRegistration =
-      JSON.parse(localStorage.getItem("userRegistration")) || [];
-
-    localUserRegistration.push(JSON.parse(JSON.stringify(values)));
-
-    localStorage.setItem(
-      "userRegistration",
-      JSON.stringify(localUserRegistration)
-    );
-  };
+  const [userTypes, setUserTypes] = useState([]);
 
   useEffect(() => {
+    optionsMaker(
+      "userType",
+      "user_type",
+      "user_type",
+      setUserTypes,
+      "",
+      false,
+      "user_type_id"
+    );
+
+    getData(URLS.userType.path, { "x-api-version": URLS.userType.version });
+
     form.resetFields();
   }, [form]);
 
@@ -60,24 +67,16 @@ const UserRegistrationForm = () => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ companyName: "KASH IT SOLUTION" }}
+        initialValues={{ company: "KASH IT SOLUTION" }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
-            label={<div className="font-semibold">First Name</div>}
+            label={<div className="font-semibold">User Name</div>}
             name="name"
             rules={[{ required: true, message: "Please first name" }]}
             className="mb-4"
           >
             <Input placeholder="Enter name" className="rounded-none " />
-          </Form.Item>
-          <Form.Item
-            label={<div className="font-semibold">First Name</div>}
-            name="name"
-            rules={[{ required: true, message: "Please last name" }]}
-            className="mb-4"
-          >
-            <Input placeholder="Last name" className="rounded-none " />
           </Form.Item>
           <Form.Item
             label={<div className="font-semibold">Email ID</div>}
@@ -92,7 +91,7 @@ const UserRegistrationForm = () => {
           </Form.Item>
           <Form.Item
             label={<div className="font-semibold">Contact Number</div>}
-            name="contactNumber"
+            name="phone"
             rules={[
               { required: true, message: "Please enter the contact number" },
               {
@@ -107,28 +106,11 @@ const UserRegistrationForm = () => {
               className="rounded-none "
             />
           </Form.Item>
-          <Form.Item
-            label={<div className="font-semibold">Age</div>}
-            name="age"
-            rules={[{ required: true, message: "Please enter the age" }]}
-            className="mb-4"
-          >
-            <InputNumber
-              placeholder="Enter age"
-              className="rounded-none w-full"
-            />
-          </Form.Item>
-          <Form.Item
-            label={<div className="font-semibold">Gender</div>}
-            name="gender"
-            rules={[{ required: true, message: "Please select gender" }]}
-            className="mb-4"
-          >
-            <Select placeholder="Select Gender" className="rounded-none ">
-              <Option value="Male">Male</Option>
-              <Option value="Female">Female</Option>
-            </Select>
-          </Form.Item>{" "}
+
+          <CountryStateCity
+            form={form}
+            setSelectedVillageId={setSelectedVillageId}
+          ></CountryStateCity>
           <Form.Item
             label={<div className="font-semibold">Address</div>}
             name="address"
@@ -138,12 +120,12 @@ const UserRegistrationForm = () => {
             <TextArea rows={1} />
           </Form.Item>
           <Form.Item
-            label={<div className="font-semibold">Username</div>}
-            name="username"
-            rules={[{ required: true, message: "Please enter the username" }]}
+            label={<div className="font-semibold">Company</div>}
+            name="company"
+            rules={[{ required: true, message: "Please enter the company" }]}
             className="mb-4"
           >
-            <Input placeholder="Enter Username" className="rounded-none " />
+            <Input placeholder="Company Name" className="rounded-none " />
           </Form.Item>
           <Form.Item
             label={<div className="font-semibold">Password</div>}
@@ -163,60 +145,23 @@ const UserRegistrationForm = () => {
             />
           </Form.Item>
           <Form.Item
+            name="user_type_id"
             label={<div className="font-semibold">Role</div>}
-            name="assignRole"
             rules={[{ required: true, message: "Please select a role" }]}
             className="mb-4"
           >
-            <Select placeholder="Select a role" className="rounded-none ">
-              <Option value="admin">Admin</Option>
-              <Option value="mis">MIS Officer</Option>
-              <Option value="vendor">Vendor</Option>
-              <Option value="supervisor">Supervisor</Option>
-              <Option value="driver">Driver</Option>
-              <Option value="monitoring_agent">Monitoring Agent</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label={<div className="font-semibold">Assign Center</div>}
-            name="assignCenter"
-            rules={[{ required: true, message: "Please select a center" }]}
-            className="mb-6"
-          >
-            <Select placeholder="Select a center" className="rounded-none ">
-              <Option value="center1">Center 1</Option>
-              <Option value="center2">Center 2</Option>
-              <Option value="center3">Center 3</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="image"
-            label="Upload Image"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => e.fileList}
-          >
-            <Upload
-              //   listType="picture-card"
-              onChange={handleChange}
-              beforeUpload={() => false} // Prevent automatic upload
-            >
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
-            </Upload>
-
-            {/* {previewImage && (
-              <Form.Item label="Image Preview">
-                <Image
-                  src={previewImage}
-                  alt="Uploaded Image"
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-            )} */}
+            <Select
+              placeholder="Select a role"
+              className="rounded-none"
+              options={userTypes}
+            ></Select>
           </Form.Item>
         </div>
+
         <div className="flex justify-end">
           <Form.Item>
             <Button
+              loading={loading}
               type="primary"
               htmlType="submit"
               className="w-fit rounded-none bg-5c"
