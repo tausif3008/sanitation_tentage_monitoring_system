@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 const MainNavbar = (props) => {
   const [isSticky, setIsSticky] = useState(false);
-
+  
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;

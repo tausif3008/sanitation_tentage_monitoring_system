@@ -349,16 +349,16 @@ const Navbar = ({ lang, setLang }) => {
   const location = useLocation();
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
-    const titleName = location.pathname.split("/").join("").split("-")[0];
-    if (titleName === "dashboard") {
-      setTitle("Sanitation");
-    } else if (titleName === "home") {
-      setTitle("");
-    } else {
-      setTitle(titleName);
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   const titleName = location.pathname.split("/").join("").split("-")[0];
+  //   if (titleName === "dashboard") {
+  //     setTitle("Sanitation");
+  //   } else if (titleName === "home") {
+  //     setTitle("");
+  //   } else {
+  //     setTitle(titleName);
+  //   }
+  // }, [location]);
 
   return (
     <div className="mx-3 font-nutino bg-white p-1 shadow-md">

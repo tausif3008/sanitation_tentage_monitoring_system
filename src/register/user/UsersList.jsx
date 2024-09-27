@@ -6,6 +6,8 @@ import CommonTable from "../../commonComponents/CommonTable";
 import CommonDivider from "../../commonComponents/CommonDivider";
 import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
+import { useDispatch } from "react-redux";
+import { increment } from "../../Redux/counterSlice";
 
 const columns = [
   {
@@ -70,6 +72,7 @@ const columns = [
 
 const UserList = () => {
   const [isUserList, setIsUserList] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     list: [],
     pageLength: 25,
@@ -79,14 +82,14 @@ const UserList = () => {
   const params = useParams();
 
   const getUsers = async () => {
+    setLoading(true);
+
     let uri = URLS.users.path + "/?";
-    console.log(uri);
     if (params.page) {
       uri = uri + params.page;
     } else if (params.per_page) {
       uri = uri + "&" + params.per_page;
     }
-    console.log("seturl == ", uri);
 
     const extraHeaders = { "x-api-version": URLS.users.version };
     const res = await getData(uri, extraHeaders);
@@ -95,6 +98,7 @@ const UserList = () => {
       const data = res.data;
       const pagination = data.paging;
       console.log(data, pagination[0]);
+      setLoading(false);
 
       setUserDetails(() => {
         return {
@@ -111,8 +115,15 @@ const UserList = () => {
     getUsers();
   }, [params]);
 
+  const dispatch = useDispatch();
+
+  const handleAddItem = () => {
+    dispatch(increment({ val: 10 }));
+  };
+
   return (
     <div className="">
+      <Button onClick={handleAddItem}> </Button>
       {!isUserList && (
         <>
           <CommonDivider
@@ -128,6 +139,7 @@ const UserList = () => {
           ></CommonDivider>
 
           <CommonTable
+            loading={loading}
             uri={URLS.users.path}
             columns={columns}
             details={userDetails}
