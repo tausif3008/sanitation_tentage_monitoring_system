@@ -86,7 +86,7 @@ const UserList = () => {
     } else if (params.per_page) {
       uri = uri + "&" + params.per_page;
     }
-    console.log("seturl == ",uri);
+    console.log("seturl == ", uri);
 
     const extraHeaders = { "x-api-version": URLS.users.version };
     const res = await getData(uri, extraHeaders);
@@ -101,6 +101,7 @@ const UserList = () => {
           list: data.users,
           pageLength: data.paging[0].length,
           currentPage: data.paging[0].currentPage,
+          totalRecords: data.paging[0].totalrecords,
         };
       });
     }
@@ -129,9 +130,7 @@ const UserList = () => {
           <CommonTable
             uri={URLS.users.path}
             columns={columns}
-            dataSource={userDetails.list}
-            currentPage={userDetails.currentPage}
-            pageLength={userDetails.pageLength}
+            details={userDetails}
             setUserDetails={setUserDetails}
           ></CommonTable>
         </>

@@ -1,22 +1,12 @@
 import { Pagination, Table } from "antd";
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
-const CommonTable = ({
-  columns,
-  dataSource,
-  uri,
-  setUserDetails,
-  pageLength = 25,
-  currentPage = 1,
-}) => {
+const CommonTable = ({ columns, uri, details }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handlePageChange = (pageNumber, per_page) => {
-    console.log(pageNumber, per_page);
-    let path = uri + "?page=" + pageNumber + "&per_page=" + per_page;
-    console.log(path);
+    let path = uri + "/page=" + pageNumber + "&per_page=" + per_page;
     navigate(path);
   };
 
@@ -26,17 +16,16 @@ const CommonTable = ({
         columns={columns}
         bordered
         scroll={{ x: 1600, y: 400 }}
-        dataSource={dataSource}
+        dataSource={details.list || []}
         pagination={false}
       />
-
       <Pagination
         showQuickJumper
         className="mt-2"
         align="end"
-        current={currentPage}
-        total={100}
-        pageSize={pageLength}
+        current={details.currentPage}
+        total={details.totalRecords}
+        pageSize={details.pageLength}
         onChange={handlePageChange}
       />
     </div>
