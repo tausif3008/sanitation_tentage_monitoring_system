@@ -8,6 +8,14 @@ import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { useDispatch } from "react-redux";
 import { increment } from "../../Redux/counterSlice";
+import { EditOutlined } from "@ant-design/icons";
+const getVal = (val) => {
+  if (val === "undefined" || val === null) {
+    return "-";
+  } else {
+    return val;
+  }
+};
 
 const columns = [
   {
@@ -15,34 +23,48 @@ const columns = [
     dataIndex: "name",
     key: "name",
   },
-  // {
-  //   title: "Image",
-  //   dataIndex: "image",
-  //   key: "image",
-  //   render: (text) => <Image src={text} alt="User Image" width={100} />,
-  // },
+
   {
     title: "Email",
     dataIndex: "email",
     key: "email",
   },
   {
-    title: "Contact Number",
-    dataIndex: "phone",
-    key: "contactNumber",
+    title: "Country",
+    dataIndex: "country_name",
+    key: "country_name",
+    render: getVal,
   },
-
+  {
+    title: "State",
+    dataIndex: "state_name",
+    key: "state_name",
+    render: getVal,
+  },
+  {
+    title: "City",
+    dataIndex: "city_name",
+    key: "city_type",
+    render: getVal,
+  },
+  {
+    title: "User Type",
+    dataIndex: "user_type",
+    key: "user_type",
+  },
   {
     title: "Address",
     dataIndex: "address",
+    width: 300,
     key: "address",
     render: (val) => {
-      if (val === "undefine") {
+      if (val === "undefined") {
         return "-";
+      } else {
+        return val;
       }
     },
   },
-
   {
     title: "Password",
     dataIndex: "password",
@@ -52,6 +74,12 @@ const columns = [
     title: "User Type",
     dataIndex: "user_type",
     key: "user_type",
+  },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+    fixed: "right",
   },
 ];
 
@@ -63,6 +91,9 @@ const UserList = () => {
     pageLength: 25,
     currentPage: 1,
   });
+
+  const [updateDetails, setUpdateDetails] = useState();
+  const [updated, setUpdated] = useState(false);
 
   const params = useParams();
 
@@ -81,13 +112,29 @@ const UserList = () => {
 
     if (res) {
       const data = res.data;
-      const pagination = data.paging;
-      console.log(data, pagination[0]);
+      setUpdated(false);
       setLoading(false);
+
+      const list = data.users.map((el, index) => {
+        return {
+          ...el,
+          action: (
+            <Button
+              className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
+              key={el.name + index}
+              onClick={() => {
+                setUpdateDetails(el);
+              }}
+            >
+              <EditOutlined></EditOutlined>
+            </Button>
+          ),
+        };
+      });
 
       setUserDetails(() => {
         return {
-          list: data.users,
+          list,
           pageLength: data.paging[0].length,
           currentPage: data.paging[0].currentPage,
           totalRecords: data.paging[0].totalrecords,
@@ -98,11 +145,11 @@ const UserList = () => {
 
   useEffect(() => {
     getUsers();
-  }, [params]);
+  }, [params, updated]);
 
   return (
     <div className="">
-      {!isUserList && (
+      {!isUserList && !updateDetails && (
         <>
           <CommonDivider
             label={"User List"}
@@ -125,7 +172,15 @@ const UserList = () => {
           ></CommonTable>
         </>
       )}
-      {isUserList && <UserRegistrationForm></UserRegistrationForm>}
+
+      {(isUserList || updateDetails) && (
+        <UserRegistrationForm
+          setUpdated={setUpdated}
+          updateDetails={updateDetails}
+          setUpdateDetails={setUpdateDetails}
+          setIsUserList={setIsUserList}
+        ></UserRegistrationForm>
+      )}
     </div>
   );
 };

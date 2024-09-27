@@ -95,7 +95,7 @@ const dashboards = (lang, dict) => {
       ),
     },
     {
-      key: "3",
+      key: "4",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
@@ -106,7 +106,7 @@ const dashboards = (lang, dict) => {
       ),
     },
     {
-      key: "4",
+      key: "5",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
@@ -117,7 +117,7 @@ const dashboards = (lang, dict) => {
       ),
     },
     {
-      key: "5",
+      key: "6",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
@@ -128,7 +128,7 @@ const dashboards = (lang, dict) => {
       ),
     },
     {
-      key: "5",
+      key: "7",
       label: (
         <Link
           className="text-black no-underline hover:text-green"
@@ -298,7 +298,7 @@ const setting_item = (dict, lang, navigate) => {
         ),
       })
     : list.push({
-        key: "3",
+        key: "4",
         label: (
           <div
             className="text-black no-underline hover:text-green"

@@ -6084,6 +6084,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fsevents@^2.3.2", "fsevents@~2.3.2":
+  "integrity" "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
+  "version" "2.3.3"
+
 "function-bind@^1.1.2":
   "integrity" "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -7681,6 +7686,7 @@
     "@floating-ui/react-dom" "^1.0.0"
     "@iconify/react" "^5.0.2"
     "@react-google-maps/api" "^2.19.3"
+    "@reduxjs/toolkit" "^2.2.7"
     "@testing-library/jest-dom" "^5.17.0"
     "@testing-library/react" "^13.4.0"
     "@testing-library/user-event" "^13.5.0"
@@ -7709,6 +7715,7 @@
     "react-gauge-chart" "^0.5.1"
     "react-gauge-component" "^1.2.51"
     "react-leaflet" "^4.2.1"
+    "react-redux" "^9.1.2"
     "react-router" "^6.25.1"
     "react-router-dom" "^6.25.1"
     "react-scripts" "5.0.1"

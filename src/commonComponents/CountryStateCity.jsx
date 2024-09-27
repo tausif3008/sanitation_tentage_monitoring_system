@@ -2,43 +2,75 @@ import { Form, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import optionsMaker from "../urils/OptionMaker";
 
-const CountryStateCity = ({ setSelectedVillageId, form }) => {
+const CountryStateCity = ({ form, country_id, state_id, city_id }) => {
   const [selectedCountryId, setSelectedCountryId] = useState();
   const [countryOptions, setCountryOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
   const [selectedStateId, setSelectedStateId] = useState();
   const [villageOptions, setVillageOptions] = useState([]);
+  const [selectedCityId, setSelectedCityId] = useState([]);
 
   useEffect(() => {
-    optionsMaker("country", "countries", "name", setCountryOptions, "");
+    optionsMaker(
+      "country",
+      "countries",
+      "name",
+      setCountryOptions,
+      "",
+      "country_id"
+    );
   }, []);
 
+  // update if the country id is present
   useEffect(() => {
-    if (countryOptions.length) {
-      setSelectedCountryId(
-        JSON.stringify({ country_id: "82", name: "India", status: "1" })
-      );
+    if (country_id) {
+      form.setFieldsValue({ country_id });
+      setSelectedCountryId(country_id);
     }
-  }, [countryOptions]);
+  }, [country_id, form]);
+
+  useEffect(() => {
+    if (state_id) {
+      setSelectedStateId(state_id);
+    }
+  }, [state_id]);
+
+  useEffect(() => {
+    if (city_id) {
+      setSelectedCityId(city_id);
+    }
+  }, [city_id]);
 
   useEffect(() => {
     if (selectedCountryId) {
-      const element = JSON.parse(selectedCountryId);
-      const params = "?country_id=" + element.country_id;
-      optionsMaker("state", "states", "name", setStateOptions, params);
-      form.setFieldsValue({ country_id: selectedCountryId });
+      const params = "?country_id=" + selectedCountryId;
+      optionsMaker(
+        "state",
+        "states",
+        "name",
+        setStateOptions,
+        params,
+        "state_id"
+      );
+
+      form.setFieldsValue({ state_id });
     }
-  }, [selectedCountryId, form]);
+  }, [selectedCountryId, form, state_id]);
 
   useEffect(() => {
     if (selectedStateId) {
-      const element = JSON.parse(selectedStateId);
-
       const params =
-        "?country_id=" + element.country_id + "&state_id=" + element.state_id;
-      optionsMaker("city", "cities", "name", setVillageOptions, params);
+        "?country_id=" + selectedCountryId + "&state_id=" + selectedStateId;
+      optionsMaker(
+        "city",
+        "cities",
+        "name",
+        setVillageOptions,
+        params,
+        "city_id"
+      );
     }
-  }, [selectedStateId]);
+  }, [selectedCountryId, selectedStateId]);
 
   return (
     <>
@@ -49,11 +81,17 @@ const CountryStateCity = ({ setSelectedVillageId, form }) => {
       >
         <Select
           showSearch
-          onChange={(val) => setSelectedCountryId(() => val)}
-          options={countryOptions}
-          placeholder="Select Country"
-          className="rounded-none "
-        />
+          placeholder="Select a country"
+          optionFilterProp="children"
+          onChange={(val) => setSelectedCountryId(val)}
+          style={{ width: 300 }}
+        >
+          {countryOptions.map((option) => (
+            <Option key={option.value} value={option.value}>
+              {option.label}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -63,11 +101,17 @@ const CountryStateCity = ({ setSelectedVillageId, form }) => {
       >
         <Select
           showSearch
-          options={stateOptions}
+          optionFilterProp="children"
           onChange={(val) => setSelectedStateId(() => val)}
           placeholder="Select state"
           className="rounded-none"
-        />
+        >
+          {stateOptions.map((option) => (
+            <Option key={option.value} value={option.value}>
+              {option.label}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -77,14 +121,20 @@ const CountryStateCity = ({ setSelectedVillageId, form }) => {
       >
         <Select
           showSearch
-          onChange={(val) => setSelectedVillageId(() => val)}
-          options={villageOptions}
+          optionFilterProp="children"
           placeholder="Select city"
           className="rounded-none"
-        />
+        >
+          {villageOptions.map((option) => (
+            <Option key={option.value} value={option.value}>
+              {option.label}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
     </>
   );
 };
 
 export default CountryStateCity;
+const { Option } = Select;

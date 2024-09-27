@@ -7,7 +7,6 @@ const optionsMaker = async (
   labelFieldName, // label key name from the received response
   setOptions,
   params,
-  valueAsLabel,
   idName
 ) => {
   const path = URLS[uri].path;
@@ -24,11 +23,7 @@ const optionsMaker = async (
       if (element[labelFieldName]) {
         finalList.push({
           label: element[labelFieldName],
-          value: valueAsLabel
-            ? element[labelFieldName]
-            : idName
-            ? element[idName]
-            : JSON.stringify(element),
+          value: element[idName],
         });
       }
     }

@@ -7,6 +7,7 @@ import "./dropdown.css";
 const DropDown = ({ items, name, text }) => {
   return (
     <Dropdown
+      key={name}
       className={`h-full flex items-center ant-dropDown text-sm justify-center no-underline `}
       menu={{
         items,
