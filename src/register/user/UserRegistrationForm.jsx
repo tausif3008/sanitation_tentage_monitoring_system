@@ -25,6 +25,7 @@ const UserRegistrationForm = () => {
     if (values.state_id) {
       values.state_id = JSON.parse(values.state_id).state_id;
     }
+    values.status = 1;
 
     const res = await postData(getFormData(values), URLS.register.path, {
       version: URLS.register.version,
@@ -114,7 +115,6 @@ const UserRegistrationForm = () => {
           <Form.Item
             label={<div className="font-semibold">Address</div>}
             name="address"
-            rules={[{ required: true, message: "Please enter address" }]}
             className="mb-6"
           >
             <TextArea rows={1} />
@@ -147,11 +147,11 @@ const UserRegistrationForm = () => {
           <Form.Item
             name="user_type_id"
             label={<div className="font-semibold">Role</div>}
-            rules={[{ required: true, message: "Please select a role" }]}
+            rules={[{ required: true, message: "Please select User Type" }]}
             className="mb-4"
           >
             <Select
-              placeholder="Select a role"
+              placeholder="Select a User Type"
               className="rounded-none"
               options={userTypes}
             ></Select>

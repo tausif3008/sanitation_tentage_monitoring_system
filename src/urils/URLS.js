@@ -1,5 +1,5 @@
 const URLS = {
-  register: { path: "/register", version: "5.43" },
+  register: { path: "/users/entry", version: "5.43" },
   users: { path: "/users", version: "5.43" },
   country: { path: "/country", version: 5.43 },
   state: { path: "/state", version: 5.43 }, // ?country_id=1

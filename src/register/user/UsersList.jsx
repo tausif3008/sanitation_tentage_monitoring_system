@@ -28,45 +28,30 @@ const columns = [
   },
   {
     title: "Contact Number",
-    dataIndex: "contactNumber",
+    dataIndex: "phone",
     key: "contactNumber",
   },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-    width: 70,
-  },
-  {
-    title: "Gender",
-    dataIndex: "gender",
-    key: "gender",
-    width: 80,
-  },
+
   {
     title: "Address",
     dataIndex: "address",
     key: "address",
+    render: (val) => {
+      if (val === "undefine") {
+        return "-";
+      }
+    },
   },
-  {
-    title: "Username",
-    dataIndex: "username",
-    key: "username",
-  },
+
   {
     title: "Password",
     dataIndex: "password",
     key: "password",
   },
   {
-    title: "Assigned Role",
-    dataIndex: "assignRole",
-    key: "assignRole",
-  },
-  {
-    title: "Assigned Center",
-    dataIndex: "assignCenter",
-    key: "assignCenter",
+    title: "User Type",
+    dataIndex: "user_type",
+    key: "user_type",
   },
 ];
 
