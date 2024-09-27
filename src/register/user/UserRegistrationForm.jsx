@@ -32,7 +32,6 @@ const UserRegistrationForm = () => {
   };
 
   const onFinish = (values) => {
-    console.log("Form Values:", values);
     values.image = previewImage;
 
     const localUserRegistration =

@@ -115,8 +115,6 @@ const UserList = () => {
     getUsers();
   }, [params]);
 
-  const dispatch = useDispatch();
-
   return (
     <div className="">
       {!isUserList && (

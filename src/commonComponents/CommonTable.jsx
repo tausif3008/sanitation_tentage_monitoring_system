@@ -23,6 +23,7 @@ const CommonTable = ({ columns, uri, details, loading }) => {
       <Pagination
         className="mt-2"
         align="end"
+        showSizeChanger
         showQuickJumper
         current={details.currentPage}
         total={details.totalRecords}
