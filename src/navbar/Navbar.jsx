@@ -45,8 +45,8 @@ const register_items = (lang, dict) => {
     {
       key: "6",
       label: (
-        <Link className="text-black no-underline" to="/asset-sub-type-list">
-          Sub Type Registration
+        <Link className="text-black no-underline" to="/asset-type-list">
+          Asset Type Registration
         </Link>
       ),
     },
