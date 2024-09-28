@@ -260,12 +260,12 @@ export const DICT = {
   },
 
   address_footer: {
-    en: "Kumbh Mela Adhikari Triveni Bhawan, Daraganj, Prayagraj, Uttar Pradesh. 211006",
-    hi: "कुंभ मेला अधिकारी त्रिवेणी भवन, दारागंज, प्रयागराज, उत्तर प्रदेश। 211006",
+    en: "Kumbh Mela Adhikari Triveni Bhawan, Prayagraj, Uttar Pradesh.",
+    hi: "कुंभ मेला अधिकारी त्रिवेणी भवन, प्रयागराज, उत्तर प्रदेश।",
   },
   email_footer: {
-    en: "support@kumbhtsmonitoring.in",
-    hi: "support@kumbhtsmonitoring.in",
+    en: "support@kumbhmonitoringsystem.in",
+    hi: "support@kumbhmonitoringsystem.in",
   },
   phone: { en: "Phone", hi: "फ़ोन" },
   phone_number: {
