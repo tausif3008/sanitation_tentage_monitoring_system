@@ -64,18 +64,37 @@ const VendorRegistrationForm = () => {
     });
   };
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Form Values:", values);
 
-    const localVendorRegistration =
-      JSON.parse(localStorage.getItem("vendorRegistration")) || [];
+    try {
+      const response = await fetch(`${BASE_URL}users/entry`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "YunHu873jHds83hRujGJKd873",
+          "x-api-version": "1.0.1",
+          "x-platform": "Web",
+          "x-access-token": localStorage.getItem("sessionToken") || "",
+        },
+        body: JSON.stringify({
+          ...values,
+          user_type_id: 8, // Set user_type_id for vendor registration
+        }),
+      });
 
-    localVendorRegistration.push(JSON.parse(JSON.stringify(values)));
+      const data = await response.json();
 
-    localStorage.setItem(
-      "vendorRegistration",
-      JSON.stringify(localVendorRegistration)
-    );
+      if (data.success) {
+        message.success("Vendor registered successfully!");
+        form.resetFields();
+      } else {
+        message.error(data.message || "Vendor registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering vendor:", error);
+      message.error("Failed to register vendor");
+    }
   };
 
   return (
@@ -282,73 +301,55 @@ const VendorRegistrationForm = () => {
                     {...restField}
                     name={[name, "dateOfAllocation"]}
                     fieldKey={[fieldKey, "dateOfAllocation"]}
-                    label={
-                      <div className="font-semibold">Date of Allocation</div>
-                    }
+                    label={<div className="font-semibold">Allocation Date</div>}
                     rules={[
                       {
                         required: true,
-                        message: "Please select date of allocation",
+                        message: "Please enter the date of allocation",
                       },
                     ]}
                   >
-                    <DatePicker className="w-full rounded-none" />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, "totalAllottedQuantity"]}
-                    fieldKey={[fieldKey, "totalAllottedQuantity"]}
-                    label={
-                      <div className="font-semibold">
-                        Total Allotted Quantity
-                      </div>
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter total allotted quantity",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter total allotted quantity"
-                      className="rounded-none"
+                    <DatePicker
+                      placeholder="Select allocation date"
+                      className="w-full rounded-none"
                     />
                   </Form.Item>
 
-                  <MinusCircleOutlined
-                    onClick={() => remove(name)}
-                    className="text-red-500 cursor-pointer mt-8"
-                  />
+                  <Form.Item label=" ">
+                    <Button
+                      danger
+                      type="dashed"
+                      onClick={() => remove(name)}
+                      icon={<MinusCircleOutlined />}
+                      className="w-full"
+                    >
+                      Remove Vendor Details
+                    </Button>
+                  </Form.Item>
                 </div>
               ))}
-
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add Department Details
-                </Button>
-              </Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                icon={<PlusOutlined />}
+                className="w-full"
+              >
+                Add Vendor Details
+              </Button>
             </>
           )}
         </Form.List>
 
-        <div className="flex justify-end">
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="w-fit rounded-none bg-5c"
-            >
-              Register
-            </Button>
-          </Form.Item>
-        </div>
+        <Divider className="bg-d9 h-2/3 mt-1"></Divider>
+        <Form.Item className="mt-2">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="bg-d9 text-white rounded-none"
+          >
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );
