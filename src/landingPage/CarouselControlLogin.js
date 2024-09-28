@@ -49,7 +49,7 @@ const items = (dict, lang) => {
                       </span>{" "}
                       <span className="text-1d font-semibold">
                         {" "}
-                        support@kumbhmonitoringsystem.in
+                        support@kumbhtsmonitoring.in
                       </span>
                     </div>
                     <div>
