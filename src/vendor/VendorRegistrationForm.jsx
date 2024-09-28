@@ -1,11 +1,68 @@
-import React from "react";
-import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Divider,
+  DatePicker,
+  message,
+} from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
+const BASE_URL = "https://kumbhtsmonitoring.in/php-api/";
+
 const VendorRegistrationForm = () => {
   const [form] = Form.useForm();
+  const [assetTypes, setAssetTypes] = useState([]);
+  const [filteredAssetTypes, setFilteredAssetTypes] = useState([]);
+
+  useEffect(() => {
+    // Fetch asset types from the API
+    const fetchAssetTypes = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}asset-types`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "YunHu873jHds83hRujGJKd873",
+            "x-api-version": "1.0.1",
+            "x-platform": "Web",
+            "x-access-token": localStorage.getItem("sessionToken") || "",
+          },
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          setAssetTypes(data.data.assettypes);
+        } else {
+          message.error(data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching asset types:", error);
+        message.error("Failed to fetch asset types");
+      }
+    };
+
+    fetchAssetTypes();
+  }, []);
+
+  const handleMainTypeChange = (value, fieldKey) => {
+    // Filter asset types based on the selected main type
+    const filtered = assetTypes.filter(
+      (asset) => asset.asset_main_type === value
+    );
+    setFilteredAssetTypes(filtered);
+
+    // Clear the asset type dropdown when main type changes
+    form.setFieldsValue({
+      vendorDetails: {
+        [fieldKey]: { assetType: null },
+      },
+    });
+  };
 
   const onFinish = (values) => {
     console.log("Form Values:", values);
@@ -89,42 +146,49 @@ const VendorRegistrationForm = () => {
                 >
                   <Form.Item
                     {...restField}
-                    name={[name, "department"]}
-                    fieldKey={[fieldKey, "department"]}
-                    label={<div className="font-semibold">Department</div>}
+                    name={[name, "assetMainType"]}
+                    fieldKey={[fieldKey, "assetMainType"]}
+                    label={<div className="font-semibold">Asset Main Type</div>}
                     rules={[
-                      { required: true, message: "Please select a department" },
+                      {
+                        required: true,
+                        message: "Please select an asset main type",
+                      },
                     ]}
                   >
                     <Select
-                      placeholder="Select department"
+                      placeholder="Select Asset Main Type"
                       className="rounded-none"
+                      onChange={(value) =>
+                        handleMainTypeChange(value, fieldKey)
+                      }
                     >
-                      <Option value="sanitation">Sanitation</Option>
-                      <Option value="tentage">Tentage</Option>
-                      {/* Add more options as required */}
+                      <Option value="Sanitation">Sanitation</Option>
+                      <Option value="Tentage">Tentage</Option>
                     </Select>
                   </Form.Item>
 
                   <Form.Item
                     {...restField}
-                    name={[name, "departmentType"]}
-                    fieldKey={[fieldKey, "departmentType"]}
-                    label={<div className="font-semibold">Department Type</div>}
+                    name={[name, "assetType"]}
+                    fieldKey={[fieldKey, "assetType"]}
+                    label={<div className="font-semibold">Asset Type</div>}
                     rules={[
                       {
                         required: true,
-                        message: "Please select department type",
+                        message: "Please select an asset type",
                       },
                     ]}
                   >
                     <Select
-                      placeholder="Select department type"
+                      placeholder="Select an asset type"
                       className="rounded-none"
                     >
-                      <Option value="operational">Operational</Option>
-                      <Option value="administrative">Administrative</Option>
-                      {/* Add more options as needed */}
+                      {filteredAssetTypes.map((type) => (
+                        <Option key={type.asset_type_id} value={type.name}>
+                          {type.name}
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
 
@@ -147,7 +211,6 @@ const VendorRegistrationForm = () => {
                       <Option value="CN001">CN001</Option>
                       <Option value="CN002">CN002</Option>
                       <Option value="CN003">CN003</Option>
-                      {/* Add more contract numbers as required */}
                     </Select>
                   </Form.Item>
 
@@ -244,39 +307,12 @@ const VendorRegistrationForm = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Please enter allotted quantity",
-                      },
-                      {
-                        pattern: /^[0-9]+$/,
-                        message: "Please enter a valid number",
+                        message: "Please enter total allotted quantity",
                       },
                     ]}
                   >
                     <Input
                       placeholder="Enter total allotted quantity"
-                      className="rounded-none"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, "proposedLocationSectors"]}
-                    fieldKey={[fieldKey, "proposedLocationSectors"]}
-                    label={
-                      <div className="font-semibold">
-                        Proposed Sectors for Deployment
-                      </div>
-                    }
-                    rules={[
-                      {
-                        required: false,
-                        message: "Please enter proposed location/sectors",
-                      },
-                    ]}
-                  >
-                    <Input.TextArea
-                      rows={1}
-                      placeholder="Enter proposed location/sectors"
                       className="rounded-none"
                     />
                   </Form.Item>

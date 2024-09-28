@@ -3,12 +3,12 @@ import { Form, Input, Button, Select, Divider, message } from "antd";
 
 const { Option } = Select;
 
-const assetTypes = [
-  { value: "sanitation", label: "Sanitation" },
-  { value: "tentage", label: "Tentage" },
+const assetMainTypes = [
+  { value: "Sanitation", label: "Sanitation" },
+  { value: "Tentage", label: "Tentage" },
 ];
 
-const AssetSubTypeForm = () => {
+const AssetTypeForm = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -17,8 +17,8 @@ const AssetSubTypeForm = () => {
 
     // Prepare data for API with default values for questions and status
     const apiData = {
-      name: values.assetType, // Assuming 'name' is the asset type (dropdown selection)
-      asset_sub_type: values.assetSubType, // Assuming this is for asset sub-type
+      asset_main_type: values.assetMainType, // Assuming 'name' is the asset type (dropdown selection)
+      name: values.assetType, // Assuming this is for asset sub-type
       description: values.assetTypeDescription || "", // Optional description
       questions: 0, // default value
       status: 1, // default value
@@ -56,16 +56,16 @@ const AssetSubTypeForm = () => {
 
       // Check if the API returned success
       if (result.success) {
-        message.success("Asset Sub Type added successfully!");
+        message.success("Asset Type added successfully!");
         form.resetFields();
       } else {
         message.error(
-          result.message || "Failed to add asset sub type. Please try again."
+          result.message || "Failed to add asset type. Please try again."
         );
       }
     } catch (error) {
-      console.error("Error adding asset sub type:", error);
-      message.error("Failed to add asset sub type. Please try again.");
+      console.error("Error adding asset type:", error);
+      message.error("Failed to add asset type. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ const AssetSubTypeForm = () => {
   return (
     <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
       <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Asset Sub Type Registration</div>
+        <div className="font-bold"></div>
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
@@ -82,12 +82,17 @@ const AssetSubTypeForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 mb-3">
           {/* Asset Type Dropdown */}
           <Form.Item
-            name="assetType"
-            label={<div className="font-semibold">Asset Type</div>}
-            rules={[{ required: true, message: "Please select an asset type" }]}
+            name="assetMainType"
+            label={<div className="font-semibold">Asset Main Type</div>}
+            rules={[
+              { required: true, message: "Please select an asset main type" },
+            ]}
           >
-            <Select placeholder="Select asset type" className="rounded-none">
-              {assetTypes.map((type) => (
+            <Select
+              placeholder="Select asset main type"
+              className="rounded-none"
+            >
+              {assetMainTypes.map((type) => (
                 <Option key={type.value} value={type.value}>
                   {type.label}
                 </Option>
@@ -97,16 +102,11 @@ const AssetSubTypeForm = () => {
 
           {/* Asset Sub Type Textbox */}
           <Form.Item
-            name="assetSubType"
-            label={<div className="font-semibold">Asset Sub Type</div>}
-            rules={[
-              { required: true, message: "Please enter an asset sub type" },
-            ]}
+            name="assetType"
+            label={<div className="font-semibold">Asset Type</div>}
+            rules={[{ required: true, message: "Please enter an asset type" }]}
           >
-            <Input
-              placeholder="Enter asset sub type"
-              className="rounded-none"
-            />
+            <Input placeholder="Enter asset type" className="rounded-none" />
           </Form.Item>
 
           {/* Asset Type Description Textbox */}
@@ -138,4 +138,4 @@ const AssetSubTypeForm = () => {
   );
 };
 
-export default AssetSubTypeForm;
+export default AssetTypeForm;
