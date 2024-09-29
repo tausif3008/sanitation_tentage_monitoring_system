@@ -41,6 +41,7 @@ import DMSDashboard from "./DMSDashboard/DMSDashboard";
 import SLADashboard from "./SLADashboard/SLADashboard";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import VendorDetails from "./vendor/VendorDetails";
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");
@@ -106,13 +107,15 @@ function App() {
               element={<GPSFleetRegistration></GPSFleetRegistration>}
             ></Route>
             <Route
-              path="vendor-registration"
-              element={<VendorRegistrationForm></VendorRegistrationForm>}
-            ></Route>
-            <Route
-              path="vendor-list"
+              path="vendor/:page?/:per_page?"
               element={<VendorList></VendorList>}
             ></Route>
+
+            <Route
+              path="vendor/add-vendor-details/:id/:page?/:per_page?"
+              element={<VendorDetails></VendorDetails>}
+            ></Route>
+
             <Route
               path="asset-type-registration"
               element={<AssetTypeForm></AssetTypeForm>}

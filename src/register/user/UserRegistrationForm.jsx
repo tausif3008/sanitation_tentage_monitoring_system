@@ -25,18 +25,6 @@ const UserRegistrationForm = ({
   const onFinish = async (values) => {
     setLoading(true);
 
-    // if (values.city_id) {
-    //   values.city_id;
-    // }
-
-    // if (values.country_id) {
-    //   values.country_id = JSON.parse(values.country_id).country_id;
-    // }
-
-    // if (values.state_id) {
-    //   values.state_id = JSON.parse(values.state_id).state_id;
-    // }
-
     values.status = 1;
 
     if (updateDetails) {
@@ -164,6 +152,7 @@ const UserRegistrationForm = ({
             >
               <Input placeholder="Company Name" className="rounded-none " />
             </Form.Item>
+
             <Form.Item
               label={<div className="font-semibold">Password</div>}
               name="password"
@@ -183,7 +172,7 @@ const UserRegistrationForm = ({
             </Form.Item>
             <Form.Item
               name="user_type_id"
-              label={<div className="font-semibold">Role</div>}
+              label={<div className="font-semibold">User Type</div>}
               rules={[{ required: true, message: "Please select User Type" }]}
               className="mb-4"
             >
@@ -203,7 +192,7 @@ const UserRegistrationForm = ({
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
               >
-                Register
+                {updateDetails ? "Update" : "Register"}
               </Button>
             </Form.Item>
           </div>

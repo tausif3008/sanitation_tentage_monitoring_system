@@ -65,11 +65,7 @@ const columns = [
       }
     },
   },
-  {
-    title: "Password",
-    dataIndex: "password",
-    key: "password",
-  },
+
   {
     title: "User Type",
     dataIndex: "user_type",
@@ -165,7 +161,7 @@ const UserList = () => {
 
           <CommonTable
             loading={loading}
-            uri={URLS.users.path}
+            uri={"users"}
             columns={columns}
             details={userDetails}
             setUserDetails={setUserDetails}

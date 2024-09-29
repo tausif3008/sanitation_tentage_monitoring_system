@@ -1,356 +1,198 @@
-import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Divider,
-  DatePicker,
-  message,
-} from "antd";
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, Select, Divider } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { getData, postData } from "../Fetch/Axios";
+import URLS from "../urils/URLS";
+import { getFormData } from "../urils/getFormData";
+import optionsMaker from "../urils/OptionMaker";
+import CountryStateCity from "../commonComponents/CountryStateCity";
 
-const { Option } = Select;
+const { TextArea } = Input;
 
-const BASE_URL = "https://kumbhtsmonitoring.in/php-api/";
-
-const VendorRegistrationForm = () => {
+const VendorRegistrationForm = ({
+  setIsList,
+  updateDetails,
+  setUpdateDetails,
+  setUpdated,
+}) => {
   const [form] = Form.useForm();
-  const [assetTypes, setAssetTypes] = useState([]);
-  const [filteredAssetTypes, setFilteredAssetTypes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [userTypes, setUserTypes] = useState([]);
 
   useEffect(() => {
-    // Fetch asset types from the API
-    const fetchAssetTypes = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}asset-types`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "YunHu873jHds83hRujGJKd873",
-            "x-api-version": "1.0.1",
-            "x-platform": "Web",
-            "x-access-token": localStorage.getItem("sessionToken") || "",
-          },
-        });
-        const data = await response.json();
-
-        if (data.success) {
-          setAssetTypes(data.data.assettypes);
-        } else {
-          message.error(data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching asset types:", error);
-        message.error("Failed to fetch asset types");
-      }
-    };
-
-    fetchAssetTypes();
-  }, []);
-
-  const handleMainTypeChange = (value, fieldKey) => {
-    // Filter asset types based on the selected main type
-    const filtered = assetTypes.filter(
-      (asset) => asset.asset_main_type === value
-    );
-    setFilteredAssetTypes(filtered);
-
-    // Clear the asset type dropdown when main type changes
-    form.setFieldsValue({
-      vendorDetails: {
-        [fieldKey]: { assetType: null },
-      },
-    });
-  };
+    if (updateDetails) {
+      form.setFieldsValue(updateDetails);
+    }
+  }, [updateDetails, form]);
 
   const onFinish = async (values) => {
-    console.log("Form Values:", values);
+    setLoading(true);
 
-    try {
-      const response = await fetch(`${BASE_URL}users/entry`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "YunHu873jHds83hRujGJKd873",
-          "x-api-version": "1.0.1",
-          "x-platform": "Web",
-          "x-access-token": localStorage.getItem("sessionToken") || "",
-        },
-        body: JSON.stringify({
-          ...values,
-          user_type_id: 8, // Set user_type_id for vendor registration
-        }),
-      });
+    values.status = 1;
+    values.user_type_id = 8;
 
-      const data = await response.json();
+    if (updateDetails) {
+      values.user_id = updateDetails.user_id;
+    }
+    const res = await postData(getFormData(values), URLS.register.path, {
+      version: URLS.register.version,
+    });
 
-      if (data.success) {
-        message.success("Vendor registered successfully!");
+    if (res) {
+      setLoading(false);
+      if (res.data.success) {
         form.resetFields();
-      } else {
-        message.error(data.message || "Vendor registration failed");
+        setUpdated(true);
       }
-    } catch (error) {
-      console.error("Error registering vendor:", error);
-      message.error("Failed to register vendor");
+
+      if (updateDetails) {
+        setUpdateDetails(false);
+        //   setUpdated(true);
+      }
     }
   };
 
+  useEffect(() => {
+    optionsMaker(
+      "userType",
+      "user_type",
+      "user_type",
+      setUserTypes,
+      "",
+      "user_type_id"
+    );
+
+    getData(URLS.userType.path, { "x-api-version": URLS.userType.version });
+    getData(URLS.vendorUsers.path + 8, {
+      "x-api-version": URLS.vendorUsers.version,
+    });
+  }, [form]);
+
   return (
-    <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-3 w-full">
-      <div className="text-d9 text-2xl flex items-end justify-between">
-        <div className="font-bold">Vendor Registration</div>
-        <div className="text-xs">All * marked fields are mandatory</div>
-      </div>
-      <Divider className="bg-d9 h-2/3 mt-1"></Divider>
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-          <Form.Item
-            label={<div className="font-semibold">Vendor Name</div>}
-            name="vendorName"
-            rules={[{ required: true, message: "Please enter vendor name" }]}
-            className="mb-4"
+    <div className="mt-3">
+      <div className="mx-auto p-3 bg-white shadow-md rounded-lg mt-3 w-full">
+        <div className="flex gap-2 items-center">
+          <Button
+            className="bg-gray-200 rounded-full w-9 h-9"
+            onClick={() => {
+              setIsList(false);
+              setUpdateDetails(false);
+            }}
           >
-            <Input placeholder="Enter vendor name" className="rounded-none " />
-          </Form.Item>
+            <ArrowLeftOutlined />
+          </Button>
 
-          <Form.Item
-            label={<div className="font-semibold">Contact Number</div>}
-            name="contactNumber"
-            rules={[
-              { required: true, message: "Please enter the contact number" },
-              {
-                pattern: /^[0-9]{10}$/,
-                message: "Please enter a valid 10-digit contact number",
-              },
-            ]}
-            className="mb-4"
-          >
-            <Input
-              placeholder="Enter contact number"
-              className="rounded-none "
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={<div className="font-semibold">Email ID</div>}
-            name="email"
-            rules={[
-              { required: true, message: "Please enter the email" },
-              { type: "email", message: "Please enter a valid email" },
-            ]}
-            className="mb-4"
-          >
-            <Input placeholder="Enter email" className="rounded-none " />
-          </Form.Item>
-
-          <Form.Item
-            label={<div className="font-semibold">Address</div>}
-            name="address"
-            rules={[{ required: false, message: "Please enter address" }]}
-            className="mb-6"
-          >
-            <Input.TextArea rows={1} placeholder="Enter address" />
-          </Form.Item>
+          <div className="text-d9 text-2xl w-full flex items-end justify-between ">
+            <div className="font-bold">
+              {updateDetails ? "Update Vendor Details" : "Vendor Registration"}
+            </div>
+            <div className="text-xs">All * marks fields are mandatory</div>
+          </div>
         </div>
 
-        <Form.List name="vendorDetails">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <div
-                  key={key}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-5 mb-3"
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, "assetMainType"]}
-                    fieldKey={[fieldKey, "assetMainType"]}
-                    label={<div className="font-semibold">Asset Main Type</div>}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select an asset main type",
-                      },
-                    ]}
-                  >
-                    <Select
-                      placeholder="Select Asset Main Type"
-                      className="rounded-none"
-                      onChange={(value) =>
-                        handleMainTypeChange(value, fieldKey)
-                      }
-                    >
-                      <Option value="Sanitation">Sanitation</Option>
-                      <Option value="Tentage">Tentage</Option>
-                    </Select>
-                  </Form.Item>
+        <Divider className="bg-d9 h-2/3 mt-1" />
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "assetType"]}
-                    fieldKey={[fieldKey, "assetType"]}
-                    label={<div className="font-semibold">Asset Type</div>}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select an asset type",
-                      },
-                    ]}
-                  >
-                    <Select
-                      placeholder="Select an asset type"
-                      className="rounded-none"
-                    >
-                      {filteredAssetTypes.map((type) => (
-                        <Option key={type.asset_type_id} value={type.name}>
-                          {type.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ company: "KASH IT SOLUTION" }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
+            <Form.Item
+              label={<div className="font-semibold">User Name</div>}
+              name="name"
+              rules={[{ required: true, message: "Please enter name" }]}
+              className="mb-4"
+            >
+              <Input placeholder="Enter name" className="rounded-none" />
+            </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Email ID</div>}
+              name="email"
+              rules={[
+                { required: true, message: "Please enter the email" },
+                { type: "email", message: "Please enter a valid email" },
+              ]}
+              className="mb-4"
+            >
+              <Input placeholder="Enter email" className="rounded-none" />
+            </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Contact Number</div>}
+              name="phone"
+              rules={[
+                { required: true, message: "Please enter the contact number" },
+                {
+                  pattern: /^[0-9]{10}$/,
+                  message: "Please enter a valid 10-digit contact number",
+                },
+              ]}
+              className="mb-4"
+            >
+              <Input
+                placeholder="Enter contact number"
+                className="rounded-none"
+              />
+            </Form.Item>
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "contractNumber"]}
-                    fieldKey={[fieldKey, "contractNumber"]}
-                    label={<div className="font-semibold">Contract Number</div>}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select a contract number",
-                      },
-                    ]}
-                  >
-                    <Select
-                      placeholder="Select contract number"
-                      className="rounded-none"
-                    >
-                      <Option value="CN001">CN001</Option>
-                      <Option value="CN002">CN002</Option>
-                      <Option value="CN003">CN003</Option>
-                    </Select>
-                  </Form.Item>
+            <CountryStateCity
+              form={form}
+              country_id={updateDetails?.country_id}
+              state_id={updateDetails?.state_id}
+              city_id={updateDetails?.city_id}
+            />
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "managerContact1"]}
-                    fieldKey={[fieldKey, "managerContact1"]}
-                    label={
-                      <div className="font-semibold">Manager Contact 1</div>
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter manager contact number 1",
-                      },
-                      {
-                        pattern: /^[0-9]{10}$/,
-                        message: "Please enter a valid 10-digit contact number",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter manager contact number 1"
-                      className="rounded-none"
-                    />
-                  </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Address</div>}
+              name="address"
+              className="mb-6"
+              rules={[{ required: true, message: "Please enter the address" }]}
+            >
+              <TextArea rows={1} />
+            </Form.Item>
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "managerContact2"]}
-                    fieldKey={[fieldKey, "managerContact2"]}
-                    label={
-                      <div className="font-semibold">Manager Contact 2</div>
-                    }
-                    rules={[
-                      {
-                        pattern: /^[0-9]{10}$/,
-                        message: "Please enter a valid 10-digit contact number",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter manager contact number 2 (optional)"
-                      className="rounded-none"
-                    />
-                  </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Company</div>}
+              name="company"
+              rules={[{ required: true, message: "Please enter the company" }]}
+              className="mb-4"
+            >
+              <Input placeholder="Company Name" className="rounded-none" />
+            </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Password</div>}
+              name="password"
+              rules={[
+                { required: true, message: "Please enter the password" },
+                {
+                  min: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              ]}
+              className="mb-4"
+            >
+              <Input.Password
+                placeholder="Enter password"
+                className="rounded-none"
+              />
+            </Form.Item>
+          </div>
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "workOrderNumber"]}
-                    fieldKey={[fieldKey, "workOrderNumber"]}
-                    label={
-                      <div className="font-semibold">Work Order Number</div>
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter work order number",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter work order number"
-                      className="rounded-none"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, "dateOfAllocation"]}
-                    fieldKey={[fieldKey, "dateOfAllocation"]}
-                    label={<div className="font-semibold">Allocation Date</div>}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter the date of allocation",
-                      },
-                    ]}
-                  >
-                    <DatePicker
-                      placeholder="Select allocation date"
-                      className="w-full rounded-none"
-                    />
-                  </Form.Item>
-
-                  <Form.Item label=" ">
-                    <Button
-                      danger
-                      type="dashed"
-                      onClick={() => remove(name)}
-                      icon={<MinusCircleOutlined />}
-                      className="w-full"
-                    >
-                      Remove Vendor Details
-                    </Button>
-                  </Form.Item>
-                </div>
-              ))}
+          <div className="flex justify-end">
+            <Form.Item>
               <Button
-                type="dashed"
-                onClick={() => add()}
-                icon={<PlusOutlined />}
-                className="w-full"
+                loading={loading}
+                type="primary"
+                htmlType="submit"
+                className="w-fit rounded-none bg-5c"
               >
-                Add Vendor Details
+                {updateDetails ? "Update" : "Register"}
               </Button>
-            </>
-          )}
-        </Form.List>
-
-        <Divider className="bg-d9 h-2/3 mt-1"></Divider>
-        <Form.Item className="mt-2">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-d9 text-white rounded-none"
-          >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+            </Form.Item>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };

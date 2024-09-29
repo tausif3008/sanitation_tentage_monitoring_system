@@ -54,7 +54,7 @@ const register_items = (lang, dict) => {
     {
       key: "7",
       label: (
-        <Link className="text-black no-underline" to="/vendor-registration">
+        <Link className="text-black no-underline" to="/vendor">
           Vendor Registration
         </Link>
       ),

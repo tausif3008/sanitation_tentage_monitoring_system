@@ -6,7 +6,7 @@ const CommonTable = ({ columns, uri, details, loading }) => {
   const navigate = useNavigate();
 
   const handlePageChange = (pageNumber, page) => {
-    let path = uri + "/page=" + pageNumber + "&per_page=" + page;
+    let path = "/" + uri + "/page=" + pageNumber + "&per_page=" + page;
     navigate(path);
   };
 
@@ -20,6 +20,7 @@ const CommonTable = ({ columns, uri, details, loading }) => {
         dataSource={details.list || []}
         pagination={false}
       />
+
       <div className="mt-2 flex justify-between items-center">
         {<div>Total: {details.totalRecords}</div>}
         <Pagination

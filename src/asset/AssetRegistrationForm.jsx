@@ -26,20 +26,28 @@ const AssetRegistrationForm = () => {
     // Fetch the vendor list on component mount
     const fetchVendors = async () => {
       try {
-        const response = await fetch("https://kumbhtsmonitoring.in/php-api/users?user_type_id=8", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "YunHu873jHds83hRujGJKd873",
-            "x-api-version": "1.0.1",
-            "x-platform": "Web",
-            "x-access-token": localStorage.getItem("sessionToken") || "",
+        const response = await fetch(
+          "https://kumbhtsmonitoring.in/php-api/users?user_type_id=8",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "YunHu873jHds83hRujGJKd873",
+              "x-api-version": "1.0.1",
+              "x-platform": "Web",
+              "x-access-token": localStorage.getItem("sessionToken") || "",
+            },
           }
-        });
-    
+        );
+
         const result = await response.json();
-    
-        if (response.ok && result.data && result.data.users && Array.isArray(result.data.users)) {
+
+        if (
+          response.ok &&
+          result.data &&
+          result.data.users &&
+          Array.isArray(result.data.users)
+        ) {
           setVendors(result.data.users); // Set vendors to state
         } else {
           message.error("Failed to fetch vendors.");
@@ -48,7 +56,7 @@ const AssetRegistrationForm = () => {
         message.error("Error fetching vendors: " + error.message);
       }
     };
-    
+
     fetchVendors();
   }, []);
 
@@ -90,7 +98,7 @@ const AssetRegistrationForm = () => {
 
   const onFinish = async (values) => {
     // Ensure vendor_id is included
-    const vendor = vendors.find(v => v.name === values.vendor);
+    const vendor = vendors.find((v) => v.name === values.vendor);
     if (vendor) {
       values.vendor_id = vendor.id;
     }
