@@ -6,6 +6,9 @@ const CommonTable = ({ columns, uri, details, loading }) => {
   const navigate = useNavigate();
 
   const handlePageChange = (pageNumber, page) => {
+    if (isNaN(pageNumber)) {
+      pageNumber = 1;
+    }
     let path = "/" + uri + "/page=" + pageNumber + "&per_page=" + page;
     navigate(path);
   };

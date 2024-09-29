@@ -62,6 +62,7 @@ const columns = [
 const VendorDetails = () => {
   const [isList, setIsList] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [details, setDetails] = useState({
     list: [],
     pageLength: 25,
