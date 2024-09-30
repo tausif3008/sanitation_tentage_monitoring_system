@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "antd";
-import CommonTable from "../../commonComponents/CommonTable";
-import CommonDivider from "../../commonComponents/CommonDivider";
-import URLS from "../../urils/URLS";
+import CommonTable from "../../../commonComponents/CommonTable";
+import CommonDivider from "../../../commonComponents/CommonDivider";
+import URLS from "../../../urils/URLS";
 import { useNavigate, useParams } from "react-router";
-import { getData } from "../../Fetch/Axios";
+import { getData } from "../../../Fetch/Axios";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
 import VendorDetailsForm from "./VendorDetailsForm";
 import { Link } from "react-router-dom";

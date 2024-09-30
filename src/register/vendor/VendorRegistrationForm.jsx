@@ -119,6 +119,7 @@ const VendorRegistrationForm = () => {
             >
               <Input placeholder="Enter name" className="rounded-none" />
             </Form.Item>
+
             <Form.Item
               label={<div className="font-semibold">Email ID</div>}
               name="email"

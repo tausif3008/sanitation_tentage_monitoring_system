@@ -10,8 +10,15 @@ const URLS = {
   // vendor
   vendors: { path: "/users/?user_type_id=8", version: "5.43" },
   vendorUsers: { path: "/users/details?user_id=", version: "5.43" },
+
+  // vendor Details
   vendorDetails: { path: "/user-details?user_id=", version: "5.43" },
   addVendorDetails: { path: "/user-details/entry", version: "5.43" },
+  vendorAsset: { path: "/asset-types", version: 5.43 },
+
+  // questions
+  questions: { path: "/questions", version: "5.43" },
+  questionsEntry: { path: "/questions/entry", version: "5.43" },
 };
 
 export default URLS;

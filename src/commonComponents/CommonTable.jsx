@@ -2,7 +2,7 @@ import { Pagination, Table } from "antd";
 import React from "react";
 import { useNavigate } from "react-router";
 
-const CommonTable = ({ columns, uri, details, loading }) => {
+const CommonTable = ({ columns, uri, details, loading, scroll }) => {
   const navigate = useNavigate();
 
   const handlePageChange = (pageNumber, page) => {
@@ -19,7 +19,7 @@ const CommonTable = ({ columns, uri, details, loading }) => {
         loading={loading}
         columns={columns}
         bordered
-        scroll={{ x: 1600, y: 400 }}
+        scroll={scroll ? scroll : { x: 1600, y: 400 }}
         dataSource={details.list || []}
         pagination={false}
       />

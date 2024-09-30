@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { getData, postData } from "../../Fetch/Axios";
-import URLS from "../../urils/URLS";
-import { getFormData } from "../../urils/getFormData";
-import optionsMaker from "../../urils/OptionMaker";
+import { getData, postData } from "../../../Fetch/Axios";
+import URLS from "../../../urils/URLS";
+import { getFormData } from "../../../urils/getFormData";
+import optionsMaker from "../../../urils/OptionMaker";
 import { useParams } from "react-router";
 import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
+const { Option } = Select;
 
 const dateFormat = "YYYY-MM-DD";
 
@@ -18,13 +19,29 @@ const VendorDetailsForm = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [userTypes, setUserTypes] = useState([]);
-
   const params = useParams();
+  const [assetTypes, setAssetTypes] = useState([]);
+
+  useEffect(() => {
+    console.log("setAssetTypes---", assetTypes);
+  }, [assetTypes]);
+
+  useEffect(() => {
+    optionsMaker(
+      "vendorAsset",
+      "assettypes",
+      "name",
+      setAssetTypes,
+      "",
+      "asset_type_id"
+    );
+  }, []);
 
   useEffect(() => {
     if (updateDetails) {
       form.setFieldsValue(updateDetails);
     }
+
     return () => {
       setUpdateDetails();
       setUpdated(false);
@@ -66,18 +83,6 @@ const VendorDetailsForm = () => {
     }
   };
 
-  useEffect(() => {
-    // optionsMaker(
-    //   "userType",
-    //   "user_type",
-    //   "user_type",
-    //   setUserTypes,
-    //   "",
-    //   "user_type_id"
-    // );
-    // getData(URLS.userType.path, { "x-api-version": URLS.userType.version });
-  }, [form]);
-
   return (
     <div className="mt-3">
       <div className="mx-auto p-3 bg-white shadow-md rounded-lg mt-3 w-full">
@@ -115,16 +120,36 @@ const VendorDetailsForm = () => {
               rules={[{ required: true, message: "Please enter main type" }]}
               className="mb-4"
             >
-              <Input placeholder="Enter main type" className="rounded-none" />
+              <Select
+                placeholder="Select a option and change input text above"
+                allowClear
+              >
+                <Option value="Sanitation">Sanitation</Option>
+                <Option value="Tentage">Tentage</Option>
+              </Select>
             </Form.Item>
 
             <Form.Item
-              label={<div className="font-semibold">Sub Type</div>}
-              name="sub_type"
+              label={<div className="font-semibold">Asset Type</div>}
+              name="asset_type"
               rules={[{ required: true, message: "Please enter sub type" }]}
               className="mb-4"
             >
-              <Input placeholder="Enter sub type" className="rounded-none" />
+              <Select
+                showSearch
+                onChange={(val) => {
+                  form.setFieldsValue({ asset_type: val });
+                }}
+                placeholder="Select Asset Type"
+                optionFilterProp="children"
+                style={{ width: 300 }}
+              >
+                {assetTypes.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>{" "}
             </Form.Item>
 
             <Form.Item
