@@ -42,6 +42,9 @@ import SLADashboard from "./SLADashboard/SLADashboard";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import VendorDetails from "./vendor/VendorDetails";
+import AddQuestionForm from "./questions/AddQuestionForm";
+import QuestionsList from "./questions/QuestionsList";
+
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");
@@ -121,6 +124,12 @@ function App() {
               element={<AssetTypeForm></AssetTypeForm>}
             ></Route>
             <Route path="asset-type-list" element={<AssetTypeList />} />
+
+            <Route
+              path="addquestionform"
+              element={<AddQuestionForm></AddQuestionForm>}
+            ></Route>
+            <Route path="questions-list" element={<QuestionsList />} />
 
             <Route
               path="vendor-list"
