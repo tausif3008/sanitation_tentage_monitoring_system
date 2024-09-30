@@ -49,10 +49,7 @@ import AddQuestionForm from "./register/questions/AddQuestionForm";
 import QuestionList from "./register/questions/QuestionList";
 import AssetTypeForm from "./register/AssetTypes/AssetTypeForm";
 import AssetTypeList from "./register/AssetTypes/AssetTypeList";
-import {
-  AssetContext,
-  AssetProvider,
-} from "./register/AssetTypes/AssetContext";
+import { AssetProvider } from "./register/AssetTypes/AssetContext";
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");

@@ -5,19 +5,12 @@ import CommonDivider from "../../commonComponents/CommonDivider";
 import URLS from "../../urils/URLS";
 import { useNavigate, useParams } from "react-router";
 import { getData } from "../../Fetch/Axios";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { EditOutlined } from "@ant-design/icons";
 import { AssetContext } from "./AssetContext";
 
-const VendorList = () => {
-  const {
-    updateDetails,
-    setUpdateDetails,
-    updated,
-    setUpdated,
-    isList,
-    setIsList,
-  } = useContext(AssetContext);
+const AssetTypeList = () => {
+  const { setIsListUpdateDetails, isListUpdateDetails } =
+    useContext(AssetContext);
 
   const navigate = useNavigate();
 
@@ -49,7 +42,10 @@ const VendorList = () => {
 
     if (res) {
       const data = res.data;
-      setUpdated(false);
+      setIsListUpdateDetails((prev) => {
+        return { ...prev, updated: false };
+      });
+
       setLoading(false);
 
       const list = data.assettypes.map((el, index) => {
@@ -60,7 +56,9 @@ const VendorList = () => {
               className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
               key={el.name + index}
               onClick={() => {
-                setUpdateDetails(el);
+                setIsListUpdateDetails((prev) => {
+                  return { ...prev, updateDetails: el };
+                });
               }}
             >
               <EditOutlined></EditOutlined>
@@ -107,13 +105,18 @@ const VendorList = () => {
 
   useEffect(() => {
     getDetails();
-  }, [params, updated]);
+  }, [params, isListUpdateDetails.updated]);
 
   useEffect(() => {
-    if (isList || updateDetails) {
+    if (isListUpdateDetails.isList || isListUpdateDetails.updateDetails) {
+      console.log(
+        " isListUpdateDetails",
+        isListUpdateDetails.isList,
+        isListUpdateDetails.updateDetails
+      );
       navigate("/asset-type-registration");
     }
-  }, [isList, updateDetails, navigate]);
+  }, [isListUpdateDetails.isList, isListUpdateDetails.updateDetails, navigate]);
 
   const showModal = async (assetTypeId) => {
     setSelectedAssetType(assetTypeId);
@@ -125,6 +128,7 @@ const VendorList = () => {
     setIsModalVisible(false); // Close the modal
     setQuestions([]); // Clear the questions when modal closes
   };
+
   const columns = [
     {
       title: "Main Type", // Asset main type
@@ -156,67 +160,74 @@ const VendorList = () => {
         </Button>
       ),
     },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+    },
   ];
 
   return (
     <div className="">
-      {!isList && !updateDetails && (
-        <>
-          <CommonDivider
-            label={"Asset Type List"}
-            compo={
-              <Button
-                className="bg-orange-300 mb-1"
-                onClick={() => setIsList(true)}
-              >
-                Add Asset Type
-              </Button>
-            }
-          ></CommonDivider>
+      <>
+        <CommonDivider
+          label={"Asset Type List"}
+          compo={
+            <Button
+              className="bg-orange-300 mb-1"
+              onClick={() =>
+                setIsListUpdateDetails((prev) => {
+                  return { ...prev, isList: true };
+                })
+              }
+            >
+              Add Asset Type
+            </Button>
+          }
+        ></CommonDivider>
 
-          <CommonTable
-            columns={columns}
-            uri={"asset-type-list"}
-            details={details}
-            loading={loading}
-            scroll={{ x: 800, y: 400 }}
-          ></CommonTable>
+        <CommonTable
+          columns={columns}
+          uri={"asset-type-list"}
+          details={details}
+          loading={loading}
+          scroll={{ x: 800, y: 400 }}
+        ></CommonTable>
 
-          <Modal
-            title={`Questions for Asset Type ID: ${selectedAssetType}`}
-            visible={isModalVisible}
-            onCancel={handleCancel}
-            footer={null}
-            width={800} // Adjust width if necessary
-          >
-            {questions?.list?.length > 0 ? (
-              <Table
-                bordered
-                dataSource={questions.list}
-                rowKey="question_id"
-                pagination={false}
-                scroll={{ x: 800, y: 400 }}
-                columns={[
-                  {
-                    title: "Question (EN)",
-                    dataIndex: "question_en",
-                    key: "question_en",
-                  },
-                  {
-                    title: "Question (HI)",
-                    dataIndex: "question_hi",
-                    key: "question_hi",
-                  },
-                ]}
-              />
-            ) : (
-              <p>No questions found for this asset type.</p>
-            )}
-          </Modal>
-        </>
-      )}
+        <Modal
+          title={`Questions for Asset Type ID: ${selectedAssetType}`}
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+          width={800} // Adjust width if necessary
+        >
+          {questions?.list?.length > 0 ? (
+            <Table
+              bordered
+              dataSource={questions.list}
+              rowKey="question_id"
+              pagination={false}
+              scroll={{ x: 800, y: 400 }}
+              columns={[
+                {
+                  title: "Question (EN)",
+                  dataIndex: "question_en",
+                  key: "question_en",
+                },
+                {
+                  title: "Question (HI)",
+                  dataIndex: "question_hi",
+                  key: "question_hi",
+                },
+              ]}
+            />
+          ) : (
+            <p>No questions found for this asset type.</p>
+          )}
+        </Modal>
+      </>
     </div>
   );
 };
 
-export default VendorList;
+export default AssetTypeList;

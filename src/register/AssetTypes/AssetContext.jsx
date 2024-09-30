@@ -3,19 +3,17 @@ import React, { createContext, useState } from "react";
 export const AssetContext = createContext();
 
 export const AssetProvider = ({ children }) => {
-  const [updateDetails, setUpdateDetails] = useState();
-  const [updated, setUpdated] = useState(false);
-  const [isList, setIsList] = useState(false);
+  const [isListUpdateDetails, setIsListUpdateDetails] = useState({
+    isList: false,
+    updateDetails: false,
+    updated: false,
+  });
 
   return (
     <AssetContext.Provider
       value={{
-        updateDetails,
-        setUpdateDetails,
-        updated,
-        setUpdated,
-        isList,
-        setIsList,
+        setIsListUpdateDetails,
+        isListUpdateDetails,
       }}
     >
       {children}

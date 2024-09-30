@@ -23,6 +23,7 @@ const URLS = {
   // Assets
   assetQuestions: { path: "/questions?asset_type_id=", version: "5.43" },
   assetTypes: { path: "/asset-types", version: 5.43 },
+  assetTypeEntry: { path: "/asset-types/entry", version: 5.43 },
 };
 
 export default URLS;
