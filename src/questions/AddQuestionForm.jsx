@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, Select, message } from "antd";
 
+const { Option } = Select;
 const BASE_URL = "https://kumbhtsmonitoring.in/php-api/";
 
 const AddQuestionForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
+    // Set default values for action, sla, and status
+    values.action = 1;
+    values.sla = 1;
+    values.status = 1;
+
     console.log("Form Values:", values);
 
     try {
@@ -79,6 +85,20 @@ const AddQuestionForm = () => {
             placeholder="Enter description"
             className="rounded-none"
           />
+        </Form.Item>
+
+        <Form.Item
+          label="Is Image"
+          name="is_image"
+          rules={[{ required: true, message: "Please select an option" }]}
+        >
+          <Select
+            placeholder="Select if image is required"
+            className="rounded-none"
+          >
+            <Option value={0}>No</Option>
+            <Option value={1}>Yes</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item>
