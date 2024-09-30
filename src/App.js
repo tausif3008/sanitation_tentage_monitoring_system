@@ -43,7 +43,7 @@ import { Provider } from "react-redux";
 import store from "./Redux/store";
 import VendorDetails from "./register/vendor/VendorDetails";
 import AddQuestionForm from "./questions/AddQuestionForm";
-import QuestionsList from "./questions/QuestionsList";
+import QuestionsList from "./questions/QuestionsList";  // Use correct casing
 import UserRegistrationForm from "./register/user/UserRegistrationForm";
 import { ListFormProviderVendor } from "./register/vendor/ListFormContextVendor";
 import { ListFormProviderUser } from "./register/user/ListFormContextUser";
