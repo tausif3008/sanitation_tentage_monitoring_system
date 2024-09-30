@@ -7,11 +7,11 @@ import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
-import { QuestionContext } from "./QuestionContext";
+import { AssetContext } from "./AssetContext";
 
 const UserRegistrationForm = () => {
   const { updateDetails, setUpdateDetails, setUpdated, setIsList } =
-    useContext(QuestionContext);
+    useContext(AssetContext);
 
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -38,10 +38,10 @@ const UserRegistrationForm = () => {
     values.status = 1;
 
     if (updateDetails) {
-      values.question_id = updateDetails.question_id;
+      values.user_id = updateDetails.user_id;
     }
 
-    const res = await postData(getFormData(values), URLS.questionsEntry.path, {
+    const res = await postData(getFormData(values), URLS.register.path, {
       version: URLS.register.version,
     });
 
@@ -50,12 +50,12 @@ const UserRegistrationForm = () => {
       if (res.data.success) {
         form.resetFields();
         setUpdated(true);
-        navigate("/questions");
+        navigate("/users");
       }
       if (updateDetails) {
         setUpdateDetails(false);
         setUpdated(true);
-        navigate("/questions");
+        navigate("/users");
       }
     }
   };
@@ -84,109 +84,78 @@ const UserRegistrationForm = () => {
             onClick={() => {
               setIsList(false);
               setUpdateDetails(false);
-              navigate("/questions");
+              navigate("/users");
             }}
           >
             <ArrowLeftOutlined></ArrowLeftOutlined>
           </Button>
           <div className="text-d9 text-2xl  w-full flex items-end justify-between ">
             <div className="font-bold">
-              {updateDetails ? "Update Question" : "Add Question"}
+              {updateDetails ? "Update Asset Type" : "Add Asset Type"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
         </div>
         <Divider className="bg-d9 h-2/3 mt-1"></Divider>
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item
-            label="Question (English)"
-            name="question_en"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the question in English",
-              },
-            ]}
-          >
-            <Input
-              placeholder="Enter question in English"
-              className="rounded-none"
-            />
-          </Form.Item>
-          <Form.Item label="Question (Hindi)" name="question_hi">
-            <Input
-              placeholder="Enter question in Hindi"
-              className="rounded-none"
-            />
-          </Form.Item>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 mb-3">
+            {/* Asset Type Dropdown */}
             <Form.Item
-              label="Is Image"
-              name="is_image"
-              rules={[{ required: true, message: "Please select an option" }]}
+              name="assetMainType"
+              label={<div className="font-semibold">Asset Main Type</div>}
+              rules={[
+                { required: true, message: "Please select an asset main type" },
+              ]}
             >
               <Select
-                placeholder="Select if image is required"
+                placeholder="Select asset main type"
                 className="rounded-none"
               >
-                <Option value={0}>No</Option>
-                <Option value={1}>Yes</Option>
+                {assetMainTypes.map((type) => (
+                  <Option key={type.value} value={type.value}>
+                    {type.label}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
 
+            {/* Asset Sub Type Textbox */}
             <Form.Item
-              label="Action"
-              name="action"
-              className="rounded-none"
-              rules={[{ required: true, message: "Please select an option" }]}
+              name="assetType"
+              label={<div className="font-semibold">Asset Type</div>}
+              rules={[
+                { required: true, message: "Please enter an asset type" },
+              ]}
             >
-              <Select placeholder="Select Action" className="rounded-none">
-                <Option value={1}>Mail</Option>
-                <Option value={2}>WhatsApp</Option>
-                <Option value={3}> Mail & SMS</Option>
-                <Option value={4}>WhatsApp</Option>
-              </Select>
+              <Input placeholder="Enter asset type" className="rounded-none" />
             </Form.Item>
 
+            {/* Asset Type Description Textbox */}
             <Form.Item
-              className="rounded-none"
-              label="SLA"
-              name="sla"
-              rules={[{ required: true, message: "Please select an option" }]}
+              name="assetTypeDescription"
+              label={
+                <div className="font-semibold">Asset Type Description</div>
+              }
             >
-              <Select placeholder="Select SLA" className="rounded-none">
-                <Option value={1}>1 Hrs</Option>
-                <Option value={2}>2 Hrs</Option>
-                <Option value={3}> 3 Hrs</Option>
-                <Option value={4}>4 Hrs</Option>
-              </Select>
+              <Input
+                placeholder="Enter asset type description (optional)"
+                className="rounded-none"
+              />
             </Form.Item>
           </div>
 
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please enter a description" }]}
-          >
-            <Input.TextArea
-              rows={4}
-              placeholder="Enter description"
-              className="rounded-none"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <div className="flex w-full justify-end">
+          <div className="flex justify-end">
+            <Form.Item>
               <Button
-                loading={loading}
                 type="primary"
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
+                loading={loading} // Show loading spinner during API call
               >
-                {updateDetails ? "Update Question" : "Add Question"}
+                Submit
               </Button>
-            </div>
-          </Form.Item>
+            </Form.Item>
+          </div>
         </Form>
       </div>
     </div>
@@ -194,4 +163,3 @@ const UserRegistrationForm = () => {
 };
 
 export default UserRegistrationForm;
-const { Option } = Select;

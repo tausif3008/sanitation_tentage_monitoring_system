@@ -13,8 +13,6 @@ const AssetTypeForm = () => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
-    console.log("Form Values:", values);
-
     // Prepare data for API with default values for questions and status
     const apiData = {
       asset_main_type: values.assetMainType, // Assuming 'name' is the asset type (dropdown selection)
@@ -45,8 +43,6 @@ const AssetTypeForm = () => {
         }
       );
 
-      console.log("API Response:", response);
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -54,7 +50,6 @@ const AssetTypeForm = () => {
       const result = await response.json();
       console.log("API Result:", result); // Log the parsed result
 
-      // Check if the API returned success
       if (result.success) {
         message.success("Asset Type added successfully!");
         form.resetFields();
