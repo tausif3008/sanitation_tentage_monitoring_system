@@ -69,7 +69,7 @@ const register_items = (lang, dict) => {
     {
       key: "9",
       label: (
-        <Link className="text-black no-underline" to="/questions-list">
+        <Link className="text-black no-underline" to="/questions">
           Question Registration
         </Link>
       ),

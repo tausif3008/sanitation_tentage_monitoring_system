@@ -113,13 +113,7 @@ const UserRegistrationForm = () => {
               className="rounded-none"
             />
           </Form.Item>
-          <Form.Item
-            label="Question (Hindi)"
-            name="question_hi"
-            rules={[
-              { required: true, message: "Please enter the question in Hindi" },
-            ]}
-          >
+          <Form.Item label="Question (Hindi)" name="question_hi">
             <Input
               placeholder="Enter question in Hindi"
               className="rounded-none"
@@ -182,13 +176,16 @@ const UserRegistrationForm = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="w-fit rounded-none bg-5c"
-            >
-              Add Question
-            </Button>
+            <div className="flex w-full justify-end">
+              <Button
+                loading={loading}
+                type="primary"
+                htmlType="submit"
+                className="w-fit rounded-none bg-5c"
+              >
+                {updateDetails ? "Edit Question" : "Add Question"}
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </div>
