@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "antd";
-import CommonTable from "../commonComponents/CommonTable";
-import CommonDivider from "../commonComponents/CommonDivider";
-import URLS from "../urils/URLS";
+import CommonTable from "../../commonComponents/CommonTable";
+import CommonDivider from "../../commonComponents/CommonDivider";
+import URLS from "../../urils/URLS";
 import { useNavigate, useParams } from "react-router";
-import { getData } from "../Fetch/Axios";
+import { getData } from "../../Fetch/Axios";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
-import VendorRegistrationForm from "./VendorRegistrationForm";
 import VendorDetailsForm from "./VendorDetailsForm";
-import moment from "moment";
 import { Link } from "react-router-dom";
+import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
 
 const columns = [
   {
@@ -60,7 +59,15 @@ const columns = [
 ];
 
 const VendorDetails = () => {
-  const [isList, setIsList] = useState(false);
+  const {
+    updateDetails,
+    setUpdateDetails,
+    updated,
+    setUpdated,
+    isList,
+    setIsList,
+  } = useContext(ListFormContextVendorDetails);
+
   const [loading, setLoading] = useState(false);
 
   const [details, setDetails] = useState({
@@ -68,9 +75,6 @@ const VendorDetails = () => {
     pageLength: 25,
     currentPage: 1,
   });
-
-  const [updateDetails, setUpdateDetails] = useState();
-  const [updated, setUpdated] = useState(false);
 
   const params = useParams();
 

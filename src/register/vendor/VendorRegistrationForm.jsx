@@ -1,29 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { getData, postData } from "../Fetch/Axios";
-import URLS from "../urils/URLS";
-import { getFormData } from "../urils/getFormData";
-import optionsMaker from "../urils/OptionMaker";
-import CountryStateCity from "../commonComponents/CountryStateCity";
+import { getData, postData } from "../../Fetch/Axios";
+import URLS from "../../urils/URLS";
+import { getFormData } from "../../urils/getFormData";
+import optionsMaker from "../../urils/OptionMaker";
+import CountryStateCity from "../../commonComponents/CountryStateCity";
+import { ListFormContextVendor } from "./ListFormContextVendor";
+import { useLocation, useNavigate } from "react-router";
 
 const { TextArea } = Input;
 
-const VendorRegistrationForm = ({
-  setIsList,
-  updateDetails,
-  setUpdateDetails,
-  setUpdated,
-}) => {
+const VendorRegistrationForm = () => {
+  const { updateDetails, setUpdateDetails, setUpdated, setIsList } = useContext(
+    ListFormContextVendor
+  );
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [userTypes, setUserTypes] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (updateDetails) {
       form.setFieldsValue(updateDetails);
     }
-  }, [updateDetails, form]);
+
+    return () => {
+      setUpdateDetails();
+      setUpdated(false);
+      setIsList(false);
+    };
+  }, [updateDetails, form, location, setUpdateDetails, setIsList, setUpdated]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -34,6 +43,7 @@ const VendorRegistrationForm = ({
     if (updateDetails) {
       values.user_id = updateDetails.user_id;
     }
+
     const res = await postData(getFormData(values), URLS.register.path, {
       version: URLS.register.version,
     });
@@ -48,6 +58,7 @@ const VendorRegistrationForm = ({
       if (updateDetails) {
         setUpdateDetails(false);
         //   setUpdated(true);
+        navigate("/vendor");
       }
     }
   };
@@ -77,6 +88,7 @@ const VendorRegistrationForm = ({
             onClick={() => {
               setIsList(false);
               setUpdateDetails(false);
+              navigate("/vendor");
             }}
           >
             <ArrowLeftOutlined />
@@ -166,7 +178,7 @@ const VendorRegistrationForm = ({
               rules={[
                 { required: true, message: "Please enter the password" },
                 {
-                  min: 6,
+                  min: 7,
                   message: "Password must be at least 6 characters long",
                 },
               ]}

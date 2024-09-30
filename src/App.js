@@ -11,8 +11,8 @@ import AssetAllotment from "./asset/AssetAllotment";
 import GisServices from "./gis/GisServices";
 import GisList from "./gis/GisList";
 
-import VendorRegistrationForm from "./vendor/VendorRegistrationForm";
-import VendorList from "./vendor/VendorList";
+import VendorRegistrationForm from "./register/vendor/VendorRegistrationForm";
+import VendorList from "./register/vendor/VendorList";
 import VehicleRegistrationForm from "./vehicle/VehicleRegistrationForm";
 import VehicleList from "./vehicle/VehicleList";
 
@@ -41,161 +41,200 @@ import DMSDashboard from "./DMSDashboard/DMSDashboard";
 import SLADashboard from "./SLADashboard/SLADashboard";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
-import VendorDetails from "./vendor/VendorDetails";
+import VendorDetails from "./register/vendor/VendorDetails";
 import AddQuestionForm from "./questions/AddQuestionForm";
 import QuestionsList from "./questions/QuestionsList";
-
+import UserRegistrationForm from "./register/user/UserRegistrationForm";
+import { ListFormProviderVendor } from "./register/vendor/ListFormContextVendor";
+import { ListFormProviderUser } from "./register/user/ListFormContextUser";
+import VendorDetailsForm from "./register/vendor/VendorDetailsForm";
+import { ListFormProviderVendorDetails } from "./register/vendor/ListFormContextVendorDetails";
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              loggedIn ? (
-                <Navigate to={"/dashboard"}></Navigate>
-              ) : (
-                <Navigate to={"/home"} />
-              )
-            }
-          ></Route>
-          <Route path="/" element={<Layout></Layout>}>
-            <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-            <Route
-              path="/tentage-dashboard"
-              element={<TentageDashboard></TentageDashboard>}
-            ></Route>
-            <Route
-              path="/waste-dashboard"
-              element={<WastesDashboard></WastesDashboard>}
-            ></Route>
-            <Route
-              path="/incident-dashboard"
-              element={<IncidentDashboard></IncidentDashboard>}
-            ></Route>
-            <Route
-              path="/DMS-dashboard"
-              element={<DMSDashboard></DMSDashboard>}
-            ></Route>
-            <Route
-              path="/SLA-dashboard"
-              element={<SLADashboard></SLADashboard>}
-            ></Route>
-            <Route path="/home" element={<LandingPage></LandingPage>}></Route>
-            <Route
-              path="users/:page?/:per_page?"
-              element={<UserList></UserList>}
-            ></Route>
+      <ListFormProviderVendor>
+        <ListFormProviderUser>
+          <ListFormProviderVendorDetails>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    loggedIn ? (
+                      <Navigate to={"/dashboard"}></Navigate>
+                    ) : (
+                      <Navigate to={"/home"} />
+                    )
+                  }
+                ></Route>
 
-            {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
-            <Route
-              path="asset-registration"
-              element={<AssetRegistrationForm></AssetRegistrationForm>}
-            ></Route>
-            <Route
-              path="asset-list"
-              element={<AssetsList></AssetsList>}
-            ></Route>
-            <Route
-              path="gis-services"
-              element={<GisServices></GisServices>}
-            ></Route>
-            <Route path="gis-list" element={<GisList></GisList>}></Route>
-            <Route
-              path="gps-fleet-registration"
-              element={<GPSFleetRegistration></GPSFleetRegistration>}
-            ></Route>
-            <Route
-              path="vendor/:page?/:per_page?"
-              element={<VendorList></VendorList>}
-            ></Route>
+                <Route path="/" element={<Layout></Layout>}>
+                  <Route
+                    path="/dashboard"
+                    element={<Dashboard></Dashboard>}
+                  ></Route>
+                  <Route
+                    path="/tentage-dashboard"
+                    element={<TentageDashboard></TentageDashboard>}
+                  ></Route>
+                  <Route
+                    path="/waste-dashboard"
+                    element={<WastesDashboard></WastesDashboard>}
+                  ></Route>
+                  <Route
+                    path="/incident-dashboard"
+                    element={<IncidentDashboard></IncidentDashboard>}
+                  ></Route>
+                  <Route
+                    path="/DMS-dashboard"
+                    element={<DMSDashboard></DMSDashboard>}
+                  ></Route>
+                  <Route
+                    path="/SLA-dashboard"
+                    element={<SLADashboard></SLADashboard>}
+                  ></Route>
+                  <Route
+                    path="/home"
+                    element={<LandingPage></LandingPage>}
+                  ></Route>
+                  <Route
+                    path="users/:page?/:per_page?"
+                    element={<UserList></UserList>}
+                  ></Route>
+                  <Route
+                    path="user-registration"
+                    element={<UserRegistrationForm></UserRegistrationForm>}
+                  ></Route>
 
-            <Route
-              path="vendor/add-vendor-details/:id/:page?/:per_page?"
-              element={<VendorDetails></VendorDetails>}
-            ></Route>
+                  {/* <Route path="user-list" element={<UserList></UserList>}></Route> */}
+                  <Route
+                    path="asset-registration"
+                    element={<AssetRegistrationForm></AssetRegistrationForm>}
+                  ></Route>
+                  <Route
+                    path="asset-list"
+                    element={<AssetsList></AssetsList>}
+                  ></Route>
+                  <Route
+                    path="gis-services"
+                    element={<GisServices></GisServices>}
+                  ></Route>
+                  <Route path="gis-list" element={<GisList></GisList>}></Route>
+                  <Route
+                    path="gps-fleet-registration"
+                    element={<GPSFleetRegistration></GPSFleetRegistration>}
+                  ></Route>
 
-            <Route
-              path="asset-type-registration"
-              element={<AssetTypeForm></AssetTypeForm>}
-            ></Route>
-            <Route path="asset-type-list" element={<AssetTypeList />} />
+                  <Route
+                    path="vendor/:page?/:per_page?"
+                    element={<VendorList></VendorList>}
+                  ></Route>
 
-            <Route
-              path="addquestionform"
-              element={<AddQuestionForm></AddQuestionForm>}
-            ></Route>
-            <Route path="questions-list" element={<QuestionsList />} />
+                  <Route
+                    path="vendor-registration"
+                    element={<VendorRegistrationForm></VendorRegistrationForm>}
+                  ></Route>
 
-            <Route
-              path="vendor-list"
-              element={<VendorList></VendorList>}
-            ></Route>
-            <Route
-              path="vehicle-registration"
-              element={<VehicleRegistrationForm></VehicleRegistrationForm>}
-            ></Route>
-            <Route
-              path="vehicle-list"
-              element={<VehicleList></VehicleList>}
-            ></Route>
-            <Route
-              path="manpower-assignment"
-              element={<ManPowerAssignmentForm></ManPowerAssignmentForm>}
-            ></Route>
-            <Route
-              path="assigning-monitoring-manpower"
-              element={
-                <AssigningMonitoringManPower></AssigningMonitoringManPower>
-              }
-            ></Route>
-            <Route
-              path="asset-allotment"
-              element={<AssetAllotment></AssetAllotment>}
-            ></Route>
-            <Route
-              path="scheduling-and-deployment"
-              element={
-                <SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>
-              }
-            ></Route>
-            <Route
-              path="waste-management-schedule"
-              element={<WasteManagementSchedule></WasteManagementSchedule>}
-            ></Route>
-            <Route
-              path="create-tentage-schedule"
-              element={<CreateTentageSchedule></CreateTentageSchedule>}
-            ></Route>
-            <Route
-              path="create-sanitation-schedule"
-              element={<CreateSanitationSchedule></CreateSanitationSchedule>}
-            ></Route>
-            <Route
-              path="monthly-report"
-              element={<MonthlyReport></MonthlyReport>}
-            ></Route>
-            <Route
-              path="monitoring"
-              element={<Monitoring></Monitoring>}
-            ></Route>
-            <Route
-              path="notification"
-              element={<NotificationAdd></NotificationAdd>}
-            ></Route>
-            <Route
-              path="monitoring-report/:id"
-              element={<MonitoringReport></MonitoringReport>}
-            ></Route>
-          </Route>
-          <Route path="*" element={<AppError></AppError>}></Route>
-          <Route path="login" element={<Login></Login>}></Route>
-        </Routes>
-      </BrowserRouter>
+                  <Route
+                    path="vendor/add-vendor-details/:id/:page?/:per_page?"
+                    element={<VendorDetails></VendorDetails>}
+                  ></Route>
+
+                  <Route
+                    path="vendor/add-vendor-details-form"
+                    element={<VendorDetailsForm></VendorDetailsForm>}
+                  ></Route>
+
+                  <Route
+                    path="asset-type-registration"
+                    element={<AssetTypeForm></AssetTypeForm>}
+                  ></Route>
+                  <Route path="asset-type-list" element={<AssetTypeList />} />
+
+                  <Route
+                    path="addquestionform"
+                    element={<AddQuestionForm></AddQuestionForm>}
+                  ></Route>
+                  <Route path="questions-list" element={<QuestionsList />} />
+
+                  <Route
+                    path="vendor-list"
+                    element={<VendorList></VendorList>}
+                  ></Route>
+
+                  <Route
+                    path="vehicle-registration"
+                    element={
+                      <VehicleRegistrationForm></VehicleRegistrationForm>
+                    }
+                  ></Route>
+                  <Route
+                    path="vehicle-list"
+                    element={<VehicleList></VehicleList>}
+                  ></Route>
+                  <Route
+                    path="manpower-assignment"
+                    element={<ManPowerAssignmentForm></ManPowerAssignmentForm>}
+                  ></Route>
+                  <Route
+                    path="assigning-monitoring-manpower"
+                    element={
+                      <AssigningMonitoringManPower></AssigningMonitoringManPower>
+                    }
+                  ></Route>
+                  <Route
+                    path="asset-allotment"
+                    element={<AssetAllotment></AssetAllotment>}
+                  ></Route>
+                  <Route
+                    path="scheduling-and-deployment"
+                    element={
+                      <SchedulingAndDeploymentForm></SchedulingAndDeploymentForm>
+                    }
+                  ></Route>
+                  <Route
+                    path="waste-management-schedule"
+                    element={
+                      <WasteManagementSchedule></WasteManagementSchedule>
+                    }
+                  ></Route>
+                  <Route
+                    path="create-tentage-schedule"
+                    element={<CreateTentageSchedule></CreateTentageSchedule>}
+                  ></Route>
+                  <Route
+                    path="create-sanitation-schedule"
+                    element={
+                      <CreateSanitationSchedule></CreateSanitationSchedule>
+                    }
+                  ></Route>
+                  <Route
+                    path="monthly-report"
+                    element={<MonthlyReport></MonthlyReport>}
+                  ></Route>
+                  <Route
+                    path="monitoring"
+                    element={<Monitoring></Monitoring>}
+                  ></Route>
+                  <Route
+                    path="notification"
+                    element={<NotificationAdd></NotificationAdd>}
+                  ></Route>
+                  <Route
+                    path="monitoring-report/:id"
+                    element={<MonitoringReport></MonitoringReport>}
+                  ></Route>
+                </Route>
+                <Route path="*" element={<AppError></AppError>}></Route>
+                <Route path="login" element={<Login></Login>}></Route>
+              </Routes>
+            </BrowserRouter>
+          </ListFormProviderVendorDetails>
+        </ListFormProviderUser>
+      </ListFormProviderVendor>
     </Provider>
   );
 }

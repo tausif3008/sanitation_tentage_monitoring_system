@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { getData, postData } from "../Fetch/Axios";
-import URLS from "../urils/URLS";
-import { getFormData } from "../urils/getFormData";
-import optionsMaker from "../urils/OptionMaker";
+import { getData, postData } from "../../Fetch/Axios";
+import URLS from "../../urils/URLS";
+import { getFormData } from "../../urils/getFormData";
+import optionsMaker from "../../urils/OptionMaker";
 import { useParams } from "react-router";
-import moment from "moment";
+import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
 
 const dateFormat = "YYYY-MM-DD";
 
-const VendorDetailsForm = ({
-  setIsList,
-  updateDetails,
-  setUpdateDetails,
-  setUpdated,
-}) => {
+const VendorDetailsForm = () => {
+  const { updateDetails, setUpdateDetails, setUpdated, setIsList } = useContext(
+    ListFormContextVendorDetails
+  );
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [userTypes, setUserTypes] = useState([]);
@@ -26,18 +25,20 @@ const VendorDetailsForm = ({
     if (updateDetails) {
       form.setFieldsValue(updateDetails);
     }
+    return () => {
+      setUpdateDetails();
+      setUpdated(false);
+      setIsList(false);
+    };
   }, [updateDetails, form]);
 
   const onFinish = async (values) => {
     setLoading(true);
 
     values.user_id = params.id;
-    console.log(values);
     if (values.date_of_allocation) {
       values.date_of_allocation = values.date_of_allocation.format(dateFormat);
     }
-
-    console.log("---date_of_allocation", values.date_of_allocation);
 
     if (updateDetails) {
       values.user_detail_id = updateDetails.user_detail_id; //------------- check

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "antd";
-import CommonTable from "../commonComponents/CommonTable";
-import CommonDivider from "../commonComponents/CommonDivider";
-import URLS from "../urils/URLS";
-import { useParams } from "react-router";
-import { getData } from "../Fetch/Axios";
+import CommonTable from "../../commonComponents/CommonTable";
+import CommonDivider from "../../commonComponents/CommonDivider";
+import URLS from "../../urils/URLS";
+import { useNavigate, useParams } from "react-router";
+import { getData } from "../../Fetch/Axios";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import VendorRegistrationForm from "./VendorRegistrationForm";
 import { Link } from "react-router-dom";
+import { ListFormContextVendor } from "./ListFormContextVendor";
 
 const columns = [
   {
@@ -84,17 +85,22 @@ const columns = [
 ];
 
 const VendorList = () => {
-  const [isList, setIsList] = useState(false);
+  const {
+    updateDetails,
+    setUpdateDetails,
+    updated,
+    setUpdated,
+    isList,
+    setIsList,
+  } = useContext(ListFormContextVendor);
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState({
     list: [],
     pageLength: 25,
     currentPage: 1,
   });
-
-  const [updateDetails, setUpdateDetails] = useState();
-  const [updated, setUpdated] = useState(false);
 
   const params = useParams();
 
@@ -160,6 +166,12 @@ const VendorList = () => {
   useEffect(() => {
     getDetails();
   }, [params, updated]);
+
+  useEffect(() => {
+    if (isList || updateDetails) {
+      navigate("/vendor-registration");
+    }
+  }, [isList, updateDetails, navigate]);
 
   return (
     <div className="">

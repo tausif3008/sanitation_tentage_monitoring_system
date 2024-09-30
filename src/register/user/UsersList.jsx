@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table, Image, Button } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import UserRegistrationForm from "./UserRegistrationForm";
 import CommonTable from "../../commonComponents/CommonTable";
 import CommonDivider from "../../commonComponents/CommonDivider";
 import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
-import { useDispatch } from "react-redux";
-import { increment } from "../../Redux/counterSlice";
 import { EditOutlined } from "@ant-design/icons";
+import { ListFormContextUser } from "./ListFormContextUser";
+
 const getVal = (val) => {
   if (val === "undefined" || val === null) {
     return "-";
@@ -19,11 +19,20 @@ const getVal = (val) => {
 
 const columns = [
   {
+    title: "User Type",
+    dataIndex: "user_type",
+    key: "user_type",
+  },
+  {
     title: "Name",
     dataIndex: "name",
     key: "name",
   },
-
+  {
+    title: "Phone (Username)",
+    dataIndex: "phone",
+    key: "Phone",
+  },
   {
     title: "Email",
     dataIndex: "email",
@@ -47,11 +56,7 @@ const columns = [
     key: "city_type",
     render: getVal,
   },
-  {
-    title: "User Type",
-    dataIndex: "user_type",
-    key: "user_type",
-  },
+
   {
     title: "Address",
     dataIndex: "address",
@@ -67,11 +72,6 @@ const columns = [
   },
 
   {
-    title: "User Type",
-    dataIndex: "user_type",
-    key: "user_type",
-  },
-  {
     title: "Action",
     dataIndex: "action",
     key: "action",
@@ -80,16 +80,23 @@ const columns = [
 ];
 
 const UserList = () => {
-  const [isUserList, setIsUserList] = useState(false);
+  const {
+    updateDetails,
+    setUpdateDetails,
+    updated,
+    setUpdated,
+    isList,
+    setIsList,
+  } = useContext(ListFormContextUser);
+
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     list: [],
     pageLength: 25,
     currentPage: 1,
   });
-
-  const [updateDetails, setUpdateDetails] = useState();
-  const [updated, setUpdated] = useState(false);
 
   const params = useParams();
 
@@ -143,15 +150,21 @@ const UserList = () => {
     getUsers();
   }, [params, updated]);
 
+  useEffect(() => {
+    if (isList || updateDetails) {
+      navigate("/user-registration");
+    }
+  }, [isList, updateDetails, navigate]);
+
   return (
     <div className="">
-      {!isUserList && !updateDetails && (
+      {!isList && !updateDetails && (
         <>
           <CommonDivider
             label={"User List"}
             compo={
               <Button
-                onClick={() => setIsUserList(true)}
+                onClick={() => setIsList(true)}
                 className="bg-orange-300 mb-1"
               >
                 Add User
@@ -167,15 +180,6 @@ const UserList = () => {
             setUserDetails={setUserDetails}
           ></CommonTable>
         </>
-      )}
-
-      {(isUserList || updateDetails) && (
-        <UserRegistrationForm
-          setUpdated={setUpdated}
-          updateDetails={updateDetails}
-          setUpdateDetails={setUpdateDetails}
-          setIsUserList={setIsUserList}
-        ></UserRegistrationForm>
       )}
     </div>
   );

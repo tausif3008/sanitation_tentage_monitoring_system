@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider } from "antd";
 import CountryStateCity from "../../commonComponents/CountryStateCity";
 import optionsMaker from "../../urils/OptionMaker";
@@ -6,21 +6,31 @@ import { getData, postData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useLocation, useNavigate } from "react-router";
+import { ListFormContextUser } from "./ListFormContextUser";
 
-const UserRegistrationForm = ({
-  setIsUserList,
-  updateDetails,
-  setUpdateDetails,
-  setUpdated,
-}) => {
+const UserRegistrationForm = () => {
+  const { updateDetails, setUpdateDetails, setUpdated, setIsList } =
+    useContext(ListFormContextUser);
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (updateDetails) {
       form.setFieldsValue(updateDetails);
     }
-  }, [updateDetails, form]);
+  }, [updateDetails, form, location, setUpdateDetails, setIsList, setUpdated]);
+
+  useEffect(() => {
+    return () => {
+      setUpdateDetails();
+      setUpdated(false);
+      setIsList(false);
+    };
+  }, [location, navigate, setUpdateDetails, setUpdated, setIsList]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -40,10 +50,12 @@ const UserRegistrationForm = ({
       if (res.data.success) {
         form.resetFields();
         setUpdated(true);
+        navigate("/users");
       }
       if (updateDetails) {
         setUpdateDetails(false);
         setUpdated(true);
+        navigate("/users");
       }
     }
   };
@@ -70,8 +82,9 @@ const UserRegistrationForm = ({
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsUserList(false);
+              setIsList(false);
               setUpdateDetails(false);
+              navigate("/users");
             }}
           >
             <ArrowLeftOutlined></ArrowLeftOutlined>
@@ -131,7 +144,7 @@ const UserRegistrationForm = ({
               rules={[
                 { required: true, message: "Please enter the password" },
                 {
-                  min: 6,
+                  min: 7,
                   message: "Password must be at least 6 characters long",
                 },
               ]}
