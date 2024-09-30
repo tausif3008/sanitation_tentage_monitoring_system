@@ -50,7 +50,6 @@ const register_items = (lang, dict) => {
         </Link>
       ),
     },
-
     {
       key: "7",
       label: (
@@ -64,6 +63,14 @@ const register_items = (lang, dict) => {
       label: (
         <Link className="text-black no-underline" to="/vehicle-registration">
           Vehicle Registration
+        </Link>
+      ),
+    },
+    {
+      key: "9",
+      label: (
+        <Link className="text-black no-underline" to="/questions-list">
+          Question Registration
         </Link>
       ),
     },
