@@ -43,7 +43,7 @@ import { Provider } from "react-redux";
 import store from "./Redux/store";
 import VendorDetails from "./vendor/VendorDetails";
 import AddQuestionForm from "./questions/AddQuestionForm";
-import QuestionsList from "./questions/QuestionsList";
+import QuestionsList from "./questions/QuestionsList";  // Use correct casing
 
 
 function App() {
