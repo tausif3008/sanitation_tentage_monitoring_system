@@ -93,64 +93,36 @@ const UserRegistrationForm = ({
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             <Form.Item
-              label={<div className="font-semibold">User Name</div>}
-              name="name"
-              rules={[{ required: true, message: "Please first name" }]}
+              name="user_type_id"
+              label={<div className="font-semibold">Select User Type</div>}
+              rules={[{ required: true, message: "Please select User Type" }]}
               className="mb-4"
             >
-              <Input placeholder="Enter name" className="rounded-none " />
+              <Select
+                placeholder="Select a User Type"
+                className="rounded-none"
+                options={userTypes}
+              ></Select>
             </Form.Item>
+
             <Form.Item
-              label={<div className="font-semibold">Email ID</div>}
-              name="email"
-              rules={[
-                { required: true, message: "Please enter the email" },
-                { type: "email", message: "Please enter a valid email" },
-              ]}
-              className="mb-4"
-            >
-              <Input placeholder="Enter email" className="rounded-none " />
-            </Form.Item>
-            <Form.Item
-              label={<div className="font-semibold">Contact Number</div>}
+              label={
+                <div className="font-semibold">Mobile Number (Username)</div>
+              }
               name="phone"
               rules={[
-                { required: true, message: "Please enter the contact number" },
+                { required: true, message: "Please enter the mobile number" },
                 {
                   pattern: /^[0-9]{10}$/,
-                  message: "Please enter a valid 10-digit contact number",
+                  message: "Please enter a valid 10-digit mobile number",
                 },
               ]}
               className="mb-4"
             >
               <Input
-                placeholder="Enter contact number"
+                placeholder="Enter mobile number"
                 className="rounded-none "
               />
-            </Form.Item>
-
-            <CountryStateCity
-              form={form}
-              country_id={updateDetails?.country_id}
-              state_id={updateDetails?.state_id}
-              city_id={updateDetails?.city_id}
-            ></CountryStateCity>
-
-            <Form.Item
-              label={<div className="font-semibold">Address</div>}
-              name="address"
-              className="mb-6"
-            >
-              <TextArea rows={1} />
-            </Form.Item>
-
-            <Form.Item
-              label={<div className="font-semibold">Company</div>}
-              name="company"
-              rules={[{ required: true, message: "Please enter the company" }]}
-              className="mb-4"
-            >
-              <Input placeholder="Company Name" className="rounded-none " />
             </Form.Item>
 
             <Form.Item
@@ -170,17 +142,49 @@ const UserRegistrationForm = ({
                 className="rounded-none "
               />
             </Form.Item>
+
             <Form.Item
-              name="user_type_id"
-              label={<div className="font-semibold">User Type</div>}
-              rules={[{ required: true, message: "Please select User Type" }]}
+              label={<div className="font-semibold">Name (Display Name) </div>}
+              name="name"
+              rules={[{ required: true, message: "Please enter name" }]}
               className="mb-4"
             >
-              <Select
-                placeholder="Select a User Type"
-                className="rounded-none"
-                options={userTypes}
-              ></Select>
+              <Input placeholder="Enter name" className="rounded-none " />
+            </Form.Item>
+            <Form.Item
+              label={<div className="font-semibold">Email ID</div>}
+              name="email"
+              rules={[
+                { required: true, message: "Please enter the email" },
+                { type: "email", message: "Please enter a valid email" },
+              ]}
+              className="mb-4"
+            >
+              <Input placeholder="Enter email" className="rounded-none " />
+            </Form.Item>
+
+            <Form.Item
+              label={<div className="font-semibold">Company</div>}
+              name="company"
+              rules={[{ required: true, message: "Please enter the company" }]}
+              className="mb-4"
+            >
+              <Input placeholder="Company Name" className="rounded-none " />
+            </Form.Item>
+
+            <CountryStateCity
+              form={form}
+              country_id={updateDetails?.country_id}
+              state_id={updateDetails?.state_id}
+              city_id={updateDetails?.city_id}
+            ></CountryStateCity>
+
+            <Form.Item
+              label={<div className="font-semibold">Address</div>}
+              name="address"
+              className="mb-6"
+            >
+              <TextArea rows={2} />
             </Form.Item>
           </div>
 
