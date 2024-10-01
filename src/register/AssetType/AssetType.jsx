@@ -69,9 +69,9 @@ const AssetTypeList = () => {
       setDetails(() => {
         return {
           list,
-          pageLength: list.length,
-          currentPage: 1,
-          totalRecords: list.length,
+          pageLength: data.paging[0].length,
+          currentPage: data.paging[0].currentpage,
+          totalRecords: data.paging[0].totalrecords,
         };
       });
     }

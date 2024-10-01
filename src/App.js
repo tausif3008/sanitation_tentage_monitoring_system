@@ -158,7 +158,10 @@ function App() {
                       path="asset-type-registration"
                       element={<AssetTypeForm></AssetTypeForm>}
                     ></Route>
-                    <Route path="asset-type-list" element={<AssetTypeList />} />
+                    <Route
+                      path="asset-type-list/:page?/:per_page?"
+                      element={<AssetTypeList />}
+                    />
 
                     <Route
                       path="add-question-form"
