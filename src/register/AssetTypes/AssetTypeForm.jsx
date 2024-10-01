@@ -85,17 +85,6 @@ const AssetTypeForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (!isListUpdateDetails.isList) {
-      navigate("/asset-type-list");
-    }
-  }, [
-    isListUpdateDetails.isList,
-    isListUpdateDetails.updateDetails,
-    navigate,
-    location,
-  ]);
-
   return (
     <div className="mt-3">
       <div className="mx-auto p-3 bg-white shadow-md rounded-lg mt-3 w-full">
