@@ -1,9 +1,9 @@
 // slices/index.js
 import { combineReducers } from "@reduxjs/toolkit";
-import counterReducer from "./counterSlice";
+import assetTypeSlice from "./../register/AssetType/AssetTypeSlice";
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
+  assetTypeUpdateEl: assetTypeSlice,
 });
 
 export default rootReducer;

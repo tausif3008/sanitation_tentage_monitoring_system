@@ -47,9 +47,9 @@ import { ListFormProviderVendorDetails } from "./register/vendor/VendorDetails/L
 import { QuestionContextProvider } from "./register/questions/QuestionContext";
 import AddQuestionForm from "./register/questions/AddQuestionForm";
 import QuestionList from "./register/questions/QuestionList";
-import AssetTypeForm from "./register/AssetTypes/AssetTypeForm";
-import AssetTypeList from "./register/AssetTypes/AssetTypeList";
+import AssetTypeForm from "./register/AssetType/AssetTypeForm";
 import { AssetProvider } from "./register/AssetTypes/AssetContext";
+import AssetTypeList from "./register/AssetType/AssetType";
 
 function App() {
   const loggedIn = localStorage.getItem("sessionToken");

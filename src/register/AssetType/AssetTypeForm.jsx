@@ -1,18 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider } from "antd";
-import CountryStateCity from "../../commonComponents/CountryStateCity";
-import optionsMaker from "../../urils/OptionMaker";
-import { getData, postData } from "../../Fetch/Axios";
+import { postData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router";
-import { AssetContext } from "./AssetContext";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssetTypeListIsUpdated } from "./AssetTypeSlice";
 
 const AssetTypeForm = () => {
-  const { setIsListUpdateDetails, isListUpdateDetails } =
-    useContext(AssetContext);
-
   const { Option } = Select;
 
   const assetMainTypes = [
@@ -23,27 +19,20 @@ const AssetTypeForm = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const assetUpdateElSelector = useSelector(
+    (state) => state.assetTypeUpdateEl?.assetUpdateEl
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isListUpdateDetails.updateDetails) {
-      form.setFieldsValue(isListUpdateDetails.updateDetails);
+    if (assetUpdateElSelector) {
+      if (assetUpdateElSelector) {
+        form.setFieldsValue(assetUpdateElSelector);
+      }
     }
-  }, [
-    form,
-    location,
-    isListUpdateDetails.updateDetails,
-    isListUpdateDetails.isList,
-    isListUpdateDetails.updated,
-  ]);
-
-  useEffect(() => {
-    return () => {
-      setIsListUpdateDetails((prev) => {
-        return { ...prev, updateDetails: false, isList: false, updated: false };
-      });
-    };
-  }, [location, navigate, setIsListUpdateDetails]);
+  }, [assetUpdateElSelector, form]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -51,9 +40,9 @@ const AssetTypeForm = () => {
     values.status = 1;
     values.questions = 0;
 
-    if (isListUpdateDetails.updateDetails) {
-      values.asset_type_id = isListUpdateDetails.updateDetails.asset_type_id;
-      values.questions = isListUpdateDetails.updateDetails.questions;
+    if (assetUpdateElSelector) {
+      values.asset_type_id = assetUpdateElSelector.asset_type_id;
+      values.questions = assetUpdateElSelector.questions;
     }
 
     const res = await postData(getFormData(values), URLS.assetTypeEntry.path, {
@@ -62,25 +51,14 @@ const AssetTypeForm = () => {
 
     if (res) {
       setLoading(false);
+      dispatch(setAssetTypeListIsUpdated({ isUpdated: true }));
 
       if (res.data.success) {
         form.resetFields();
-        setIsListUpdateDetails((prev) => {
-          return { ...prev, updated: true };
-        });
-        navigate("/asset-type-list");
-      }
 
-      if (isListUpdateDetails.updateDetails) {
-        setIsListUpdateDetails((prev) => {
-          return {
-            ...prev,
-            updateDetails: false,
-            updated: true,
-          };
-        });
-
-        navigate("/asset-type-list");
+        if (assetUpdateElSelector) {
+          navigate("/asset-type-list");
+        }
       }
     }
   };
@@ -92,13 +70,6 @@ const AssetTypeForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsListUpdateDetails((prev) => {
-                return {
-                  ...prev,
-                  updateDetails: false,
-                  isList: false,
-                };
-              });
               navigate("/asset-type-list");
             }}
           >
@@ -106,9 +77,7 @@ const AssetTypeForm = () => {
           </Button>
           <div className="text-d9 text-2xl  w-full flex items-end justify-between ">
             <div className="font-bold">
-              {isListUpdateDetails.updateDetails
-                ? "Update Asset Type"
-                : "Add Asset Type"}
+              {assetUpdateElSelector ? "Update Asset Type" : "Add Asset Type"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
@@ -170,7 +139,7 @@ const AssetTypeForm = () => {
                 className="w-fit rounded-none bg-5c"
                 loading={loading} // Show loading spinner during API call
               >
-                {isListUpdateDetails.updateDetails ? "Update" : "Add"}
+                {assetUpdateElSelector ? "Update" : "Add"}
               </Button>
             </Form.Item>
           </div>
