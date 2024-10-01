@@ -86,6 +86,7 @@ const QuestionList = () => {
     const res = await getData(uri, extraHeaders);
 
     if (res) {
+      
       const data = res.data;
       setUpdated(false);
       setLoading(false);
