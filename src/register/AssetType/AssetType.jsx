@@ -168,7 +168,9 @@ const AssetTypeList = () => {
           compo={
             <Button
               className="bg-orange-300 mb-1"
-              //   onClick={}
+              onClick={() => {
+                navigate("/asset-type-registration");
+              }}
             >
               Add Asset Type
             </Button>
