@@ -152,7 +152,7 @@ const VendorDetailsForm = () => {
 
             <Form.Item
               label={<div className="font-semibold">Asset Type</div>}
-              name="sub_type"
+              name="asset_type"
               rules={[{ required: true, message: "Please enter asset type" }]}
               className="mb-4"
             >

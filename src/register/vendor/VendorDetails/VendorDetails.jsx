@@ -22,9 +22,9 @@ const columns = [
     key: "main_type",
   },
   {
-    title: "Sub Type",
-    dataIndex: "sub_type",
-    key: "sub_type",
+    title: "Asset Type",
+    dataIndex: "asset_type",
+    key: "asset_type",
   },
   {
     title: "Contract Number",
