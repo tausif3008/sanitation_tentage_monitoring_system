@@ -109,7 +109,7 @@ const VendorDetails = () => {
               key={el.name + index}
               onClick={() => {
                 dispatch(setUpdateVendorDetailsEl({ updateElement: el }));
-                navigate("/vendor/add-vendor-details-form");
+                navigate("/vendor/add-vendor-details-form/" + params.id);
               }}
             >
               <EditOutlined></EditOutlined>
@@ -140,7 +140,6 @@ const VendorDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (params.id) {
-      localStorage.setItem("vendorDetailsId", params.id);
       getDetails();
       if (isUpdatedSelector) {
         dispatch(setVendorDetailsListIsUpdated({ isUpdated: false }));
@@ -166,7 +165,7 @@ const VendorDetails = () => {
                 <Button
                   className="bg-orange-300 mb-1"
                   onClick={() => {
-                    navigate("/vendor/add-vendor-details-form");
+                    navigate("/vendor/add-vendor-details-form/" + params.id);
                   }}
                 >
                   Add Details

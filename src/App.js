@@ -144,7 +144,7 @@ function App() {
                 ></Route>
 
                 <Route
-                  path="vendor/add-vendor-details-form"
+                  path="vendor/add-vendor-details-form/:id"
                   element={<VendorDetailsForm></VendorDetailsForm>}
                 ></Route>
 

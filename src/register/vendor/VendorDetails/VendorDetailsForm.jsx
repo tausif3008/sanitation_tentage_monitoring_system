@@ -64,10 +64,8 @@ const VendorDetailsForm = () => {
   const onFinish = async (values) => {
     setLoading(true);
 
-    const id = localStorage.getItem("vendorDetailsId");
-
-    if (id) {
-      values.user_id = id;
+    if (params.id) {
+      values.user_id = params.id;
     } else {
       return message.info("Invalid User");
     }
@@ -95,11 +93,18 @@ const VendorDetailsForm = () => {
         dispatch(setVendorDetailsListIsUpdated({ isUpdated: true }));
 
         if (vendorDetailsUpdateElSelector) {
-          navigate("/vendor/add-vendor-details/" + id);
+          navigate("/vendor/add-vendor-details/" + params.id);
         }
       }
     }
   };
+
+  useEffect(() => {
+    if (params.id) {
+    } else {
+      navigate("/vendor");
+    }
+  }, [params, navigate]);
 
   return (
     <div className="mt-3">
@@ -108,8 +113,8 @@ const VendorDetailsForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              const id = localStorage.getItem("vendorDetailsId");
-              if (id) navigate("/vendor/add-vendor-details/" + id);
+              if (params.id)
+                navigate("/vendor/add-vendor-details/" + params.id);
               else navigate("/vendor");
             }}
           >
