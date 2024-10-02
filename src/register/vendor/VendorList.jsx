@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import CommonTable from "../../commonComponents/CommonTable";
 import CommonDivider from "../../commonComponents/CommonDivider";
@@ -6,9 +6,9 @@ import URLS from "../../urils/URLS";
 import { useNavigate, useParams } from "react-router";
 import { getData } from "../../Fetch/Axios";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import VendorRegistrationForm from "./VendorRegistrationForm";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdateVendorEl, setVendorListIsUpdated } from "./vendorSlice";
 import { Link } from "react-router-dom";
-import { ListFormContextVendor } from "./ListFormContextVendor";
 
 const columns = [
   {
@@ -71,30 +71,10 @@ const columns = [
     fixed: "right",
     width: 170,
   },
-
-  // {
-  //   title: "Status",
-  //   dataIndex: "status",
-  //   key: "status",
-  //   render: (status) => (
-  //     <Tag color={status === "1" ? "green" : "red"}>
-  //       {status === "1" ? "Active" : "Inactive"}
-  //     </Tag>
-  //   ),
-  // },
 ];
 
 const VendorList = () => {
-  const {
-    updateDetails,
-    setUpdateDetails,
-    updated,
-    setUpdated,
-    isList,
-    setIsList,
-  } = useContext(ListFormContextVendor);
-
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState({
     list: [],
@@ -102,7 +82,12 @@ const VendorList = () => {
     currentPage: 1,
   });
 
+  const isUpdatedSelector = useSelector(
+    (state) => state.vendorUpdateEl?.isUpdated
+  );
+
   const params = useParams();
+  const navigate = useNavigate();
 
   const getDetails = async () => {
     setLoading(true);
@@ -119,7 +104,6 @@ const VendorList = () => {
 
     if (res) {
       const data = res.data;
-      setUpdated(false);
       setLoading(false);
 
       const list = data.users.map((el, index) => {
@@ -131,18 +115,17 @@ const VendorList = () => {
                 className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
                 key={el.name + index}
                 onClick={() => {
-                  setUpdateDetails(el);
+                  dispatch(setUpdateVendorEl({ updateElement: el }));
+                  navigate("/vendor-registration");
                 }}
               >
                 <EditOutlined></EditOutlined>
               </Button>
+
               <Link to={"/vendor/add-vendor-details/" + el.user_id}>
                 <Button
                   className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
                   key={el.name + index}
-                  onClick={() => {
-                    setUpdateDetails(el);
-                  }}
                 >
                   <PlusOutlined></PlusOutlined> Details
                 </Button>
@@ -165,47 +148,39 @@ const VendorList = () => {
 
   useEffect(() => {
     getDetails();
-  }, [params, updated]);
+    if (isUpdatedSelector) {
+      dispatch(setVendorListIsUpdated({ isUpdated: false }));
+    }
+  }, [params, isUpdatedSelector]);
 
   useEffect(() => {
-    if (isList || updateDetails) {
-      navigate("/vendor-registration");
-    }
-  }, [isList, updateDetails, navigate]);
+    dispatch(setUpdateVendorEl({ updateElement: null }));
+  }, []);
 
   return (
     <div className="">
-      {!isList && !updateDetails && (
-        <>
-          <CommonDivider
-            label={"Vendor List"}
-            compo={
-              <Button
-                className="bg-orange-300 mb-1"
-                onClick={() => setIsList(true)}
-              >
-                Add Vendor
-              </Button>
-            }
-          ></CommonDivider>
+      <>
+        <CommonDivider
+          label={"Vendor List"}
+          compo={
+            <Button
+              className="bg-orange-300 mb-1"
+              onClick={() => {
+                navigate("/vendor-registration");
+              }}
+            >
+              Add Vendor
+            </Button>
+          }
+        ></CommonDivider>
 
-          <CommonTable
-            columns={columns}
-            uri={"vendor"} // react uri
-            details={details}
-            loading={loading}
-          ></CommonTable>
-        </>
-      )}
-
-      {(isList || updateDetails) && (
-        <VendorRegistrationForm
-          setIsList={setIsList}
-          updateDetails={updateDetails}
-          setUpdateDetails={setUpdateDetails}
-          setUpdated={setUpdated}
-        />
-      )}
+        <CommonTable
+          columns={columns}
+          uri={"vendor"}
+          details={details}
+          loading={loading}
+        ></CommonTable>
+      </>
     </div>
   );
 };

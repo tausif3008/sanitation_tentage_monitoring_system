@@ -1,31 +1,55 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Form, Input, Button, Select, Divider, DatePicker } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Divider,
+  DatePicker,
+  message,
+} from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { getData, postData } from "../../../Fetch/Axios";
+import { postData } from "../../../Fetch/Axios";
 import URLS from "../../../urils/URLS";
 import { getFormData } from "../../../urils/getFormData";
 import optionsMaker from "../../../urils/OptionMaker";
-import { useParams } from "react-router";
-import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setVendorDetailsListIsUpdated } from "./vendorDetailsSlice";
+import dayjs from "dayjs";
+
 const { Option } = Select;
 
 const dateFormat = "YYYY-MM-DD";
 
 const VendorDetailsForm = () => {
-  const { updateDetails, setUpdateDetails, setUpdated, setIsList } = useContext(
-    ListFormContextVendorDetails
-  );
-
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [userTypes, setUserTypes] = useState([]);
   const params = useParams();
   const [assetTypes, setAssetTypes] = useState([]);
 
-  useEffect(() => {
-    console.log("setAssetTypes---", assetTypes);
-  }, [assetTypes]);
+  const vendorDetailsUpdateElSelector = useSelector(
+    (state) => state.vendorDetailsSlice?.vendorDetailsUpdateEl
+  );
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Prepopulate form if editing vendor details
+  useEffect(() => {
+    if (vendorDetailsUpdateElSelector) {
+      const updatedDetails = { ...vendorDetailsUpdateElSelector };
+
+      // Ensure the date is a dayjs object
+      updatedDetails.date_of_allocation = dayjs(
+        updatedDetails.date_of_allocation
+      );
+
+      form.setFieldsValue(updatedDetails);
+    }
+  }, [vendorDetailsUpdateElSelector, form]);
+
+  // Populate asset types for selection
   useEffect(() => {
     optionsMaker(
       "vendorAsset",
@@ -37,28 +61,23 @@ const VendorDetailsForm = () => {
     );
   }, []);
 
-  useEffect(() => {
-    if (updateDetails) {
-      form.setFieldsValue(updateDetails);
-    }
-
-    return () => {
-      setUpdateDetails();
-      setUpdated(false);
-      setIsList(false);
-    };
-  }, [updateDetails, form]);
-
   const onFinish = async (values) => {
     setLoading(true);
 
-    values.user_id = params.id;
+    const id = localStorage.getItem("vendorDetailsId");
+
+    if (id) {
+      values.user_id = id;
+    } else {
+      return message.info("Invalid User");
+    }
+
     if (values.date_of_allocation) {
       values.date_of_allocation = values.date_of_allocation.format(dateFormat);
     }
 
-    if (updateDetails) {
-      values.user_detail_id = updateDetails.user_detail_id; //------------- check
+    if (vendorDetailsUpdateElSelector) {
+      values.user_detail_id = vendorDetailsUpdateElSelector.user_detail_id;
     }
 
     const res = await postData(
@@ -73,12 +92,11 @@ const VendorDetailsForm = () => {
       setLoading(false);
       if (res.data.success) {
         form.resetFields();
-        setUpdated(true);
-      }
+        dispatch(setVendorDetailsListIsUpdated({ isUpdated: true }));
 
-      if (updateDetails) {
-        setUpdateDetails(false);
-        //   setUpdated(true);
+        if (vendorDetailsUpdateElSelector) {
+          navigate("/vendor/add-vendor-details/" + id);
+        }
       }
     }
   };
@@ -90,8 +108,9 @@ const VendorDetailsForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsList(false);
-              setUpdateDetails(false);
+              const id = localStorage.getItem("vendorDetailsId");
+              if (id) navigate("/vendor/add-vendor-details/" + id);
+              else navigate("/vendor");
             }}
           >
             <ArrowLeftOutlined />
@@ -99,7 +118,9 @@ const VendorDetailsForm = () => {
 
           <div className="text-d9 text-2xl w-full flex items-end justify-between ">
             <div className="font-bold">
-              {updateDetails ? "Update Vendor Details" : "Vendor Details"}
+              {vendorDetailsUpdateElSelector
+                ? "Update Vendor Details"
+                : "Vendor Details"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
@@ -131,15 +152,12 @@ const VendorDetailsForm = () => {
 
             <Form.Item
               label={<div className="font-semibold">Asset Type</div>}
-              name="asset_type"
-              rules={[{ required: true, message: "Please enter sub type" }]}
+              name="sub_type"
+              rules={[{ required: true, message: "Please enter asset type" }]}
               className="mb-4"
             >
               <Select
                 showSearch
-                onChange={(val) => {
-                  form.setFieldsValue({ asset_type: val });
-                }}
                 placeholder="Select Asset Type"
                 optionFilterProp="children"
                 style={{ width: 300 }}
@@ -149,7 +167,7 @@ const VendorDetailsForm = () => {
                     {option.label}
                   </Option>
                 ))}
-              </Select>{" "}
+              </Select>
             </Form.Item>
 
             <Form.Item
@@ -216,11 +234,12 @@ const VendorDetailsForm = () => {
               ]}
             >
               <DatePicker
-                format={dateFormat} // Display format
+                format={dateFormat}
                 placeholder="Select Date"
                 className="w-full"
               />
             </Form.Item>
+
             <Form.Item
               label={
                 <div className="font-semibold">Total Allotted Quantity</div>
@@ -258,12 +277,12 @@ const VendorDetailsForm = () => {
           <div className="flex justify-end">
             <Form.Item>
               <Button
-                // loading={loading}
+                loading={loading}
                 type="primary"
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
               >
-                {updateDetails ? "Update" : "Register"}
+                {vendorDetailsUpdateElSelector ? "Update" : "Register"}
               </Button>
             </Form.Item>
           </div>

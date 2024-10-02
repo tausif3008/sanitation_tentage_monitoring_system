@@ -28,9 +28,7 @@ const AssetTypeForm = () => {
 
   useEffect(() => {
     if (assetUpdateElSelector) {
-      if (assetUpdateElSelector) {
-        form.setFieldsValue(assetUpdateElSelector);
-      }
+      form.setFieldsValue(assetUpdateElSelector);
     }
   }, [assetUpdateElSelector, form]);
 

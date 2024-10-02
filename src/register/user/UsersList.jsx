@@ -7,7 +7,8 @@ import CommonDivider from "../../commonComponents/CommonDivider";
 import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { EditOutlined } from "@ant-design/icons";
-import { ListFormContextUser } from "./ListFormContextUser";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdateUserEl, setUserListIsUpdated } from "./userSlice";
 
 const getVal = (val) => {
   if (val === "undefined" || val === null) {
@@ -80,16 +81,13 @@ const columns = [
 ];
 
 const UserList = () => {
-  const {
-    updateDetails,
-    setUpdateDetails,
-    updated,
-    setUpdated,
-    isList,
-    setIsList,
-  } = useContext(ListFormContextUser);
-
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const isUpdatedSelector = useSelector(
+    (state) => state.userUpdateEl?.isUpdated
+  );
 
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
@@ -115,7 +113,6 @@ const UserList = () => {
 
     if (res) {
       const data = res.data;
-      setUpdated(false);
       setLoading(false);
 
       const list = data.users.map((el, index) => {
@@ -126,7 +123,8 @@ const UserList = () => {
               className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
               key={el.name + index}
               onClick={() => {
-                setUpdateDetails(el);
+                dispatch(setUpdateUserEl({ updateElement: el }));
+                navigate("/user-registration");
               }}
             >
               <EditOutlined></EditOutlined>
@@ -148,39 +146,38 @@ const UserList = () => {
 
   useEffect(() => {
     getUsers();
-  }, [params, updated]);
+    if (isUpdatedSelector) {
+      dispatch(setUserListIsUpdated({ isUpdated: false }));
+    }
+  }, [params, isUpdatedSelector]);
 
   useEffect(() => {
-    if (isList || updateDetails) {
-      navigate("/user-registration");
-    }
-  }, [isList, updateDetails, navigate]);
+    dispatch(setUpdateUserEl({ updateElement: null }));
+  }, []);
 
   return (
     <div className="">
-      {!isList && !updateDetails && (
-        <>
-          <CommonDivider
-            label={"User List"}
-            compo={
-              <Button
-                onClick={() => setIsList(true)}
-                className="bg-orange-300 mb-1"
-              >
-                Add User
-              </Button>
-            }
-          ></CommonDivider>
+      <>
+        <CommonDivider
+          label={"User List"}
+          compo={
+            <Button
+              onClick={() => navigate("/user-registration")}
+              className="bg-orange-300 mb-1"
+            >
+              Add User
+            </Button>
+          }
+        ></CommonDivider>
 
-          <CommonTable
-            loading={loading}
-            uri={"users"}
-            columns={columns}
-            details={userDetails}
-            setUserDetails={setUserDetails}
-          ></CommonTable>
-        </>
-      )}
+        <CommonTable
+          loading={loading}
+          uri={"users"}
+          columns={columns}
+          details={userDetails}
+          setUserDetails={setUserDetails}
+        ></CommonTable>
+      </>
     </div>
   );
 };

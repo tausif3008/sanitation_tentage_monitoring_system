@@ -7,6 +7,8 @@ import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { EditOutlined } from "@ant-design/icons";
 import { QuestionContext } from "./QuestionContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestionListIsUpdated, setUpdateQuestionEl } from "./questionSlice";
 
 const getVal = (val) => {
   if (val === "undefined" || val === null) {
@@ -52,15 +54,6 @@ const columns = [
 ];
 
 const QuestionList = () => {
-  const {
-    updateDetails,
-    setUpdateDetails,
-    updated,
-    setUpdated,
-    isList,
-    setIsList,
-  } = useContext(QuestionContext);
-
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -69,6 +62,12 @@ const QuestionList = () => {
     pageLength: 25,
     currentPage: 1,
   });
+
+  const dispatch = useDispatch();
+
+  const isUpdatedSelector = useSelector(
+    (state) => state.questionUpdateEl?.isUpdated
+  );
 
   const params = useParams();
 
@@ -86,9 +85,7 @@ const QuestionList = () => {
     const res = await getData(uri, extraHeaders);
 
     if (res) {
-      
       const data = res.data;
-      setUpdated(false);
       setLoading(false);
 
       const list = data.listings.map((el, index) => {
@@ -99,7 +96,8 @@ const QuestionList = () => {
               className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
               key={el.name + index}
               onClick={() => {
-                setUpdateDetails(el);
+                dispatch(setUpdateQuestionEl({ updateElement: el }));
+                navigate("/add-question-form");
               }}
             >
               <EditOutlined></EditOutlined>
@@ -121,39 +119,38 @@ const QuestionList = () => {
 
   useEffect(() => {
     getUsers();
-  }, [params, updated]);
+    if (isUpdatedSelector) {
+      dispatch(setQuestionListIsUpdated({ isUpdated: false }));
+    }
+  }, [params, isUpdatedSelector]);
 
   useEffect(() => {
-    if (isList || updateDetails) {
-      navigate("/add-question-form");
-    }
-  }, [isList, updateDetails, navigate]);
+    dispatch(setUpdateQuestionEl({ updateElement: null }));
+  }, []);
 
   return (
     <div className="">
-      {!isList && !updateDetails && (
-        <>
-          <CommonDivider
-            label={"Question List"}
-            compo={
-              <Button
-                onClick={() => setIsList(true)}
-                className="bg-orange-300 mb-1"
-              >
-                Add Questions
-              </Button>
-            }
-          ></CommonDivider>
+      <>
+        <CommonDivider
+          label={"Question List"}
+          compo={
+            <Button
+              onClick={() => navigate("/add-question-form")}
+              className="bg-orange-300 mb-1"
+            >
+              Add Questions
+            </Button>
+          }
+        ></CommonDivider>
 
-          <CommonTable
-            loading={loading}
-            uri={"questions"}
-            columns={columns}
-            details={userDetails}
-            scroll={{ x: 300, y: 400 }}
-          ></CommonTable>
-        </>
-      )}
+        <CommonTable
+          loading={loading}
+          uri={"questions"}
+          columns={columns}
+          details={userDetails}
+          scroll={{ x: 300, y: 400 }}
+        ></CommonTable>
+      </>
     </div>
   );
 };

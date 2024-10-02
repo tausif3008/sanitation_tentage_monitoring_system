@@ -8,6 +8,7 @@ import { getData } from "../../Fetch/Axios";
 import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setAssetTypeListIsUpdated, setUpdateAssetEl } from "./AssetTypeSlice";
+import CommonSearchForm from "../../commonComponents/CommonSearchForm";
 
 const AssetTypeList = () => {
   const [updated, setUpdated] = useState(false);
@@ -176,7 +177,6 @@ const AssetTypeList = () => {
             </Button>
           }
         ></CommonDivider>
-
         <CommonTable
           columns={columns}
           uri={"asset-type-list"}
@@ -184,7 +184,6 @@ const AssetTypeList = () => {
           loading={loading}
           scroll={{ x: 800, y: 400 }}
         ></CommonTable>
-
         <Modal
           title={`Questions for Asset Type ID: ${selectedAssetType}`}
           visible={isModalVisible}

@@ -3,16 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "userSlice",
   initialState: {
-    userDetails: {},
-    status: "",
-    loading: false,
+    userUpdateEl: null,
+    isUpdated: false,
   },
   reducers: {
-    userDetails: (state, action) => {
-      return action.payload.userDetails;
+    setUpdateUserEl: (state, action) => {
+      state.userUpdateEl = action.payload.updateElement;
+    },
+
+    setUserListIsUpdated: (state, action) => {
+      state.isUpdated = action.payload.isUpdated;
     },
   },
 });
 
-export const { userDetails } = userSlice.actions;
+export const { setUpdateUserEl, setUserListIsUpdated } = userSlice.actions;
 export default userSlice.reducer;

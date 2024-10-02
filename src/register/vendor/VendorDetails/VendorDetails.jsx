@@ -9,6 +9,11 @@ import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
 import VendorDetailsForm from "./VendorDetailsForm";
 import { Link } from "react-router-dom";
 import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUpdateVendorDetailsEl,
+  setVendorDetailsListIsUpdated,
+} from "./vendorDetailsSlice";
 
 const columns = [
   {
@@ -56,20 +61,19 @@ const columns = [
     dataIndex: "proposed_sectors",
     key: "proposed_sectors",
   },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+    fixed: "right",
+    width: 80,
+  },
 ];
 
 const VendorDetails = () => {
-  const {
-    updateDetails,
-    setUpdateDetails,
-    updated,
-    setUpdated,
-    isList,
-    setIsList,
-  } = useContext(ListFormContextVendorDetails);
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-
   const [details, setDetails] = useState({
     list: [],
     pageLength: 25,
@@ -94,7 +98,6 @@ const VendorDetails = () => {
 
     if (res) {
       const data = res.data;
-      setUpdated(false);
       setLoading(false);
 
       const list = data.userdetails.map((el, index) => {
@@ -105,7 +108,8 @@ const VendorDetails = () => {
               className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
               key={el.name + index}
               onClick={() => {
-                setUpdateDetails(el);
+                dispatch(setUpdateVendorDetailsEl({ updateElement: el }));
+                navigate("/vendor/add-vendor-details-form");
               }}
             >
               <EditOutlined></EditOutlined>
@@ -125,57 +129,60 @@ const VendorDetails = () => {
     }
   };
 
+  const isUpdatedSelector = useSelector(
+    (state) => state.vendorDetailsUpdateEl?.isUpdated
+  );
+
+  useEffect(() => {
+    dispatch(setUpdateVendorDetailsEl({ updateElement: null }));
+  }, []);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (params.id) {
+      localStorage.setItem("vendorDetailsId", params.id);
       getDetails();
+      if (isUpdatedSelector) {
+        dispatch(setVendorDetailsListIsUpdated({ isUpdated: false }));
+      }
     } else {
       navigate("/vendor");
     }
-  }, [params, updated]);
+  }, [params, isUpdatedSelector]);
 
   return (
     <div className="">
-      {!isList && !updateDetails && (
-        <>
-          <div className="flex gap-2 items-center ">
-            <Link to="/vendor">
-              <Button className="bg-gray-200 rounded-full w-9 h-9">
-                <ArrowLeftOutlined />
-              </Button>
-            </Link>
-            <div className="w-full">
-              <CommonDivider
-                label={"Vendor Details"}
-                compo={
-                  <Button
-                    className="bg-orange-300 mb-1"
-                    onClick={() => setIsList(true)}
-                  >
-                    Add Details
-                  </Button>
-                }
-              ></CommonDivider>
-            </div>
+      <>
+        <div className="flex gap-2 items-center ">
+          <Link to="/vendor">
+            <Button className="bg-gray-200 rounded-full w-9 h-9">
+              <ArrowLeftOutlined />
+            </Button>
+          </Link>
+          <div className="w-full">
+            <CommonDivider
+              label={"Vendor Details"}
+              compo={
+                <Button
+                  className="bg-orange-300 mb-1"
+                  onClick={() => {
+                    navigate("/vendor/add-vendor-details-form");
+                  }}
+                >
+                  Add Details
+                </Button>
+              }
+            ></CommonDivider>
           </div>
+        </div>
 
-          <CommonTable
-            columns={columns}
-            uri={"vendor/add-details/" + params.id} // react url
-            details={details}
-            loading={loading}
-          ></CommonTable>
-        </>
-      )}
-
-      {(isList || updateDetails) && (
-        <VendorDetailsForm
-          setIsList={setIsList}
-          updateDetails={updateDetails}
-          setUpdateDetails={setUpdateDetails}
-          setUpdated={setUpdated}
-        />
-      )}
+        <CommonTable
+          columns={columns}
+          uri={"vendor/add-details/" + params.id} // react url
+          details={details}
+          loading={loading}
+        ></CommonTable>
+      </>
     </div>
   );
 };
