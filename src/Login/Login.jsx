@@ -25,7 +25,6 @@ const Login = () => {
     setLoading(true);
 
     const res = await loginFetch(formData, setCanProceed);
-    // localStorage.setItem(res);
     console.log(res);
 
     if (res) {
@@ -40,23 +39,16 @@ const Login = () => {
         clearInterval(intervalId);
         navigate("/dashboard");
       }
-    });
+    }, 1000);
+    return () => clearInterval(intervalId);
   }, [canProceed, navigate]);
-
-  useEffect(() => {
-    form.setFieldsValue({ username: "9017827198", password: "1234" });
-
-    return () => {
-      form.resetFields();
-    };
-  }, [form]);
 
   return (
     <div className="flex m-auto bg-gray-100">
       <div className="h-screen m-auto flex w-10/12  flex-col justify-center">
         <div className="grid md:grid-cols-2 grid-cols-1 w-full h-96 shadow-xl ">
           <div className="w-full h-96 hidden md:flex">
-            <img src={loginImage} alt="" className="w-full h-full" />
+            <img src={loginImage} alt="login" className="w-full h-full" />
           </div>
           <div className="flex h-full flex-col w-full items-center">
             <div className="text-center font-merriweather p-2 font-semibold text-lg flex flex-col items-center w-full m-auto justify-center">
@@ -88,7 +80,7 @@ const Login = () => {
                   >
                     <Input
                       autoComplete="off"
-                      prefix={<UserOutlined></UserOutlined>}
+                      prefix={<UserOutlined />}
                       placeholder="User Name"
                       className="rounded-none"
                     />
@@ -105,7 +97,7 @@ const Login = () => {
                   >
                     <Input.Password
                       autoComplete="off"
-                      prefix={<LockOutlined></LockOutlined>}
+                      prefix={<LockOutlined />}
                       placeholder="Password"
                       className="rounded-none"
                     />
