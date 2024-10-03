@@ -16,7 +16,7 @@ const TypeList = ({ tentage }) => {
               placement="bottomLeft"
               color={"white"}
             >
-              <span className="font-semibold w-4 h-4 rounded-full text-white bg-yellow-400 flex text-center justify-center align-items-center p-1">
+              <span className="font-semibold w-4 h-4 rounded-full text-white bg-green-500 flex text-center justify-center align-items-center p-1">
                 i
               </span>
             </Tooltip>

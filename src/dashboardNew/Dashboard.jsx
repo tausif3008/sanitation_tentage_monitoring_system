@@ -51,7 +51,8 @@ const Dashboard = () => {
           <AverageResponseTimeChart></AverageResponseTimeChart>
         </div>
       </div>
-      <div className="lg:col-span-1 col-span-4 sm:col-span-2 md:col-span-2 flex gap-2 flex-col">
+
+      <div className="lg:col-span-1 lg:hidden col-span-4 sm:col-span-2 md:col-span-2 flex gap-2 flex-col">
         <div
           className="col-span-2 flex-wrap h-full  rounded-md "
           style={{ height: "424px" }}
@@ -76,6 +77,20 @@ const Dashboard = () => {
         <TaskSchedule></TaskSchedule>
       </div>
 
+      <div className="lg:col-span-1 hidden lg:flex col-span-4 sm:col-span-2 md:col-span-2 gap-2 flex-col">
+        <div
+          className="col-span-2 flex-wrap h-full  rounded-md "
+          style={{ height: "424px" }}
+        >
+          <Notifications></Notifications>
+        </div>
+        <div
+          className="col-span-2  hidden lg:flex w-full flex-wrap rounded-md"
+          style={{ height: "375px" }}
+        >
+          <Alerts></Alerts>
+        </div>
+      </div>
       <div className="col-span-4 shadow-md bg-white h-auto rounded-md">
         <PerformanceMatrix></PerformanceMatrix>
       </div>

@@ -23,7 +23,7 @@ const MainNavbar = (props) => {
   }, []);
 
   return (
-    <div className="w-full mt-2  m-auto">
+    <div className="w-full m-auto">
       <NavHead {...props}></NavHead>
       <div
         className={`${
