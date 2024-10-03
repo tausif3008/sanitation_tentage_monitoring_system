@@ -5,22 +5,19 @@ import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import URLS from "../urils/URLS";
 import { getData } from "../Fetch/Axios";
-import {
-  setAssetTypeListIsUpdated,
-  setUpdateAssetEl,
-} from "../register/AssetType/AssetTypeSlice";
+import {} from "../register/AssetType/AssetTypeSlice";
 import CommonDivider from "../commonComponents/CommonDivider";
 import CommonTable from "../commonComponents/CommonTable";
 import QRCode from "qrcode.react";
 import {
+  setAssetInfo,
   setMonitoringListIsUpdated,
   setUpdateMonitoringEl,
 } from "./monitoringSlice";
 
 const Monitoring = () => {
-  const [updated, setUpdated] = useState(false);
-
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState({
@@ -43,19 +40,19 @@ const Monitoring = () => {
   const getDetails = async () => {
     setLoading(true);
 
-    let uri = URLS.monitoring.path + "/?";
+    let uri = URLS.asset.path + "/?";
+
     if (params.page) {
       uri = uri + params.page;
     } else if (params.per_page) {
       uri = uri + "&" + params.per_page;
     }
 
-    const extraHeaders = { "x-api-version": URLS.monitoring.version };
+    const extraHeaders = { "x-api-version": URLS.asset.version };
     const res = await getData(uri, extraHeaders);
 
     if (res) {
       const data = res.data;
-      setUpdated(false);
       setLoading(false);
 
       const list = data.listings.map((el, index) => {
@@ -67,7 +64,7 @@ const Monitoring = () => {
               key={el.name + index}
               onClick={() => {
                 dispatch(setUpdateMonitoringEl({ updateElement: el }));
-                navigate("/asset-type-registration");
+                navigate("/add-update-monitoring");
               }}
             >
               <EditOutlined></EditOutlined>
@@ -105,19 +102,26 @@ const Monitoring = () => {
 
   const showQrCode = (record) => {
     setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
-    setQrCodeUrl(record.qrCodeUrl); // Set the QR code URL
+    setQrCodeUrl(record.qr_code); // Set the QR code URL
     setIsModalVisible(true); // Show the modal
   };
 
   const columns = [
     {
       title: "Assets Name",
-      dataIndex: "assetsName",
+      dataIndex: "name",
       key: "assetsName",
     },
     {
+      title: "Assets Type Name",
+      dataIndex: "asset_type_name",
+      key: "assetsName",
+      width: 210,
+    },
+
+    {
       title: "Assets Code",
-      dataIndex: "assetsCode",
+      dataIndex: "code",
       key: "assetsCode",
     },
     {
@@ -126,19 +130,48 @@ const Monitoring = () => {
       key: "vendor",
     },
     {
+      title: "Vendor Asset Code",
+      dataIndex: "vendor_asset_code",
+      key: "vendor_asset_code",
+      width: 160,
+    },
+    {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "Unit",
+    },
+    {
+      title: "Sector",
+      dataIndex: "sector",
+      key: "assetsName",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description_",
+    },
+    {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 130,
+
       render: (text, record) => (
-        <div>
-          <Button type="link" onClick={() => showQrCode(record)}>
-            QR
-          </Button>
-          <Button
+        <div className="flex gap-2">
+          <div
             type="link"
-            // onClick={() => setsetAssetInfo(record)}
+            className="text-blue-500 cursor-pointer"
+            onClick={() => showQrCode(record)}
           >
-            View Monitoring
-          </Button>
+            QR
+          </div>
+          <div
+            className="text-blue-500 cursor-pointer"
+            type="link"
+            onClick={() => dispatch(setAssetInfo(record))}
+          >
+            Monitoring
+          </div>
         </div>
       ),
     },
@@ -147,12 +180,12 @@ const Monitoring = () => {
   return (
     <div className="">
       <CommonDivider
-        label={"Monitoring"}
+        label={"Assets Monitoring "}
         // compo={
         //   <Button
         //     className="bg-orange-300 mb-1"
         //     onClick={() => {
-        //       navigate("/asset-type-registration");
+        //       navigate("/add-update-monitoring");
         //     }}
         //   >
         //     Add Monitoring
@@ -164,7 +197,7 @@ const Monitoring = () => {
         uri={"monitoring"}
         details={details}
         loading={loading}
-        scroll={{ x: 800, y: 400 }}
+        scroll={{ x: 1400, y: 400 }}
       ></CommonTable>
       <Modal
         width={300}
@@ -179,12 +212,12 @@ const Monitoring = () => {
         >
           {qrCodeUrl ? (
             <img
-              src={"http://filemanagement.metaxpay.in:8001" + qrCodeUrl}
+              src={URLS.baseUrl + "/" + qrCodeUrl}
               alt="QR Code"
               style={{ maxWidth: "200px" }}
             />
           ) : (
-            <QRCode value={qrCodeData} />
+            <div>QR Code Not Found</div>
           )}
         </div>
       </Modal>

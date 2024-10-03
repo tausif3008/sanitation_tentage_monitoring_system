@@ -1,4 +1,5 @@
 const URLS = {
+  baseUrl: "https://kumbhtsmonitoring.in/php-api",
   // user
   register: { path: "/users/entry", version: "5.43" },
   users: { path: "/users", version: "5.43" },
@@ -26,7 +27,8 @@ const URLS = {
   assetTypeEntry: { path: "/asset-types/entry", version: 5.43 },
 
   // monitoring
-  monitoring: { path: "/monitoring", version: 5.43 },
+  asset: { path: "/asset", version: 5.43 },
+  monitoringDetails: { path: "/monitoring/details?id=", version: 5.43 },
 };
 
 export default URLS;

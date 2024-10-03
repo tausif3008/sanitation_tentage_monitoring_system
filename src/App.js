@@ -211,6 +211,7 @@ function App() {
                   path="waste-management-schedule"
                   element={<WasteManagementSchedule></WasteManagementSchedule>}
                 ></Route>
+
                 <Route
                   path="create-tentage-schedule"
                   element={<CreateTentageSchedule></CreateTentageSchedule>}
@@ -229,6 +230,12 @@ function App() {
                   path="monitoring/:page?/:per_page?"
                   element={<Monitoring></Monitoring>}
                 ></Route>
+
+                <Route
+                  path="asset-monitoring-report/:page?/:per_page?"
+                  element={<MonitoringReport></MonitoringReport>}
+                ></Route>
+
                 <Route
                   path="notification"
                   element={<NotificationAdd></NotificationAdd>}
