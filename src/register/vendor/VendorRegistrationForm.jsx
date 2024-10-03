@@ -88,7 +88,27 @@ const VendorRegistrationForm = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             <Form.Item
-              label={<div className="font-semibold">User Name</div>}
+              label={
+                <div className="font-semibold">Mobile Number (Username)</div>
+              }
+              name="phone"
+              rules={[
+                { required: true, message: "Please enter the mobile number" },
+                {
+                  pattern: /^[0-9]{10}$/,
+                  message: "Please enter a valid 10-digit mobile number",
+                },
+              ]}
+              className="mb-4"
+            >
+              <Input
+                placeholder="Enter mobile number"
+                className="rounded-none "
+              />
+            </Form.Item>
+
+            <Form.Item
+              label={<div className="font-semibold">Vendor Name</div>}
               name="name"
               rules={[{ required: true, message: "Please enter name" }]}
               className="mb-4"
@@ -108,23 +128,7 @@ const VendorRegistrationForm = () => {
               <Input placeholder="Enter email" className="rounded-none" />
             </Form.Item>
 
-            <Form.Item
-              label={<div className="font-semibold">Contact Number</div>}
-              name="phone"
-              rules={[
-                { required: true, message: "Please enter the contact number" },
-                {
-                  pattern: /^[0-9]{10}$/,
-                  message: "Please enter a valid 10-digit contact number",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input
-                placeholder="Enter contact number"
-                className="rounded-none"
-              />
-            </Form.Item>
+          
 
             <CountryStateCity
               form={form}

@@ -137,7 +137,7 @@ const UserRegistrationForm = () => {
               rules={[
                 { required: true, message: "Please enter the password" },
                 {
-                  min: 7,
+                  min: 6,
                   message: "Password must be at least 6 characters long",
                 },
               ]}
