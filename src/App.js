@@ -226,7 +226,7 @@ function App() {
                   element={<MonthlyReport></MonthlyReport>}
                 ></Route>
                 <Route
-                  path="monitoring"
+                  path="monitoring/:page?/:per_page?"
                   element={<Monitoring></Monitoring>}
                 ></Route>
                 <Route
