@@ -7,38 +7,33 @@ import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
-import { ListFormContextUser } from "./ListFormContextUser";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserListIsUpdated } from "./userSlice";
 
 const UserRegistrationForm = () => {
-  const { updateDetails, setUpdateDetails, setUpdated, setIsList } =
-    useContext(ListFormContextUser);
-
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const userUpdateElSelector = useSelector(
+    (state) => state.userSlice?.userUpdateEl
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (updateDetails) {
-      form.setFieldsValue(updateDetails);
+    if (userUpdateElSelector) {
+      form.setFieldsValue(userUpdateElSelector);
     }
-  }, [updateDetails, form, location, setUpdateDetails, setIsList, setUpdated]);
-
-  useEffect(() => {
-    return () => {
-      setUpdateDetails();
-      setUpdated(false);
-      setIsList(false);
-    };
-  }, [location, navigate, setUpdateDetails, setUpdated, setIsList]);
+  }, [userUpdateElSelector, form]);
 
   const onFinish = async (values) => {
     setLoading(true);
 
     values.status = 1;
 
-    if (updateDetails) {
-      values.user_id = updateDetails.user_id;
+    if (userUpdateElSelector) {
+      values.user_id = userUpdateElSelector.user_id;
     }
 
     const res = await postData(getFormData(values), URLS.register.path, {
@@ -47,15 +42,13 @@ const UserRegistrationForm = () => {
 
     if (res) {
       setLoading(false);
+      dispatch(setUserListIsUpdated({ isUpdated: true }));
+
       if (res.data.success) {
         form.resetFields();
-        setUpdated(true);
-        navigate("/users");
-      }
-      if (updateDetails) {
-        setUpdateDetails(false);
-        setUpdated(true);
-        navigate("/users");
+        if (userUpdateElSelector) {
+          navigate("/users");
+        }
       }
     }
   };
@@ -82,8 +75,6 @@ const UserRegistrationForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsList(false);
-              setUpdateDetails(false);
               navigate("/users");
             }}
           >
@@ -91,7 +82,9 @@ const UserRegistrationForm = () => {
           </Button>
           <div className="text-d9 text-2xl  w-full flex items-end justify-between ">
             <div className="font-bold">
-              {updateDetails ? "Update User Details" : "User Registration"}
+              {userUpdateElSelector
+                ? "Update User Details"
+                : "User Registration"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
@@ -144,7 +137,7 @@ const UserRegistrationForm = () => {
               rules={[
                 { required: true, message: "Please enter the password" },
                 {
-                  min: 7,
+                  min: 6,
                   message: "Password must be at least 6 characters long",
                 },
               ]}
@@ -187,9 +180,9 @@ const UserRegistrationForm = () => {
 
             <CountryStateCity
               form={form}
-              country_id={updateDetails?.country_id}
-              state_id={updateDetails?.state_id}
-              city_id={updateDetails?.city_id}
+              country_id={userUpdateElSelector?.country_id}
+              state_id={userUpdateElSelector?.state_id}
+              city_id={userUpdateElSelector?.city_id}
             ></CountryStateCity>
 
             <Form.Item
@@ -209,7 +202,7 @@ const UserRegistrationForm = () => {
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
               >
-                {updateDetails ? "Update" : "Register"}
+                {userUpdateElSelector ? "Update" : "Register"}
               </Button>
             </Form.Item>
           </div>

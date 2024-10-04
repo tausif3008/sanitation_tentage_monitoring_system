@@ -1,38 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Form, Input, Button, Select, Divider } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, Divider } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { getData, postData } from "../../Fetch/Axios";
+import { postData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
-import optionsMaker from "../../urils/OptionMaker";
 import CountryStateCity from "../../commonComponents/CountryStateCity";
-import { ListFormContextVendor } from "./ListFormContextVendor";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setVendorListIsUpdated } from "./vendorSlice";
 
 const { TextArea } = Input;
 
 const VendorRegistrationForm = () => {
-  const { updateDetails, setUpdateDetails, setUpdated, setIsList } = useContext(
-    ListFormContextVendor
-  );
-
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [userTypes, setUserTypes] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const vendorUpdateElSelector = useSelector(
+    (state) => state.vendorSlice?.vendorUpdateEl
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (updateDetails) {
-      form.setFieldsValue(updateDetails);
+    if (vendorUpdateElSelector) {
+      form.setFieldsValue(vendorUpdateElSelector);
     }
-
-    return () => {
-      setUpdateDetails();
-      setUpdated(false);
-      setIsList(false);
-    };
-  }, [updateDetails, form, location, setUpdateDetails, setIsList, setUpdated]);
+  }, [vendorUpdateElSelector, form]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -40,8 +34,8 @@ const VendorRegistrationForm = () => {
     values.status = 1;
     values.user_type_id = 8;
 
-    if (updateDetails) {
-      values.user_id = updateDetails.user_id;
+    if (vendorUpdateElSelector) {
+      values.user_id = vendorUpdateElSelector.user_id;
     }
 
     const res = await postData(getFormData(values), URLS.register.path, {
@@ -52,32 +46,14 @@ const VendorRegistrationForm = () => {
       setLoading(false);
       if (res.data.success) {
         form.resetFields();
-        setUpdated(true);
-      }
+        dispatch(setVendorListIsUpdated({ isUpdated: true }));
 
-      if (updateDetails) {
-        setUpdateDetails(false);
-        //   setUpdated(true);
-        navigate("/vendor");
+        if (vendorUpdateElSelector) {
+          navigate("/vendor");
+        }
       }
     }
   };
-
-  useEffect(() => {
-    optionsMaker(
-      "userType",
-      "user_type",
-      "user_type",
-      setUserTypes,
-      "",
-      "user_type_id"
-    );
-
-    getData(URLS.userType.path, { "x-api-version": URLS.userType.version });
-    getData(URLS.vendorUsers.path + 8, {
-      "x-api-version": URLS.vendorUsers.version,
-    });
-  }, [form]);
 
   return (
     <div className="mt-3">
@@ -86,8 +62,6 @@ const VendorRegistrationForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsList(false);
-              setUpdateDetails(false);
               navigate("/vendor");
             }}
           >
@@ -96,7 +70,9 @@ const VendorRegistrationForm = () => {
 
           <div className="text-d9 text-2xl w-full flex items-end justify-between ">
             <div className="font-bold">
-              {updateDetails ? "Update Vendor Details" : "Vendor Registration"}
+              {vendorUpdateElSelector
+                ? "Update Vendor Details"
+                : "Vendor Registration"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
@@ -112,7 +88,27 @@ const VendorRegistrationForm = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             <Form.Item
-              label={<div className="font-semibold">User Name</div>}
+              label={
+                <div className="font-semibold">Mobile Number (Username)</div>
+              }
+              name="phone"
+              rules={[
+                { required: true, message: "Please enter the mobile number" },
+                {
+                  pattern: /^[0-9]{10}$/,
+                  message: "Please enter a valid 10-digit mobile number",
+                },
+              ]}
+              className="mb-4"
+            >
+              <Input
+                placeholder="Enter mobile number"
+                className="rounded-none "
+              />
+            </Form.Item>
+
+            <Form.Item
+              label={<div className="font-semibold">Vendor Name</div>}
               name="name"
               rules={[{ required: true, message: "Please enter name" }]}
               className="mb-4"
@@ -131,29 +127,14 @@ const VendorRegistrationForm = () => {
             >
               <Input placeholder="Enter email" className="rounded-none" />
             </Form.Item>
-            <Form.Item
-              label={<div className="font-semibold">Contact Number</div>}
-              name="phone"
-              rules={[
-                { required: true, message: "Please enter the contact number" },
-                {
-                  pattern: /^[0-9]{10}$/,
-                  message: "Please enter a valid 10-digit contact number",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input
-                placeholder="Enter contact number"
-                className="rounded-none"
-              />
-            </Form.Item>
+
+          
 
             <CountryStateCity
               form={form}
-              country_id={updateDetails?.country_id}
-              state_id={updateDetails?.state_id}
-              city_id={updateDetails?.city_id}
+              country_id={vendorUpdateElSelector?.country_id}
+              state_id={vendorUpdateElSelector?.state_id}
+              city_id={vendorUpdateElSelector?.city_id}
             />
 
             <Form.Item
@@ -200,7 +181,7 @@ const VendorRegistrationForm = () => {
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
               >
-                {updateDetails ? "Update" : "Register"}
+                {vendorUpdateElSelector ? "Update" : "Register"}
               </Button>
             </Form.Item>
           </div>

@@ -8,37 +8,33 @@ import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
 import { QuestionContext } from "./QuestionContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestionListIsUpdated } from "./questionSlice";
 
 const UserRegistrationForm = () => {
-  const { updateDetails, setUpdateDetails, setUpdated, setIsList } =
-    useContext(QuestionContext);
-
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const questionUpdateElSelector = useSelector(
+    (state) => state.questionSlice?.questionUpdateEl
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (updateDetails) {
-      form.setFieldsValue(updateDetails);
+    if (questionUpdateElSelector) {
+      form.setFieldsValue(questionUpdateElSelector);
     }
-  }, [updateDetails, form, location, setUpdateDetails, setIsList, setUpdated]);
-
-  useEffect(() => {
-    return () => {
-      setUpdateDetails();
-      setUpdated(false);
-      setIsList(false);
-    };
-  }, [location, navigate, setUpdateDetails, setUpdated, setIsList]);
+  }, [questionUpdateElSelector, form]);
 
   const onFinish = async (values) => {
     setLoading(true);
 
     values.status = 1;
 
-    if (updateDetails) {
-      values.question_id = updateDetails.question_id;
+    if (questionUpdateElSelector) {
+      values.question_id = questionUpdateElSelector.question_id;
     }
 
     const res = await postData(getFormData(values), URLS.questionsEntry.path, {
@@ -47,33 +43,17 @@ const UserRegistrationForm = () => {
 
     if (res) {
       setLoading(false);
+      dispatch(setQuestionListIsUpdated({ isUpdated: true }));
+
       if (res.data.success) {
         form.resetFields();
-        setUpdated(true);
-        navigate("/questions");
-      }
-      if (updateDetails) {
-        setUpdateDetails(false);
-        setUpdated(true);
-        navigate("/questions");
+
+        if (questionUpdateElSelector) {
+          navigate("/questions");
+        }
       }
     }
   };
-
-  const [userTypes, setUserTypes] = useState([]);
-
-  useEffect(() => {
-    optionsMaker(
-      "userType",
-      "user_type",
-      "user_type",
-      setUserTypes,
-      "",
-      "user_type_id"
-    );
-
-    getData(URLS.userType.path, { "x-api-version": URLS.userType.version });
-  }, [form]);
 
   return (
     <div className="mt-3">
@@ -82,8 +62,6 @@ const UserRegistrationForm = () => {
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
-              setIsList(false);
-              setUpdateDetails(false);
               navigate("/questions");
             }}
           >
@@ -91,11 +69,12 @@ const UserRegistrationForm = () => {
           </Button>
           <div className="text-d9 text-2xl  w-full flex items-end justify-between ">
             <div className="font-bold">
-              {updateDetails ? "Update Question" : "Add Question"}
+              {questionUpdateElSelector ? "Update Question" : "Add Question"}
             </div>
             <div className="text-xs">All * marks fields are mandatory</div>
           </div>
         </div>
+
         <Divider className="bg-d9 h-2/3 mt-1"></Divider>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
@@ -183,7 +162,7 @@ const UserRegistrationForm = () => {
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"
               >
-                {updateDetails ? "Edit Question" : "Add Question"}
+                {questionUpdateElSelector ? "Update Question" : "Add Question"}
               </Button>
             </div>
           </Form.Item>

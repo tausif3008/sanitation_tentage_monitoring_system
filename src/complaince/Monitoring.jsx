@@ -1,102 +1,127 @@
-import React, { useState, useEffect } from "react";
-import { Table, Button, Input, message, Modal } from "antd";
-import { Link } from "react-router-dom";
-import QRCode from "qrcode.react";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, message, Modal, Table } from "antd";
+import { useNavigate, useParams } from "react-router";
+import { EditOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import URLS from "../urils/URLS";
+import { getData } from "../Fetch/Axios";
+import {} from "../register/AssetType/AssetTypeSlice";
 import CommonDivider from "../commonComponents/CommonDivider";
-import MonitoringReport from "./MonitoringReport";
-
-const { Search } = Input;
+import CommonTable from "../commonComponents/CommonTable";
+import QRCode from "qrcode.react";
+import {
+  setAssetInfo,
+  setMonitoringListIsUpdated,
+  setUpdateMonitoringEl,
+} from "./monitoringSlice";
 
 const Monitoring = () => {
-  const [data, setData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
+
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-  const [isAssetList, setIsAssetList] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(""); // State for success message
-  const [isModalVisible, setIsModalVisible] = useState(false); // State for Modal visibility
+  const [details, setDetails] = useState({
+    list: [],
+    pageLength: 25,
+    currentPage: 1,
+  });
+
+  const isUpdatedSelector = useSelector(
+    (state) => state.monitoringSlice?.isUpdated
+  );
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  // qr
   const [qrCodeData, setQrCodeData] = useState(""); // State for QR code data
   const [qrCodeUrl, setQrCodeUrl] = useState(""); // State for QR code image URL
-  const [assetInfo, setsetAssetInfo] = useState();
+
+  const getDetails = async () => {
+    setLoading(true);
+
+    let uri = URLS.asset.path + "/?";
+
+    if (params.page) {
+      uri = uri + params.page;
+    } else if (params.per_page) {
+      uri = uri + "&" + params.per_page;
+    }
+
+    const extraHeaders = { "x-api-version": URLS.asset.version };
+    const res = await getData(uri, extraHeaders);
+
+    if (res) {
+      const data = res.data;
+      setLoading(false);
+
+      const list = data.listings.map((el, index) => {
+        return {
+          ...el,
+          action: (
+            <Button
+              className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
+              key={el.name + index}
+              onClick={() => {
+                dispatch(setUpdateMonitoringEl({ updateElement: el }));
+                navigate("/add-update-monitoring");
+              }}
+            >
+              <EditOutlined></EditOutlined>
+            </Button>
+          ),
+        };
+      });
+
+      setDetails(() => {
+        return {
+          list,
+          pageLength: data.paging[0].length,
+          currentPage: data.paging[0].currentpage,
+          totalRecords: data.paging[0].totalrecords,
+        };
+      });
+    }
+  };
 
   useEffect(() => {
-    const fetchAssets = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          "http://filemanagement.metaxpay.in:8001/asset-list/"
-        );
-        const result = await response.json();
-
-        if (response.ok && result.data) {
-          const transformedData = result.data.map((item, index) => {
-            return {
-              key: item.id,
-              srNo: index + 1,
-              assetsId: item.id,
-              dataCreated: item.date_created,
-              assetsName: item.asset_name || "N/A",
-              assetsCode: item.asset_code || "N/A",
-              vendor: item.vendor || "N/A",
-              qrCodeUrl: item.qr_code || "", // Add QR code URL
-              img: item.asset_image,
-            };
-          });
-
-          setData(transformedData);
-          setFilteredData(transformedData); // Initialize filtered data
-        } else {
-          
-          message.error(result.message || "Failed to load assets");
-        }
-      } catch (error) {
-        message.error(
-          error.message || "An error occurred while fetching the assets"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAssets();
-
-    const queryParams = new URLSearchParams(window.location.search);
-    if (queryParams.get("status") === "success") {
-      setSuccessMessage("Asset Registered Successfully");
-      setTimeout(() => {
-        setSuccessMessage(""); // Hide the message after 3 seconds
-      }, 3000);
+    getDetails();
+    if (isUpdatedSelector) {
+      dispatch(setMonitoringListIsUpdated({ isUpdated: false }));
     }
-  }, []);
+  }, [params, isUpdatedSelector]);
 
-  const handleSearch = (value) => {
-    const filtered = data.filter(
-      (item) =>
-        item.assetsName.toLowerCase().includes(value.toLowerCase()) ||
-        item.assetsCode.toLowerCase().includes(value.toLowerCase()) ||
-        item.vendor.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
+  const handleCancel = () => {
+    setIsModalVisible(false); // Close the modal
   };
+
+  // qr code
+  useEffect(() => {
+    dispatch(setUpdateMonitoringEl({ updateElement: null }));
+  }, [dispatch]);
 
   const showQrCode = (record) => {
     setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
-    setQrCodeUrl(record.qrCodeUrl); // Set the QR code URL
+    setQrCodeUrl(record.qr_code); // Set the QR code URL
     setIsModalVisible(true); // Show the modal
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false); // Hide the modal
   };
 
   const columns = [
     {
       title: "Assets Name",
-      dataIndex: "assetsName",
+      dataIndex: "name",
       key: "assetsName",
     },
     {
+      title: "Assets Type Name",
+      dataIndex: "asset_type_name",
+      key: "assetsName",
+      width: 210,
+    },
+
+    {
       title: "Assets Code",
-      dataIndex: "assetsCode",
+      dataIndex: "code",
       key: "assetsCode",
     },
     {
@@ -105,95 +130,99 @@ const Monitoring = () => {
       key: "vendor",
     },
     {
+      title: "Vendor Asset Code",
+      dataIndex: "vendor_asset_code",
+      key: "vendor_asset_code",
+      width: 160,
+    },
+    {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "Unit",
+    },
+    {
+      title: "Sector",
+      dataIndex: "sector",
+      key: "assetsName",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description_",
+    },
+    {
       title: "Action",
       key: "action",
+      fixed: "right",
+      width: 130,
+
       render: (text, record) => (
-        <div>
-          <Button type="link" onClick={() => showQrCode(record)}>
+        <div className="flex gap-2">
+          <div
+            type="link"
+            className="text-blue-500 cursor-pointer"
+            onClick={() => showQrCode(record)}
+          >
             QR
-          </Button>
-          <Button type="link" onClick={() => setsetAssetInfo(record)}>
-            View Monitoring
-          </Button>
+          </div>
+          <div
+            className="text-blue-500 cursor-pointer"
+            type="link"
+            onClick={() => dispatch(setAssetInfo(record))}
+          >
+            Monitoring
+          </div>
         </div>
       ),
     },
   ];
 
   return (
-    <>
-      {!assetInfo ? (
-        <div className="">
-          {/* Success Message */}
-          {successMessage && (
-            <div
-              style={{
-                textAlign: "center",
-                color: "green",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              {successMessage}
-            </div>
+    <div className="">
+      <CommonDivider
+        label={"Assets Monitoring "}
+        // compo={
+        //   <Button
+        //     className="bg-orange-300 mb-1"
+        //     onClick={() => {
+        //       navigate("/add-update-monitoring");
+        //     }}
+        //   >
+        //     Add Monitoring
+        //   </Button>
+        // }
+        
+      ></CommonDivider>
+      <CommonTable
+        columns={columns}
+        uri={"monitoring"}
+        details={details}
+        loading={loading}
+        scroll={{ x: 1400, y: 400 }}
+      ></CommonTable>
+      <Modal
+        width={300}
+        title="QR Code"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <div
+          style={{ textAlign: "center" }}
+          className="flex justify-center items-center"
+        >
+          {qrCodeUrl ? (
+            <img
+              src={URLS.baseUrl + "/" + qrCodeUrl}
+              alt="QR Code"
+              style={{ maxWidth: "200px" }}
+            />
+          ) : (
+            <div>QR Code Not Found</div>
           )}
-
-          {!isAssetList && (
-            <>
-              <CommonDivider label={"Assets Monitoring Listing"} />
-              <div className="mb-2 flex justify-between items-center">
-                <Search
-                  placeholder="Search assets"
-                  onSearch={handleSearch}
-                  style={{ width: 300 }}
-                  className=""
-                />
-              </div>
-              <Table
-                scroll={{ y: 450 }}
-                columns={columns}
-                bordered
-                dataSource={filteredData}
-                loading={loading}
-                pagination={false}
-              />
-            </>
-          )}
-          {/* Replace this with another component/form if needed */}
-          {isAssetList && <div>Other Component/Form</div>}
-
-          <Modal
-            width={300}
-            title="QR Code"
-            visible={isModalVisible}
-            onCancel={handleCancel}
-            footer={null}
-          >
-            <div
-              style={{ textAlign: "center" }}
-              className="flex justify-center items-center"
-            >
-              {qrCodeUrl ? (
-                <img
-                  src={"http://filemanagement.metaxpay.in:8001" + qrCodeUrl}
-                  alt="QR Code"
-                  style={{ maxWidth: "200px" }}
-                />
-              ) : (
-                <QRCode value={qrCodeData} />
-              )}
-            </div>
-          </Modal>
         </div>
-      ) : (
-        <div>
-          <MonitoringReport
-            data={assetInfo}
-            setsetAssetInfo={setsetAssetInfo}
-          ></MonitoringReport>
-        </div>
-      )}
-    </>
+      </Modal>
+    </div>
   );
 };
 

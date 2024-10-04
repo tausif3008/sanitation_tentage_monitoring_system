@@ -1,4 +1,5 @@
 const URLS = {
+  baseUrl: "https://kumbhtsmonitoring.in/php-api",
   // user
   register: { path: "/users/entry", version: "5.43" },
   users: { path: "/users", version: "5.43" },
@@ -19,6 +20,15 @@ const URLS = {
   // questions
   questions: { path: "/questions", version: "5.43" },
   questionsEntry: { path: "/questions/entry", version: "5.43" },
+
+  // Assets
+  assetQuestions: { path: "/questions?asset_type_id=", version: "5.43" },
+  assetTypes: { path: "/asset-types", version: 5.43 },
+  assetTypeEntry: { path: "/asset-types/entry", version: 5.43 },
+
+  // monitoring
+  asset: { path: "/asset", version: 5.43 },
+  monitoringDetails: { path: "/monitoring/details?id=", version: 5.43 },
 };
 
 export default URLS;
