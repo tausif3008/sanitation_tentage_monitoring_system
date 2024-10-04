@@ -61,3 +61,7 @@ fill: black !important;
 .ant-table-column-sort .ant-table-column-sorters{
   color:black !important;
 }
+
+.ant-form-item-label{
+  font-weight: 600;
+}

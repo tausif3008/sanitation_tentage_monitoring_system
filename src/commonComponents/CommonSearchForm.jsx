@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Collapse, Form, Input, Button, Select, notification } from "antd";
 import search from "../assets/Dashboard/icon-search.png";
 import { generateSearchQuery } from "../urils/getSearchQuery";
@@ -7,8 +7,16 @@ const CommonSearchForm = ({
   dropFields,
   searchQuery,
   setSearchQuery,
+  setForm,
+  dropdown,
 }) => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (setForm) {
+      setForm(form);
+    }
+  }, [setForm, form]);
 
   const [api, contextHolder] = notification.useNotification({ top: 100 });
   const openNotificationWithIcon = (type) => {
@@ -87,7 +95,9 @@ const CommonSearchForm = ({
                         </Form.Item>
                       );
                     })}
+                  {dropdown && dropdown}
                 </div>
+
                 <div className="flex w-full justify-end gap-2 ">
                   <Form.Item noStyle>
                     <Button

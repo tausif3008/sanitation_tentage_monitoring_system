@@ -6,7 +6,6 @@ import CommonDivider from "../../commonComponents/CommonDivider";
 import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { EditOutlined } from "@ant-design/icons";
-import { QuestionContext } from "./QuestionContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestionListIsUpdated, setUpdateQuestionEl } from "./questionSlice";
 

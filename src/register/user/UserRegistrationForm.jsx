@@ -9,6 +9,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserListIsUpdated } from "./userSlice";
+import UserTypeDropDown from "./UserTypeDropDown";
 
 const UserRegistrationForm = () => {
   const [form] = Form.useForm();
@@ -98,18 +99,7 @@ const UserRegistrationForm = () => {
           initialValues={{ company: "KASH IT SOLUTION" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-            <Form.Item
-              name="user_type_id"
-              label={<div className="font-semibold">Select User Type</div>}
-              rules={[{ required: true, message: "Please select User Type" }]}
-              className="mb-4"
-            >
-              <Select
-                placeholder="Select a User Type"
-                className="rounded-none"
-                options={userTypes}
-              ></Select>
-            </Form.Item>
+            <UserTypeDropDown form={form}></UserTypeDropDown>
 
             <Form.Item
               label={

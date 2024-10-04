@@ -35,7 +35,6 @@ const AssetTypeList = () => {
 
   const getDetails = async () => {
     setLoading(true);
-    console.log("getDetails Search Query", searchQuery);
 
     let uri = URLS.assetTypes.path + "/?";
     if (params.page) {
@@ -47,8 +46,6 @@ const AssetTypeList = () => {
     }
 
     if (searchQuery) {
-      console.log("getDetails Search Query", searchQuery);
-
       uri = uri + searchQuery;
     }
 
@@ -113,7 +110,6 @@ const AssetTypeList = () => {
   };
 
   useEffect(() => {
-    console.log("searchQuery-----", searchQuery);
     getDetails();
     if (isUpdatedSelector) {
       dispatch(setAssetTypeListIsUpdated({ isUpdated: false }));
