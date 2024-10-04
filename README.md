@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+< HEAD
 # tentage_sanitation_monitoring_system
-=======
-<<<<<<< HEAD
-# react_kumbhv2
 =======
 # Getting Started with Create React App
 
@@ -74,5 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 44b5e229e9b37a2cf164b86cfd3a442f2a08e0b7
 >>>>>>> d8aee9d97322526ce79d35a9008b94d9695dc053
