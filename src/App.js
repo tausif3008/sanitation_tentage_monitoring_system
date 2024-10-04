@@ -154,7 +154,7 @@ function App() {
                 ></Route>
 
                 <Route
-                  path="asset-type-list/:page?/:per_page?"
+                  path="asset-type-list/:page?/:per_page?/:search?"
                   element={<AssetTypeList />}
                 />
 
