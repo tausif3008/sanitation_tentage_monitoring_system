@@ -169,6 +169,17 @@ const UserList = () => {
 
   return (
     <div className="">
+      <CommonDivider
+        label={"User List"}
+        compo={
+          <Button
+            onClick={() => navigate("/user-registration")}
+            className="bg-orange-300 mb-1"
+          >
+            Add User
+          </Button>
+        }
+      ></CommonDivider>
       <CommonSearchForm
         setForm={setForm}
         setSearchQuery={setSearchQuery}
@@ -183,17 +194,7 @@ const UserList = () => {
           <UserTypeDropDown required={false} form={form}></UserTypeDropDown>
         }
       ></CommonSearchForm>
-      <CommonDivider
-        label={"User List"}
-        compo={
-          <Button
-            onClick={() => navigate("/user-registration")}
-            className="bg-orange-300 mb-1"
-          >
-            Add User
-          </Button>
-        }
-      ></CommonDivider>
+      <div className="h-3"></div>
       <CommonTable
         loading={loading}
         uri={"users"}

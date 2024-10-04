@@ -5,9 +5,9 @@ import Login from "./Login/Login";
 import Layout from "./AppLayout/Layout";
 
 import UserList from "./register/user/UsersList";
-import AssetRegistrationForm from "./asset/AssetRegistrationForm";
-import AssetsList from "./asset/AssetsList";
-import AssetAllotment from "./asset/AssetAllotment";
+import AssetRegistrationForm from "./register/asset/AssetRegistrationForm";
+import AssetsList from "./register/asset/AssetsList";
+import AssetAllotment from "./register/asset/AssetAllotment";
 import GisServices from "./gis/GisServices";
 import GisList from "./gis/GisList";
 
@@ -63,7 +63,7 @@ function App() {
               )
             }
           ></Route>
-          
+
           <Route path="/" element={<Layout></Layout>}>
             <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
             <Route

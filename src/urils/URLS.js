@@ -29,6 +29,9 @@ const URLS = {
   // monitoring
   asset: { path: "/asset", version: 5.43 },
   monitoringDetails: { path: "/monitoring/details?id=", version: 5.43 },
+
+  // asset
+  assetList: { path: "/asset", version: 5.43 },
 };
 
 export default URLS;

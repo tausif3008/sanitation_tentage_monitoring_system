@@ -171,6 +171,20 @@ const AssetTypeList = () => {
 
   return (
     <div className="">
+      <CommonDivider
+        label={"Asset Type List"}
+        compo={
+          <Button
+            className="bg-orange-300 mb-1"
+            onClick={() => {
+              navigate("/asset-type-registration");
+            }}
+          >
+            Add Asset Type
+          </Button>
+        }
+      ></CommonDivider>
+
       <CommonSearchForm
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
@@ -192,21 +206,7 @@ const AssetTypeList = () => {
           },
         ]}
       ></CommonSearchForm>
-
-      <CommonDivider
-        label={"Asset Type List"}
-        compo={
-          <Button
-            className="bg-orange-300 mb-1"
-            onClick={() => {
-              navigate("/asset-type-registration");
-            }}
-          >
-            Add Asset Type
-          </Button>
-        }
-      ></CommonDivider>
-
+      <div className="h-3"></div>
       <CommonTable
         columns={columns}
         uri={"asset-type-list"}
