@@ -35,13 +35,20 @@ const AssetTypeList = () => {
 
   const getDetails = async () => {
     setLoading(true);
+    console.log("getDetails Search Query", searchQuery);
 
     let uri = URLS.assetTypes.path + "/?";
     if (params.page) {
       uri = uri + params.page;
-    } else if (params.per_page) {
+    }
+
+    if (params.per_page) {
       uri = uri + "&" + params.per_page;
-    } else if (searchQuery) {
+    }
+
+    if (searchQuery) {
+      console.log("getDetails Search Query", searchQuery);
+
       uri = uri + searchQuery;
     }
 
@@ -106,6 +113,7 @@ const AssetTypeList = () => {
   };
 
   useEffect(() => {
+    console.log("searchQuery-----", searchQuery);
     getDetails();
     if (isUpdatedSelector) {
       dispatch(setAssetTypeListIsUpdated({ isUpdated: false }));
@@ -202,6 +210,7 @@ const AssetTypeList = () => {
           </Button>
         }
       ></CommonDivider>
+
       <CommonTable
         columns={columns}
         uri={"asset-type-list"}
@@ -209,6 +218,7 @@ const AssetTypeList = () => {
         loading={loading}
         scroll={{ x: 800, y: 400 }}
       ></CommonTable>
+
       <Modal
         title={`Questions for Asset Type ID: ${selectedAssetType}`}
         open={isModalVisible}
