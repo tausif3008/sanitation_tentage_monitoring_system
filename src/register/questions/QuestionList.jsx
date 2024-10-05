@@ -8,6 +8,7 @@ import URLS from "../../urils/URLS";
 import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestionListIsUpdated, setUpdateQuestionEl } from "./questionSlice";
+import AppConstants from "../../urils/AppConstants";
 
 const getVal = (val) => {
   if (val === "undefined" || val === null) {
@@ -129,27 +130,26 @@ const QuestionList = () => {
 
   return (
     <div className="">
-      <>
-        <CommonDivider
-          label={"Question List"}
-          compo={
-            <Button
-              onClick={() => navigate("/add-question-form")}
-              className="bg-orange-300 mb-1"
-            >
-              Add Questions
-            </Button>
-          }
-        ></CommonDivider>
+      <CommonDivider
+        label={"Question List"}
+        compo={
+          <Button
+            onClick={() => navigate("/add-question-form")}
+            className="mb-1"
+            style={{ backgroundColor: AppConstants.AddButtonColor }}
+          >
+            Add Questions
+          </Button>
+        }
+      ></CommonDivider>
 
-        <CommonTable
-          loading={loading}
-          uri={"questions"}
-          columns={columns}
-          details={userDetails}
-          scroll={{ x: 300, y: 400 }}
-        ></CommonTable>
-      </>
+      <CommonTable
+        loading={loading}
+        uri={"questions"}
+        columns={columns}
+        details={userDetails}
+        scroll={{ x: 300, y: 400 }}
+      ></CommonTable>
     </div>
   );
 };

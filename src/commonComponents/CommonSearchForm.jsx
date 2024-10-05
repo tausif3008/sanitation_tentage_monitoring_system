@@ -62,6 +62,7 @@ const CommonSearchForm = ({
                     dropFields.map((el) => {
                       return (
                         <Form.Item
+                          noStyle
                           name={el.name}
                           label={el.label}
                           layout="vertical"
@@ -83,6 +84,7 @@ const CommonSearchForm = ({
                     fields.map((el) => {
                       return (
                         <Form.Item
+                          noStyle
                           name={el.name}
                           label={el.label}
                           layout="vertical"

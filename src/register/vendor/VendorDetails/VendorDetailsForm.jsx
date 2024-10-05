@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setVendorDetailsListIsUpdated } from "./vendorDetailsSlice";
 import dayjs from "dayjs";
+import CommonFormDropDownMaker from "../../../commonComponents/CommonFormDropDownMaker";
 
 const { Option } = Select;
 
@@ -140,8 +141,8 @@ const VendorDetailsForm = () => {
           initialValues={{ company: "   KASH IT SOLUTION" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-            <Form.Item
-              label={<div className="font-semibold">Main Type</div>}
+            {/* <Form.Item
+              label={<div className="font-semibold">Asset Main Type</div>}
               name="main_type"
               rules={[{ required: true, message: "Please enter main type" }]}
               className="mb-4"
@@ -153,11 +154,22 @@ const VendorDetailsForm = () => {
                 <Option value="Sanitation">Sanitation</Option>
                 <Option value="Tentage">Tentage</Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
+
+            <CommonFormDropDownMaker
+              uri={"assetMainTypePerPage"}
+              responseListName="assetmaintypes"
+              responseLabelName="name"
+              responseIdName="asset_main_type_id"
+              selectLabel={"Asset Main Type"}
+              selectName={"asset_main_type_id"}
+              required={true}
+              RequiredMessage={"Main type is required!"}
+            ></CommonFormDropDownMaker>
 
             <Form.Item
               label={<div className="font-semibold">Asset Type</div>}
-              name="asset_type"
+              name="asset_type_id"
               rules={[{ required: true, message: "Please enter asset type" }]}
               className="mb-4"
             >
@@ -230,7 +242,6 @@ const VendorDetailsForm = () => {
                 className="rounded-none"
               />
             </Form.Item>
-
             <Form.Item
               label="Date of Allocation"
               name="date_of_allocation"
@@ -244,7 +255,6 @@ const VendorDetailsForm = () => {
                 className="w-full"
               />
             </Form.Item>
-
             <Form.Item
               label={
                 <div className="font-semibold">Total Allotted Quantity</div>
@@ -263,7 +273,6 @@ const VendorDetailsForm = () => {
                 className="rounded-none"
               />
             </Form.Item>
-
             <Form.Item
               label={<div className="font-semibold">Proposed Sectors</div>}
               name="proposed_sectors"

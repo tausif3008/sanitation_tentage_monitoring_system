@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Divider,
-  message,
-  Modal,
-} from "antd";
+import { Form, Input, Button, Select, Divider, message, Modal } from "antd";
 import optionsMaker from "../../urils/OptionMaker";
 
 const { Option } = Select;
@@ -48,13 +40,11 @@ const AssetRegistrationForm = () => {
   };
 
   const onFinish = async (values) => {
-    // Ensure vendor_id is included
     const vendor = vendors.find((v) => v.name === values.vendor);
     if (vendor) {
       values.vendor_id = vendor.id;
     }
 
-    // Remove assetSubType from the payload
     delete values.assetSubType;
 
     try {
@@ -159,7 +149,7 @@ const AssetRegistrationForm = () => {
             rules={[{ required: true, message: "Please enter a Description" }]}
             className="mb-4"
           >
-            <TextArea rows={1} placeholder="Enter Asset Description" />
+            <Input rows={1} placeholder="Enter Asset Description" />
           </Form.Item>
           <div className=" w-full flex justify-end items-end">
             <Form.Item>

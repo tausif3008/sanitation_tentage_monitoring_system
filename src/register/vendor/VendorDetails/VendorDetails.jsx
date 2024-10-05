@@ -6,9 +6,7 @@ import URLS from "../../../urils/URLS";
 import { useNavigate, useParams } from "react-router";
 import { getData } from "../../../Fetch/Axios";
 import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
-import VendorDetailsForm from "./VendorDetailsForm";
 import { Link } from "react-router-dom";
-import { ListFormContextVendorDetails } from "./ListFormContextVendorDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUpdateVendorDetailsEl,
@@ -17,14 +15,15 @@ import {
 
 const columns = [
   {
-    title: "Main Type",
-    dataIndex: "main_type",
+    title: "Asset Main Type",
+    dataIndex: "asset_main_type_name",
     key: "main_type",
   },
   {
     title: "Asset Type",
-    dataIndex: "asset_type",
+    dataIndex: "asset_type_name",
     key: "asset_type",
+    width: 200,
   },
   {
     title: "Contract Number",
@@ -158,6 +157,7 @@ const VendorDetails = () => {
               <ArrowLeftOutlined />
             </Button>
           </Link>
+
           <div className="w-full">
             <CommonDivider
               label={"Vendor Details"}

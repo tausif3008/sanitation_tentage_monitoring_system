@@ -4,7 +4,7 @@ import { getData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { Form, Select } from "antd";
 
-const UserTypeDropDown = ({ form, required = true }) => {
+const UserTypeDropDown = ({ form, required = true, showLabel }) => {
   const [userTypes, setUserTypes] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const UserTypeDropDown = ({ form, required = true }) => {
   return (
     <Form.Item
       name="user_type_id"
-      label={<div className="font-semibold">Select User Type</div>}
+      label={showLabel || <div className="font-semibold">Select User Type</div>}
       rules={[{ required: required, message: "Please select User Type" }]}
       className="mb-4"
     >

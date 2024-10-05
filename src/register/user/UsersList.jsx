@@ -40,6 +40,7 @@ const columns = [
     title: "Email",
     dataIndex: "email",
     key: "email",
+    width: 250,
   },
   {
     title: "Country",
@@ -79,6 +80,7 @@ const columns = [
     dataIndex: "action",
     key: "action",
     fixed: "right",
+    width: 80,
   },
 ];
 
@@ -191,7 +193,11 @@ const UserList = () => {
           { name: "company", label: " Company" },
         ]}
         dropdown={
-          <UserTypeDropDown required={false} form={form}></UserTypeDropDown>
+          <UserTypeDropDown
+            required={false}
+            form={form}
+            showLabel // means not visible
+          ></UserTypeDropDown>
         }
       ></CommonSearchForm>
       <div className="h-3"></div>

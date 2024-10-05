@@ -154,8 +154,8 @@ const AssetsList = () => {
       render: (text, record) =>
         record.photo ? (
           <Image
-            width={70}
-            height={70}
+            width={60}
+            height={60}
             src={`https://kumbhtsmonitoring.in/php-api/${record.photo}`}
             alt="Assets Photo"
           />
@@ -223,7 +223,7 @@ const AssetsList = () => {
       ></CommonTable>
 
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
         title="QR Code"

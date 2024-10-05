@@ -137,16 +137,19 @@ const AssetTypeList = () => {
       title: "Asset Type", // Asset name
       dataIndex: "name",
       key: "name",
+      width: 250,
+    },
+
+    {
+      title: "Total Quantity", // Total quantity
+      dataIndex: "total_quantity",
+      key: "total_quantity",
     },
     {
       title: "Description", // Asset description
       dataIndex: "description",
       key: "description",
-    },
-    {
-      title: "Total Quantity", // Total quantity
-      dataIndex: "total_quantity",
-      key: "total_quantity",
+      width: 300,
     },
     {
       title: "Questions", // Number of questions
@@ -162,6 +165,8 @@ const AssetTypeList = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      fixed: "right",
+      width: 100,
     },
   ];
 
@@ -212,7 +217,7 @@ const AssetTypeList = () => {
         uri={"asset-type-list"}
         details={details}
         loading={loading}
-        scroll={{ x: 800, y: 400 }}
+        scroll={{ x: 1200, y: 400 }}
       ></CommonTable>
 
       <Modal

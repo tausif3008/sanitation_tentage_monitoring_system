@@ -16,6 +16,10 @@ const URLS = {
   vendorDetails: { path: "/user-details?user_id=", version: "5.43" },
   addVendorDetails: { path: "/user-details/entry", version: "5.43" },
   vendorAsset: { path: "/asset-types", version: 5.43 },
+  assetMainTypePerPage: {
+    path: "/asset-main-types?per_page=100",
+    version: 5.43,
+  },
 
   // questions
   questions: { path: "/questions", version: "5.43" },
