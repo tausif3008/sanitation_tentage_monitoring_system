@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import optionsMaker from "../urils/OptionMaker";
 
 const CommonFormDropDownMaker = ({
-  form,
+  mode = "single",
   selectLabel,
   selectName,
   required,
@@ -33,7 +33,7 @@ const CommonFormDropDownMaker = ({
       rules={[{ required, message: RequiredMessage }]}
       className="mb-4"
     >
-      <Select placeholder="Select Main Asset Type" allowClear>
+      <Select placeholder="Select Main Asset Type" allowClear mode={mode}>
         {options.map((option) => (
           <Option key={option.value} value={option.value}>
             {option.label}

@@ -43,9 +43,13 @@ const AssetTypeForm = () => {
       values.questions = assetUpdateElSelector.questions;
     }
 
-    const res = await postData(getFormData(values), URLS.assetTypeEntry.path, {
-      version: URLS.register.version,
-    });
+    const res = await postData(
+      getFormData(values),
+      assetUpdateElSelector ? URLS.editAssetType.path : URLS.assetTypeEntry.path,
+      {
+        version: URLS.register.version,
+      }
+    );
 
     if (res) {
       setLoading(false);
