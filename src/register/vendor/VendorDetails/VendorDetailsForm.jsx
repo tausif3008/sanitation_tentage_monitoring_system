@@ -46,6 +46,9 @@ const VendorDetailsForm = () => {
         updatedDetails.date_of_allocation
       );
 
+      updatedDetails.proposed_sectors =
+        updatedDetails.proposed_sectors.split(",");
+
       form.setFieldsValue(updatedDetails);
     }
   }, [vendorDetailsUpdateElSelector, form]);
@@ -76,7 +79,7 @@ const VendorDetailsForm = () => {
     }
 
     if (vendorDetailsUpdateElSelector) {
-      values.user_detail_id = vendorDetailsUpdateElSelector.user_detail_id;
+      values.vendor_detail_id = vendorDetailsUpdateElSelector.vendor_detail_id;
     }
 
     const res = await postData(

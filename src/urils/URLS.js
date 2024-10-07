@@ -1,5 +1,6 @@
 const URLS = {
   baseUrl: "https://kumbhtsmonitoring.in/php-api",
+
   // user
   register: { path: "/users/entry", version: "5.43" },
   editUser: { path: "/users/edit", version: "5.43" },
@@ -14,9 +15,9 @@ const URLS = {
   vendorUsers: { path: "/users/details?user_id=", version: "5.43" },
 
   // vendor Details
-  vendorDetails: { path: "/user-details?user_id=", version: "5.43" },
-  addVendorDetails: { path: "/user-details/entry", version: "5.43" },
-  editVendorDetails: { path: "/user-details/edit", version: 5.43 },
+  vendorDetails: { path: "/vendor-details?user_id=", version: "5.43" },
+  addVendorDetails: { path: "/vendor-details/entry", version: "5.43" },
+  editVendorDetails: { path: "/vendor-details/edit", version: 5.43 },
   vendorAsset: { path: "/asset-types", version: 5.43 },
   assetMainTypePerPage: {
     path: "/asset-main-types?per_page=100",

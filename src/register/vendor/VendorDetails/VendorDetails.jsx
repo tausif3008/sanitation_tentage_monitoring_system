@@ -85,6 +85,7 @@ const VendorDetails = () => {
     setLoading(true);
 
     let uri = URLS.vendorDetails.path + params.id + "&";
+
     if (params.page) {
       uri = uri + params.page;
     } else if (params.per_page) {
