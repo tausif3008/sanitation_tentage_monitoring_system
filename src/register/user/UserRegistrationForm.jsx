@@ -37,9 +37,13 @@ const UserRegistrationForm = () => {
       values.user_id = userUpdateElSelector.user_id;
     }
 
-    const res = await postData(getFormData(values), URLS.register.path, {
-      version: URLS.register.version,
-    });
+    const res = await postData(
+      getFormData(values),
+      userUpdateElSelector ? URLS.editUser.path : URLS.register.path,
+      {
+        version: URLS.register.version,
+      }
+    );
 
     if (res) {
       setLoading(false);
@@ -121,23 +125,25 @@ const UserRegistrationForm = () => {
               />
             </Form.Item>
 
-            <Form.Item
-              label={<div className="font-semibold">Password</div>}
-              name="password"
-              rules={[
-                { required: true, message: "Please enter the password" },
-                {
-                  min: 6,
-                  message: "Password must be at least 6 characters long",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input.Password
-                placeholder="Enter password"
-                className="rounded-none "
-              />
-            </Form.Item>
+            {!userUpdateElSelector && (
+              <Form.Item
+                label={<div className="font-semibold">Password</div>}
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter the password" },
+                  {
+                    min: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                ]}
+                className="mb-4"
+              >
+                <Input.Password
+                  placeholder="Enter password"
+                  className="rounded-none "
+                />
+              </Form.Item>
+            )}
 
             <Form.Item
               label={<div className="font-semibold">Name (Display Name) </div>}

@@ -9,6 +9,7 @@ import {} from "../register/AssetType/AssetTypeSlice";
 import CommonDivider from "../commonComponents/CommonDivider";
 import CommonTable from "../commonComponents/CommonTable";
 import QRCode from "qrcode.react";
+
 import {
   setAssetInfo,
   setMonitoringListIsUpdated,

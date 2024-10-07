@@ -38,9 +38,13 @@ const VendorRegistrationForm = () => {
       values.user_id = vendorUpdateElSelector.user_id;
     }
 
-    const res = await postData(getFormData(values), URLS.register.path, {
-      version: URLS.register.version,
-    });
+    const res = await postData(
+      getFormData(values),
+      vendorUpdateElSelector ? URLS.editUser.path : URLS.register.path,
+      {
+        version: URLS.register.version,
+      }
+    );
 
     if (res) {
       setLoading(false);
@@ -127,8 +131,6 @@ const VendorRegistrationForm = () => {
             >
               <Input placeholder="Enter email" className="rounded-none" />
             </Form.Item>
-
-          
 
             <CountryStateCity
               form={form}

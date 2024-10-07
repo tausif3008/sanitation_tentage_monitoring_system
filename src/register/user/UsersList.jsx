@@ -122,7 +122,8 @@ const UserList = () => {
 
     const extraHeaders = { "x-api-version": URLS.users.version };
     const res = await getData(uri, extraHeaders);
-
+  
+    
     if (res) {
       const data = res.data;
       setLoading(false);

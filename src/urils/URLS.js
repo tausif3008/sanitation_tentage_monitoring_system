@@ -1,7 +1,8 @@
 const URLS = {
   baseUrl: "https://kumbhtsmonitoring.in/php-api",
   // user
-  register: { path: "/users/entry", version: "5.43" },
+  register: { path: "/users/new", version: "5.43" },
+  editUser: { path: "/users/edit", version: "5.43" },
   users: { path: "/users", version: "5.43" },
   country: { path: "/country", version: 5.43 },
   state: { path: "/state", version: 5.43 }, // ?country_id=1
