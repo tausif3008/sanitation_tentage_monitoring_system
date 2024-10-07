@@ -9,6 +9,8 @@ import URLS from "../../urils/URLS";
 import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setUpdateUserEl, setUserListIsUpdated } from "./userSlice";
+import CommonSearchForm from "../../commonComponents/CommonSearchForm";
+import UserTypeDropDown from "./UserTypeDropDown";
 
 const getVal = (val) => {
   if (val === "undefined" || val === null) {
@@ -38,6 +40,7 @@ const columns = [
     title: "Email",
     dataIndex: "email",
     key: "email",
+    width: 250,
   },
   {
     title: "Country",
@@ -77,6 +80,7 @@ const columns = [
     dataIndex: "action",
     key: "action",
     fixed: "right",
+    width: 80,
   },
 ];
 
@@ -98,19 +102,28 @@ const UserList = () => {
 
   const params = useParams();
 
+  const [searchQuery, setSearchQuery] = useState();
+
   const getUsers = async () => {
     setLoading(true);
 
     let uri = URLS.users.path + "/?";
     if (params.page) {
       uri = uri + params.page;
-    } else if (params.per_page) {
+    }
+
+    if (params.per_page) {
       uri = uri + "&" + params.per_page;
+    }
+
+    if (searchQuery) {
+      uri = uri + searchQuery;
     }
 
     const extraHeaders = { "x-api-version": URLS.users.version };
     const res = await getData(uri, extraHeaders);
-
+  
+    
     if (res) {
       const data = res.data;
       setLoading(false);
@@ -149,35 +162,53 @@ const UserList = () => {
     if (isUpdatedSelector) {
       dispatch(setUserListIsUpdated({ isUpdated: false }));
     }
-  }, [params, isUpdatedSelector]);
+  }, [params, isUpdatedSelector, searchQuery]);
 
   useEffect(() => {
     dispatch(setUpdateUserEl({ updateElement: null }));
   }, []);
 
+  const [form, setForm] = useState();
+
   return (
     <div className="">
-      <>
-        <CommonDivider
-          label={"User List"}
-          compo={
-            <Button
-              onClick={() => navigate("/user-registration")}
-              className="bg-orange-300 mb-1"
-            >
-              Add User
-            </Button>
-          }
-        ></CommonDivider>
-
-        <CommonTable
-          loading={loading}
-          uri={"users"}
-          columns={columns}
-          details={userDetails}
-          setUserDetails={setUserDetails}
-        ></CommonTable>
-      </>
+      <CommonDivider
+        label={"User List"}
+        compo={
+          <Button
+            onClick={() => navigate("/user-registration")}
+            className="bg-orange-300 mb-1"
+          >
+            Add User
+          </Button>
+        }
+      ></CommonDivider>
+      <CommonSearchForm
+        setForm={setForm}
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+        fields={[
+          { name: "name", label: "Name" },
+          { name: "email", label: "Email" },
+          { name: "phone", label: "Phone" },
+          { name: "company", label: " Company" },
+        ]}
+        dropdown={
+          <UserTypeDropDown
+            required={false}
+            form={form}
+            showLabel // means not visible
+          ></UserTypeDropDown>
+        }
+      ></CommonSearchForm>
+      <div className="h-3"></div>
+      <CommonTable
+        loading={loading}
+        uri={"users"}
+        columns={columns}
+        details={userDetails}
+        setUserDetails={setUserDetails}
+      ></CommonTable>
     </div>
   );
 };

@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Divider,
-  Upload,
-  message,
-  Modal,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Select, Divider, message, Modal } from "antd";
+import optionsMaker from "../../urils/OptionMaker";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,56 +14,8 @@ const AssetRegistrationForm = () => {
   const [vendors, setVendors] = useState([]); // State for vendors
 
   useEffect(() => {
-    // Fetch the vendor list on component mount
-    const fetchVendors = async () => {
-      try {
-        const response = await fetch(
-          "https://kumbhtsmonitoring.in/php-api/users?user_type_id=8",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key": "YunHu873jHds83hRujGJKd873",
-              "x-api-version": "1.0.1",
-              "x-platform": "Web",
-              "x-access-token": localStorage.getItem("sessionToken") || "",
-            },
-          }
-        );
-
-        const result = await response.json();
-
-        if (
-          response.ok &&
-          result.data &&
-          result.data.users &&
-          Array.isArray(result.data.users)
-        ) {
-          setVendors(result.data.users); // Set vendors to state
-        } else {
-          message.error("Failed to fetch vendors.");
-        }
-      } catch (error) {
-        message.error("Error fetching vendors: " + error.message);
-      }
-    };
-
-    fetchVendors();
+    optionsMaker("vendors", "users", "name", setVendors, "", "user_id");
   }, []);
-
-  const handleChange = ({ fileList }) => {
-    if (fileList.length > 0 && fileList[0].originFileObj) {
-      const file = fileList[0].originFileObj;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64String = reader.result;
-        setPreviewImage(base64String);
-      };
-    } else {
-      setPreviewImage(null);
-    }
-  };
 
   const onAssetTypeChange = (value) => {
     let subTypeOptions = [];
@@ -97,13 +40,11 @@ const AssetRegistrationForm = () => {
   };
 
   const onFinish = async (values) => {
-    // Ensure vendor_id is included
     const vendor = vendors.find((v) => v.name === values.vendor);
     if (vendor) {
       values.vendor_id = vendor.id;
     }
 
-    // Remove assetSubType from the payload
     delete values.assetSubType;
 
     try {
@@ -142,16 +83,8 @@ const AssetRegistrationForm = () => {
         <div className="text-xs">All * marked fields are mandatory</div>
       </div>
       <Divider className="bg-d9 h-2/3 mt-1"></Divider>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        initialValues={{
-          assetType: "Toilets & Sanitation",
-          vendor: "Vendor 1",
-        }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
+      <Form form={form} layout="vertical" onFinish={onFinish}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 mb-3">
           <Form.Item
             label={<div className="font-semibold">Assets Name</div>}
             name="name"
@@ -167,15 +100,13 @@ const AssetRegistrationForm = () => {
             className="mb-4"
           >
             <Select placeholder="Select Vendor" className="rounded-none">
-              {vendors.map((vendor) => (
-                <Option key={vendor.id} value={vendor.name}>
-                  {vendor.name}
+              {vendors.map((ven) => (
+                <Option key={ven.value} value={ven.value}>
+                  {ven.label}
                 </Option>
               ))}
             </Select>
           </Form.Item>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Asset Type</div>}
             name="asset_type_id"
@@ -212,42 +143,25 @@ const AssetRegistrationForm = () => {
               ))}
             </Select>
           </Form.Item>
-        </div>
-        <div className="grid grid-cols-1 gap-x-5">
           <Form.Item
             label={<div className="font-semibold">Description</div>}
             name="description"
             rules={[{ required: true, message: "Please enter a Description" }]}
             className="mb-4"
           >
-            <TextArea rows={2} placeholder="Enter Asset Description" />
+            <Input rows={1} placeholder="Enter Asset Description" />
           </Form.Item>
-        </div>
-        {/* <div className="grid grid-cols-1 gap-x-5">
-          <Form.Item
-            name="photo"
-            label="Photo of Asset"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => e.fileList}
-          >
-            <Upload
-              onChange={handleChange}
-              beforeUpload={() => false} // Prevent automatic upload
-            >
-              <Button icon={<UploadOutlined />}>Upload Photo</Button>
-            </Upload>
-          </Form.Item>
-        </div> */}
-        <div className="flex justify-end">
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="w-fit rounded-none bg-5c"
-            >
-              Register
-            </Button>
-          </Form.Item>
+          <div className=" w-full flex justify-end items-end">
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-fit rounded-none bg-5c"
+              >
+                Register
+              </Button>
+            </Form.Item>
+          </div>
         </div>
       </Form>
 

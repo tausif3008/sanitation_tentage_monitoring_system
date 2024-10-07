@@ -6,6 +6,7 @@ import vendorDetailsSlice from "./../register/vendor/VendorDetails/vendorDetails
 import userSlice from "./../register/user/userSlice";
 import questionSlice from "./../register/questions/questionSlice";
 import monitoringSlice from "./../complaince/monitoringSlice";
+import assetsSlice from "./../register/asset/AssetsSlice";
 
 const rootReducer = combineReducers({
   assetTypeUpdateEl: assetTypeSlice,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   userSlice: userSlice,
   questionSlice: questionSlice,
   monitoringSlice: monitoringSlice,
+  assetsSlice: assetsSlice,
 });
 
 export default rootReducer;

@@ -31,14 +31,22 @@ const AssetTypeList = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState();
+
   const getDetails = async () => {
     setLoading(true);
 
     let uri = URLS.assetTypes.path + "/?";
     if (params.page) {
       uri = uri + params.page;
-    } else if (params.per_page) {
+    }
+
+    if (params.per_page) {
       uri = uri + "&" + params.per_page;
+    }
+
+    if (searchQuery) {
+      uri = uri + searchQuery;
     }
 
     const extraHeaders = { "x-api-version": URLS.assetTypes.version };
@@ -106,7 +114,7 @@ const AssetTypeList = () => {
     if (isUpdatedSelector) {
       dispatch(setAssetTypeListIsUpdated({ isUpdated: false }));
     }
-  }, [params, isUpdatedSelector]);
+  }, [params, isUpdatedSelector, searchQuery]);
 
   const showModal = async (assetTypeId) => {
     setSelectedAssetType(assetTypeId);
@@ -126,19 +134,22 @@ const AssetTypeList = () => {
       key: "asset_main_type",
     },
     {
-      title: "Name", // Asset name
+      title: "Asset Type", // Asset name
       dataIndex: "name",
       key: "name",
+      width: 250,
+    },
+
+    {
+      title: "Total Quantity", // Total quantity
+      dataIndex: "total_quantity",
+      key: "total_quantity",
     },
     {
       title: "Description", // Asset description
       dataIndex: "description",
       key: "description",
-    },
-    {
-      title: "Total Quantity", // Total quantity
-      dataIndex: "total_quantity",
-      key: "total_quantity",
+      width: 300,
     },
     {
       title: "Questions", // Number of questions
@@ -154,6 +165,8 @@ const AssetTypeList = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      fixed: "right",
+      width: 100,
     },
   ];
 
@@ -163,59 +176,81 @@ const AssetTypeList = () => {
 
   return (
     <div className="">
-      <>
-        <CommonDivider
-          label={"Asset Type List"}
-          compo={
-            <Button
-              className="bg-orange-300 mb-1"
-              onClick={() => {
-                navigate("/asset-type-registration");
-              }}
-            >
-              Add Asset Type
-            </Button>
-          }
-        ></CommonDivider>
-        <CommonTable
-          columns={columns}
-          uri={"asset-type-list"}
-          details={details}
-          loading={loading}
-          scroll={{ x: 800, y: 400 }}
-        ></CommonTable>
-        <Modal
-          title={`Questions for Asset Type ID: ${selectedAssetType}`}
-          visible={isModalVisible}
-          onCancel={handleCancel}
-          footer={null}
-          width={800} // Adjust width if necessary
-        >
-          {questions?.list?.length > 0 ? (
-            <Table
-              bordered
-              dataSource={questions.list}
-              rowKey="question_id"
-              pagination={false}
-              scroll={{ x: 800, y: 400 }}
-              columns={[
-                {
-                  title: "Question (EN)",
-                  dataIndex: "question_en",
-                  key: "question_en",
-                },
-                {
-                  title: "Question (HI)",
-                  dataIndex: "question_hi",
-                  key: "question_hi",
-                },
-              ]}
-            />
-          ) : (
-            <p>No questions found for this asset type.</p>
-          )}
-        </Modal>
-      </>
+      <CommonDivider
+        label={"Asset Type List"}
+        compo={
+          <Button
+            className="bg-orange-300 mb-1"
+            onClick={() => {
+              navigate("/asset-type-registration");
+            }}
+          >
+            Add Asset Type
+          </Button>
+        }
+      ></CommonDivider>
+
+      <CommonSearchForm
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+        fields={[{ name: "name", label: "Asset Type" }]}
+        dropFields={[
+          {
+            name: "asset_main_type_id",
+            label: "Main Asset Type",
+            options: [
+              {
+                label: "Sanitation",
+                value: "1",
+              },
+              {
+                label: "Tentage",
+                value: "2",
+              },
+            ],
+          },
+        ]}
+      ></CommonSearchForm>
+      <div className="h-3"></div>
+      <CommonTable
+        columns={columns}
+        uri={"asset-type-list"}
+        details={details}
+        loading={loading}
+        scroll={{ x: 1200, y: 400 }}
+      ></CommonTable>
+
+      <Modal
+        title={`Questions for Asset Type ID: ${selectedAssetType}`}
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+        width={800}
+      >
+        {questions?.list?.length > 0 ? (
+          <Table
+            bordered
+            dataSource={questions.list}
+            rowKey="question_id"
+            pagination={false}
+            scroll={{ x: 800, y: 400 }}
+            columns={[
+              {
+                title: "Question (EN)",
+                dataIndex: "question_en",
+                key: "question_en",
+              },
+              {
+                title: "Question (HI)",
+                dataIndex: "question_hi",
+                key: "question_hi",
+              },
+            ]}
+          />
+        ) : (
+          <p>No questions found for this asset type.</p>
+        )}
+      </Modal>
     </div>
   );
 };

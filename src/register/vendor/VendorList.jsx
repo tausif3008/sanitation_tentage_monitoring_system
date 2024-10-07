@@ -15,6 +15,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+    width: 150,
   },
   {
     title: "Email",
@@ -27,36 +28,42 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
+    width: 110,
   },
   {
     title: "Company",
     dataIndex: "company",
     key: "company",
+    width: 150,
   },
   {
     title: "Code",
     dataIndex: "code",
     key: "code",
+    width: 160,
   },
-  {
-    title: "Pin",
-    dataIndex: "pin",
-    key: "pin",
-  },
+  // {
+  //   title: "Pin",
+  //   dataIndex: "pin",
+  //   key: "pin",
+  // },
   {
     title: "Country",
     dataIndex: "country_name",
     key: "country_name",
+    width: 100,
   },
   {
     title: "State",
     dataIndex: "state_name",
     key: "state_name",
+    width: 120,
   },
   {
     title: "City",
     dataIndex: "city_name",
     key: "city_name",
+    width: 120,
   },
   {
     title: "Address",

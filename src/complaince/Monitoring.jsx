@@ -9,6 +9,7 @@ import {} from "../register/AssetType/AssetTypeSlice";
 import CommonDivider from "../commonComponents/CommonDivider";
 import CommonTable from "../commonComponents/CommonTable";
 import QRCode from "qrcode.react";
+
 import {
   setAssetInfo,
   setMonitoringListIsUpdated,
@@ -58,18 +59,6 @@ const Monitoring = () => {
       const list = data.listings.map((el, index) => {
         return {
           ...el,
-          action: (
-            <Button
-              className="bg-blue-100 border-blue-500 focus:ring-blue-500 hover:bg-blue-200 rounded-full "
-              key={el.name + index}
-              onClick={() => {
-                dispatch(setUpdateMonitoringEl({ updateElement: el }));
-                navigate("/add-update-monitoring");
-              }}
-            >
-              <EditOutlined></EditOutlined>
-            </Button>
-          ),
         };
       });
 
@@ -159,15 +148,14 @@ const Monitoring = () => {
       render: (text, record) => (
         <div className="flex gap-2">
           <div
-            type="link"
             className="text-blue-500 cursor-pointer"
             onClick={() => showQrCode(record)}
           >
             QR
           </div>
+
           <div
             className="text-blue-500 cursor-pointer"
-            type="link"
             onClick={() => dispatch(setAssetInfo(record))}
           >
             Monitoring
@@ -191,7 +179,6 @@ const Monitoring = () => {
         //     Add Monitoring
         //   </Button>
         // }
-        
       ></CommonDivider>
       <CommonTable
         columns={columns}
@@ -203,7 +190,7 @@ const Monitoring = () => {
       <Modal
         width={300}
         title="QR Code"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >

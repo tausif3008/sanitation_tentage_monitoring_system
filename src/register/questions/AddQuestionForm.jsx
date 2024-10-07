@@ -1,13 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Select, Divider } from "antd";
-import CountryStateCity from "../../commonComponents/CountryStateCity";
-import optionsMaker from "../../urils/OptionMaker";
-import { getData, postData } from "../../Fetch/Axios";
+import { postData } from "../../Fetch/Axios";
 import URLS from "../../urils/URLS";
 import { getFormData } from "../../urils/getFormData";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router";
-import { QuestionContext } from "./QuestionContext";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestionListIsUpdated } from "./questionSlice";
 

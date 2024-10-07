@@ -1,7 +1,8 @@
 const URLS = {
   baseUrl: "https://kumbhtsmonitoring.in/php-api",
   // user
-  register: { path: "/users/entry", version: "5.43" },
+  register: { path: "/users/new", version: "5.43" },
+  editUser: { path: "/users/edit", version: "5.43" },
   users: { path: "/users", version: "5.43" },
   country: { path: "/country", version: 5.43 },
   state: { path: "/state", version: 5.43 }, // ?country_id=1
@@ -16,6 +17,10 @@ const URLS = {
   vendorDetails: { path: "/user-details?user_id=", version: "5.43" },
   addVendorDetails: { path: "/user-details/entry", version: "5.43" },
   vendorAsset: { path: "/asset-types", version: 5.43 },
+  assetMainTypePerPage: {
+    path: "/asset-main-types?per_page=100",
+    version: 5.43,
+  },
 
   // questions
   questions: { path: "/questions", version: "5.43" },
@@ -29,6 +34,9 @@ const URLS = {
   // monitoring
   asset: { path: "/asset", version: 5.43 },
   monitoringDetails: { path: "/monitoring/details?id=", version: 5.43 },
+
+  // asset
+  assetList: { path: "/asset", version: 5.43 },
 };
 
 export default URLS;

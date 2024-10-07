@@ -9,6 +9,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserListIsUpdated } from "./userSlice";
+import UserTypeDropDown from "./UserTypeDropDown";
 
 const UserRegistrationForm = () => {
   const [form] = Form.useForm();
@@ -36,9 +37,13 @@ const UserRegistrationForm = () => {
       values.user_id = userUpdateElSelector.user_id;
     }
 
-    const res = await postData(getFormData(values), URLS.register.path, {
-      version: URLS.register.version,
-    });
+    const res = await postData(
+      getFormData(values),
+      userUpdateElSelector ? URLS.editUser.path : URLS.register.path,
+      {
+        version: URLS.register.version,
+      }
+    );
 
     if (res) {
       setLoading(false);
@@ -98,18 +103,7 @@ const UserRegistrationForm = () => {
           initialValues={{ company: "KASH IT SOLUTION" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-            <Form.Item
-              name="user_type_id"
-              label={<div className="font-semibold">Select User Type</div>}
-              rules={[{ required: true, message: "Please select User Type" }]}
-              className="mb-4"
-            >
-              <Select
-                placeholder="Select a User Type"
-                className="rounded-none"
-                options={userTypes}
-              ></Select>
-            </Form.Item>
+            <UserTypeDropDown form={form}></UserTypeDropDown>
 
             <Form.Item
               label={
@@ -131,23 +125,25 @@ const UserRegistrationForm = () => {
               />
             </Form.Item>
 
-            <Form.Item
-              label={<div className="font-semibold">Password</div>}
-              name="password"
-              rules={[
-                { required: true, message: "Please enter the password" },
-                {
-                  min: 6,
-                  message: "Password must be at least 6 characters long",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input.Password
-                placeholder="Enter password"
-                className="rounded-none "
-              />
-            </Form.Item>
+            {!userUpdateElSelector && (
+              <Form.Item
+                label={<div className="font-semibold">Password</div>}
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter the password" },
+                  {
+                    min: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                ]}
+                className="mb-4"
+              >
+                <Input.Password
+                  placeholder="Enter password"
+                  className="rounded-none "
+                />
+              </Form.Item>
+            )}
 
             <Form.Item
               label={<div className="font-semibold">Name (Display Name) </div>}

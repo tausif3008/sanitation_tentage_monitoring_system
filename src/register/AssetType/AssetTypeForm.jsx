@@ -12,8 +12,8 @@ const AssetTypeForm = () => {
   const { Option } = Select;
 
   const assetMainTypes = [
-    { value: "Sanitation", label: "Sanitation" },
-    { value: "Tentage", label: "Tentage" },
+    { value: "1", label: "Sanitation" },
+    { value: "2", label: "Tentage" },
   ];
 
   const [form] = Form.useForm();
@@ -84,7 +84,7 @@ const AssetTypeForm = () => {
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 mb-3">
             <Form.Item
-              name="asset_main_type"
+              name="asset_main_type_id"
               label={<div className="font-semibold">Asset Main Type</div>}
               rules={[
                 { required: true, message: "Please select an asset main type" },
