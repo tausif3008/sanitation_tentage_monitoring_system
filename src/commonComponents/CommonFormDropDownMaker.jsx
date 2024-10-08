@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import optionsMaker from "../urils/OptionMaker";
 
 const CommonFormDropDownMaker = ({
+  show = true,
+  setSectors,
   mode = "single",
   selectLabel,
   selectName,
@@ -15,6 +17,12 @@ const CommonFormDropDownMaker = ({
 }) => {
   const [options, setOptions] = useState([]);
 
+  // useEffect(() => {
+  //   if (options.length) {
+  //     setSectors(() => options);
+  //   }
+  // }, [options, setSectors]);
+
   useEffect(() => {
     optionsMaker(
       uri,
@@ -26,7 +34,7 @@ const CommonFormDropDownMaker = ({
     );
   }, []);
 
-  return (
+  return show ? (
     <Form.Item
       label={<div className="font-semibold">{selectLabel}</div>}
       name={selectName}
@@ -41,6 +49,8 @@ const CommonFormDropDownMaker = ({
         ))}
       </Select>
     </Form.Item>
+  ) : (
+    ""
   );
 };
 

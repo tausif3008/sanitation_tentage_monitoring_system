@@ -7,17 +7,27 @@ import {
   Divider,
   DatePicker,
   message,
+  Space,
+  InputNumber,
 } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { postData } from "../../../Fetch/Axios";
 import URLS from "../../../urils/URLS";
 import { getFormData } from "../../../urils/getFormData";
 import optionsMaker from "../../../urils/OptionMaker";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setVendorDetailsListIsUpdated } from "./vendorDetailsSlice";
+import {
+  setSectorQuant,
+  setVendorDetailsListIsUpdated,
+} from "./vendorDetailsSlice";
 import dayjs from "dayjs";
 import CommonFormDropDownMaker from "../../../commonComponents/CommonFormDropDownMaker";
+import SectorsField from "./SectorsField";
 
 const { Option } = Select;
 
@@ -33,10 +43,10 @@ const VendorDetailsForm = () => {
     (state) => state.vendorDetailsSlice?.vendorDetailsUpdateEl
   );
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Prepopulate form if editing vendor details
+
   useEffect(() => {
     if (vendorDetailsUpdateElSelector) {
       const updatedDetails = { ...vendorDetailsUpdateElSelector };
@@ -65,6 +75,47 @@ const VendorDetailsForm = () => {
     );
   }, []);
 
+  const [quantity, setQuantity] = useState(0);
+
+  const handelQuantitySector = () => {
+    const vals = form.getFieldsValue();
+
+    const selected = [];
+    selected.push(vals.sector);
+
+    if (vals?.sector_info) {
+      for (const key of vals?.sector_info) {
+        if (key?.sector) {
+          if (selected.includes(key.sector)) {
+            message.info("Sector Already Selected!");
+          } else {
+            selected.push(key.sector);
+          }
+        }
+      }
+    }
+  };
+
+  const dispatch = useDispatch();
+
+  const handelQuantity = () => {
+    const vals = form.getFieldsValue();
+
+    let total = 0;
+
+    total = vals.quantity;
+
+    if (vals?.sector_info) {
+      for (const key of vals?.sector_info) {
+        if (key?.quantity) total = total + key?.quantity;
+      }
+    }
+
+    setQuantity(() => {
+      return total;
+    });
+  };
+
   const onFinish = async (values) => {
     setLoading(true);
 
@@ -82,6 +133,40 @@ const VendorDetailsForm = () => {
       values.vendor_detail_id = vendorDetailsUpdateElSelector.vendor_detail_id;
     }
 
+    const vals = form.getFieldsValue();
+
+    const selectedSectors = [];
+    const quantities = [];
+
+    selectedSectors.push(vals.sector);
+    quantities.push(vals.quantity);
+
+    selectedSectors.push(vals.sector);
+
+    if (vals?.sector_info) {
+      for (const key of vals?.sector_info) {
+        if (key?.sector) {
+          if (selectedSectors.includes(key.sector)) {
+            for (const key1 of sectorOptions) {
+              if (key1?.value == key?.sector) {
+                message.error(key1.label + " Found duplicate");
+                return;
+              }
+            }
+          } else {
+            selectedSectors.push(key.sector);
+            quantities.push(key.quantity);
+          }
+        }
+      }
+    }
+
+    values.proposed_sectors_quantity = quantities.join(",");
+    values.proposed_sectors_id = selectedSectors.join(",");
+    values.total_allotted_quantity = quantity;
+
+    delete values["sector_info"];
+
     const res = await postData(
       getFormData(values),
       vendorDetailsUpdateElSelector
@@ -94,6 +179,7 @@ const VendorDetailsForm = () => {
 
     if (res) {
       setLoading(false);
+
       if (res.data.success) {
         form.resetFields();
         dispatch(setVendorDetailsListIsUpdated({ isUpdated: true }));
@@ -111,6 +197,19 @@ const VendorDetailsForm = () => {
       navigate("/vendor");
     }
   }, [params, navigate]);
+
+  const [sectorOptions, setSectorOptions] = useState([]);
+
+  useEffect(() => {
+    optionsMaker(
+      "sectors",
+      "sectors",
+      "name",
+      setSectorOptions,
+      "",
+      "sector_id"
+    );
+  }, []);
 
   return (
     <div className="mt-3">
@@ -143,23 +242,23 @@ const VendorDetailsForm = () => {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ company: "   KASH IT SOLUTION" }}
+          initialValues={{ company: "KASH IT SOLUTION" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             {/* <Form.Item
-              label={<div className="font-semibold">Asset Main Type</div>}
-              name="main_type"
-              rules={[{ required: true, message: "Please enter main type" }]}
-              className="mb-4"
-            >
-              <Select
-                placeholder="Select a option and change input text above"
-                allowClear
+                label={<div className="font-semibold">Asset Main Type</div>}
+                name="main_type"
+                rules={[{ required: true, message: "Please enter main type" }]}
+                className="mb-4"
               >
-                <Option value="Sanitation">Sanitation</Option>
-                <Option value="Tentage">Tentage</Option>
-              </Select>
-            </Form.Item> */}
+                <Select
+                  placeholder="Select a option and change input text above"
+                  allowClear
+                >
+                  <Option value="Sanitation">Sanitation</Option>
+                  <Option value="Tentage">Tentage</Option>
+                </Select>
+              </Form.Item> */}
 
             <CommonFormDropDownMaker
               uri={"assetMainTypePerPage"}
@@ -171,7 +270,6 @@ const VendorDetailsForm = () => {
               required={true}
               RequiredMessage={"Main type is required!"}
             ></CommonFormDropDownMaker>
-
             <Form.Item
               label={<div className="font-semibold">Asset Type</div>}
               name="asset_type_id"
@@ -191,7 +289,6 @@ const VendorDetailsForm = () => {
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item
               label={<div className="font-semibold">Contract Number</div>}
               name="contract_number"
@@ -205,7 +302,6 @@ const VendorDetailsForm = () => {
                 className="rounded-none"
               />
             </Form.Item>
-
             <Form.Item
               label={<div className="font-semibold">Manager Contact 1</div>}
               name="manager_contact_1"
@@ -233,7 +329,6 @@ const VendorDetailsForm = () => {
                 className="rounded-none"
               />
             </Form.Item>
-
             <Form.Item
               label={<div className="font-semibold">Work Order Number</div>}
               name="work_order_number"
@@ -260,42 +355,134 @@ const VendorDetailsForm = () => {
                 className="w-full"
               />
             </Form.Item>
-            <Form.Item
-              label={
-                <div className="font-semibold">Total Allotted Quantity</div>
-              }
-              name="total_allotted_quantity"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter total allotted quantity",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input
-                placeholder="Enter total allotted quantity"
-                className="rounded-none"
-              />
-            </Form.Item>
 
-            <CommonFormDropDownMaker
-              uri={"sectors"}
-              responseListName="sectors"
-              responseLabelName="name"
-              responseIdName="sector_id"
-              selectLabel={"Proposed Sectors"}
-              selectName={"proposed_sectors"}
-              required={true}
-              RequiredMessage={"Please enter proposed sectors!"}
-              mode={"multiple"}
-            ></CommonFormDropDownMaker>
+            <div className="col-span-3 font-semibold ">
+              Total Alloted Quantity: {quantity}
+            </div>
+
+            <div className="col-span-3 grid grid-cols-3 justify-start items-start gap-3 mt-3 mb-2">
+              <Form.Item
+                label="Sector"
+                name="sector"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select sector!",
+                  },
+                ]}
+              >
+                <Select
+                  onChange={handelQuantitySector}
+                  placeholder="Select a sector"
+                >
+                  {sectorOptions.map((option) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Quantity"
+                name="quantity"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select quantity!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  onInput={handelQuantity}
+                  className="w-full"
+                  placeholder="Quantity"
+                />
+              </Form.Item>
+            </div>
+            <div></div>
           </div>
+
+          <Form.List name="sector_info">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div
+                    className="grid grid-cols-3 justify-start items-start gap-3 mt-3 mb-2"
+                    key={key}
+                  >
+                    <div className="w-full ">
+                      <Form.Item
+                        {...restField}
+                        name={[name, "sector"]}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select sector!",
+                          },
+                        ]}
+                      >
+                        <Select
+                          placeholder="Select a sector"
+                          onChange={handelQuantitySector}
+                        >
+                          {sectorOptions.map((option) => (
+                            <Option key={option.value} value={option.value}>
+                              {option.label}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </div>
+
+                    <div className="">
+                      <Form.Item
+                        {...restField}
+                        name={[name, "quantity"]}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter quantity!",
+                          },
+                        ]}
+                      >
+                        <InputNumber
+                          onInput={handelQuantity}
+                          className="w-full"
+                          placeholder="Enter quantity"
+                        />
+                      </Form.Item>
+                    </div>
+
+                    <div className="flex ">
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          remove(name);
+                          handelQuantity();
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Add Sector
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
 
           <div className="flex justify-end">
             <Form.Item>
               <Button
-                loading={loading}
+                // loading={loading}
                 type="primary"
                 htmlType="submit"
                 className="w-fit rounded-none bg-5c"

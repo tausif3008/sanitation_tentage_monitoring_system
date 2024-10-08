@@ -5,6 +5,7 @@ const vendorDetailsSlice = createSlice({
   initialState: {
     vendorDetailsUpdateEl: null,
     isUpdated: false,
+    sectorQuant: [1],
   },
   reducers: {
     setUpdateVendorDetailsEl: (state, action) => {
@@ -14,9 +15,21 @@ const vendorDetailsSlice = createSlice({
     setVendorDetailsListIsUpdated: (state, action) => {
       state.isUpdated = action.payload.isUpdated;
     },
+
+    setSectorQuant: (state, action) => {
+      state.sectorQuant = action.payload;
+    },
+
+    addSectorQuant: (state, action) => {
+      state.sectorQuant = [...state.sectorQuant, ...action.payload];
+    },
   },
 });
 
-export const { setUpdateVendorDetailsEl, setVendorDetailsListIsUpdated } =
-  vendorDetailsSlice.actions;
+export const {
+  setUpdateVendorDetailsEl,
+  setVendorDetailsListIsUpdated,
+  setSectorQuant,
+  addSectorQuant,
+} = vendorDetailsSlice.actions;
 export default vendorDetailsSlice.reducer;

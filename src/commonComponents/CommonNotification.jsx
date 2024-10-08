@@ -10,7 +10,7 @@ const CommonNotification = ({ label, desc, type = "success" }) => {
       description: desc,
     });
   };
-
+  
   useEffect(() => {
     if (label && desc) {
       openNotificationWithIcon(type);
