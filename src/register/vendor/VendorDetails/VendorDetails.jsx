@@ -60,13 +60,13 @@ const columns = [
     dataIndex: "proposed_sectors",
     key: "proposed_sectors",
   },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    fixed: "right",
-    width: 80,
-  },
+  // {
+  //   title: "Action",
+  //   dataIndex: "action",
+  //   key: "action",
+  //   fixed: "right",
+  //   width: 80,
+  // },o
 ];
 
 const VendorDetails = () => {
