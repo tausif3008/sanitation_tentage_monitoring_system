@@ -8,7 +8,6 @@ import CountryStateCity from "../../commonComponents/CountryStateCity";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setVendorListIsUpdated } from "./vendorSlice";
-
 const { TextArea } = Input;
 
 const VendorRegistrationForm = () => {
@@ -156,23 +155,26 @@ const VendorRegistrationForm = () => {
             >
               <Input placeholder="Company Name" className="rounded-none" />
             </Form.Item>
-            <Form.Item
-              label={<div className="font-semibold">Password</div>}
-              name="password"
-              rules={[
-                { required: true, message: "Please enter the password" },
-                {
-                  min: 7,
-                  message: "Password must be at least 6 characters long",
-                },
-              ]}
-              className="mb-4"
-            >
-              <Input.Password
-                placeholder="Enter password"
-                className="rounded-none"
-              />
-            </Form.Item>
+
+            {!vendorUpdateElSelector && (
+              <Form.Item
+                label={<div className="font-semibold">Password</div>}
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter the password" },
+                  {
+                    min: 7,
+                    message: "Password must be at least 6 characters long",
+                  },
+                ]}
+                className="mb-4"
+              >
+                <Input.Password
+                  placeholder="Enter password"
+                  className="rounded-none"
+                />
+              </Form.Item>
+            )}
           </div>
 
           <div className="flex justify-end">

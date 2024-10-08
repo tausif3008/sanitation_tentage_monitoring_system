@@ -46,6 +46,9 @@ const VendorDetailsForm = () => {
         updatedDetails.date_of_allocation
       );
 
+      updatedDetails.proposed_sectors =
+        updatedDetails.proposed_sectors.split(",");
+
       form.setFieldsValue(updatedDetails);
     }
   }, [vendorDetailsUpdateElSelector, form]);
@@ -76,12 +79,14 @@ const VendorDetailsForm = () => {
     }
 
     if (vendorDetailsUpdateElSelector) {
-      values.user_detail_id = vendorDetailsUpdateElSelector.user_detail_id;
+      values.vendor_detail_id = vendorDetailsUpdateElSelector.vendor_detail_id;
     }
 
     const res = await postData(
       getFormData(values),
-      URLS.addVendorDetails.path,
+      vendorDetailsUpdateElSelector
+        ? URLS.editVendorDetails.path
+        : URLS.addVendorDetails.path,
       {
         version: URLS.addVendorDetails.version,
       }
@@ -273,19 +278,18 @@ const VendorDetailsForm = () => {
                 className="rounded-none"
               />
             </Form.Item>
-            <Form.Item
-              label={<div className="font-semibold">Proposed Sectors</div>}
-              name="proposed_sectors"
-              rules={[
-                { required: true, message: "Please enter proposed sectors" },
-              ]}
-              className="mb-4"
-            >
-              <Input
-                placeholder="Enter proposed sectors"
-                className="rounded-none"
-              />
-            </Form.Item>
+
+            <CommonFormDropDownMaker
+              uri={"sectors"}
+              responseListName="sectors"
+              responseLabelName="name"
+              responseIdName="sector_id"
+              selectLabel={"Proposed Sectors"}
+              selectName={"proposed_sectors"}
+              required={true}
+              RequiredMessage={"Please enter proposed sectors!"}
+              mode={"multiple"}
+            ></CommonFormDropDownMaker>
           </div>
 
           <div className="flex justify-end">

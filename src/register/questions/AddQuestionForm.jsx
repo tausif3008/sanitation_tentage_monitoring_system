@@ -34,9 +34,15 @@ const UserRegistrationForm = () => {
       values.question_id = questionUpdateElSelector.question_id;
     }
 
-    const res = await postData(getFormData(values), URLS.questionsEntry.path, {
-      version: URLS.register.version,
-    });
+    const res = await postData(
+      getFormData(values),
+      questionUpdateElSelector
+        ? URLS.editQuestionsEntry.path
+        : URLS.questionsEntry.path,
+      {
+        version: URLS.register.version,
+      }
+    );
 
     if (res) {
       setLoading(false);

@@ -78,6 +78,7 @@ const Monitoring = () => {
     if (isUpdatedSelector) {
       dispatch(setMonitoringListIsUpdated({ isUpdated: false }));
     }
+    getData(URLS.monitoringDetails.path + 7);
   }, [params, isUpdatedSelector]);
 
   const handleCancel = () => {
@@ -97,11 +98,6 @@ const Monitoring = () => {
 
   const columns = [
     {
-      title: "Assets Name",
-      dataIndex: "name",
-      key: "assetsName",
-    },
-    {
       title: "Assets Type Name",
       dataIndex: "asset_type_name",
       key: "assetsName",
@@ -114,8 +110,8 @@ const Monitoring = () => {
       key: "assetsCode",
     },
     {
-      title: "Vendor",
-      dataIndex: "vendor",
+      title: "Vendor Name",
+      dataIndex: "vendor_name",
       key: "vendor",
     },
     {
@@ -123,11 +119,6 @@ const Monitoring = () => {
       dataIndex: "vendor_asset_code",
       key: "vendor_asset_code",
       width: 160,
-    },
-    {
-      title: "Unit",
-      dataIndex: "unit",
-      key: "Unit",
     },
     {
       title: "Sector",
