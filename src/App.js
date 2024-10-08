@@ -102,7 +102,7 @@ function App() {
             ></Route>
 
             <Route
-              path="asset-list"
+              path="asset-list/:page?/:per_page?"
               element={<AssetsList></AssetsList>}
             ></Route>
 

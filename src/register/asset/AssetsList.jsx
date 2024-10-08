@@ -194,12 +194,13 @@ const AssetsList = () => {
       ></CommonSearchForm> */}
 
       <div className="h-3"></div>
+
       <CommonTable
         columns={columns}
         uri={"asset-list"}
         details={details}
         loading={loading}
-        scroll={{ x: 1800, y: 400 }}
+        scroll={{ x: 1000, y: 400 }}
       ></CommonTable>
 
       <Modal
