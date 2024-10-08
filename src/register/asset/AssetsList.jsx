@@ -100,30 +100,15 @@ const AssetsList = () => {
 
   const columns = [
     {
-      title: "Asset Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "QR Value",
-      dataIndex: "code",
-      key: "code",
+      title: "Asset Type",
+      dataIndex: "asset_type_name",
+      key: "asset_type_name",
+      width: 220,
     },
     {
       title: "Vendor Asset Code",
       dataIndex: "vendor_asset_code",
       key: "vendor_asset_code",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Asset Type",
-      dataIndex: "asset_type_name",
-      key: "asset_type_name",
-      width: 220,
     },
     {
       title: "Location (Lat, Long)",
@@ -132,18 +117,13 @@ const AssetsList = () => {
       key: "location",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
       title: "QR Code",
       render: (text, record) => (
         <div
-          className="text-blue-500"
+          className="text-blue-500 cursor-pointer"
           onClick={() => handleQRCodeClick(record.qr_code)}
         >
-          View QR Code
+          {record.code ? record.code : "No QR Value"}
         </div>
       ),
       key: "qrCode",
