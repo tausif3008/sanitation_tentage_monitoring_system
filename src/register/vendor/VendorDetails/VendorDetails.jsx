@@ -188,7 +188,12 @@ const VendorDetails = () => {
 
           <div className="w-full">
             <CommonDivider
-              label={"Vendor Details For " + userName}
+              label={
+                <div>
+                  Vendor Details For{" "}
+                  <span className="text-blue-500">{userName}</span>
+                </div>
+              }
               compo={
                 <Button
                   className="bg-orange-300 mb-1"

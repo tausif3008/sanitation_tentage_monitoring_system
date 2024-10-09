@@ -100,7 +100,7 @@ const Monitoring = () => {
       title: "Assets Type Name",
       dataIndex: "asset_type_name",
       key: "assetsName",
-      width: 210,
+      width: 300,
     },
 
     {
@@ -112,6 +112,7 @@ const Monitoring = () => {
       title: "Vendor Name",
       dataIndex: "vendor_name",
       key: "vendor",
+      width: 200,
     },
     {
       title: "Vendor Asset Code",
@@ -124,11 +125,11 @@ const Monitoring = () => {
       dataIndex: "sector",
       key: "assetsName",
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description_",
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description_",
+    // },
     {
       title: "Action",
       key: "action",
@@ -179,7 +180,7 @@ const Monitoring = () => {
         uri={"monitoring"}
         details={details}
         loading={loading}
-        scroll={{ x: 1400, y: 400 }}
+        scroll={{ x: 1000, y: 400 }}
       ></CommonTable>
 
       <Modal

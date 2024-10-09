@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Table, Image, Tag, message } from "antd";
-import { useParams } from "react-router-dom";
+import { Row, Col, Button, Table, Image, Tag, message, Divider } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,10 +11,12 @@ const MonitoringReport = ({ data }) => {
   const [details, setDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [assetDetails, setAssetDetails] = useState({});
 
   const assetInfoSelector = useSelector(
     (state) => state.monitoringSlice?.assetInfo
   );
+
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -37,20 +39,16 @@ const MonitoringReport = ({ data }) => {
 
       setLoading(false);
 
-      // const list = data.listings.map((el, index) => {
-      //   return {
-      //     ...el,
-      //   };
-      // });
+      const list = data?.monitoring[0]?.questions;
+      setDetails(() => list);
 
-      // setDetails(() => {
-      //   return {
-      //     list,
-      //     pageLength: data.paging[0].length,
-      //     currentPage: data.paging[0].currentpage,
-      //     totalRecords: data.paging[0].totalrecords,
-      //   };
-      // });
+      const assetDetails = data.monitoring[0];
+      setAssetDetails({
+        latitude: assetDetails?.latitude,
+        longitude: assetDetails?.longitude,
+        remark: assetDetails?.remark,
+        photo: assetDetails?.photo,
+      });
     }
   };
 
@@ -60,55 +58,111 @@ const MonitoringReport = ({ data }) => {
 
   const dateColumns = [
     {
-      title: "Date/Question",
-      dataIndex: "question",
-      key: "question",
+      title: "Question (EN)",
+      dataIndex: "question_en",
+      key: "question_en",
+      width: 300,
+    },
+    {
+      title: "Question (HI)",
+      dataIndex: "question_hi",
+      key: "question_hi",
+      width: 300,
+    },
+    {
+      title: "SLA",
+      dataIndex: "sla",
+      key: "sla",
+    },
+
+    {
+      title: "image",
+      dataIndex: "image",
+      key: "answer",
+      render: (image) => {
+        console.log("image", image);
+        if (image !== "N") {
+          <Image width={130} src={URLS.baseUrl + image} alt="QR Code" />;
+        } else {
+          return "-";
+        }
+      },
     },
     {
       title: "Answer",
       dataIndex: "answer",
       key: "answer",
-      width: 90,
+      width: 140,
+      render: (answer) => {
+        if (answer === "1") {
+          return (
+            <div className="bg-green-500 p-1 px-3 rounded-md flex w-fit text-xs">
+              Yes
+            </div>
+          );
+        } else if (answer === "0") {
+          return (
+            <div className="bg-orange-500 p-1 px-3 rounded-md flex w-fit text-xs">
+              No
+            </div>
+          );
+        } else {
+          return (
+            <div className="bg-blue-200 p-1 px-3 rounded-md flex w-fit text-xs">
+              Maintenance
+            </div>
+          );
+        }
+      },
     },
     {
-      title: "Date",
-      dataIndex: "dataCreated",
-      key: "question",
-      width: 120,
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: 250,
     },
-    // Assuming you need columns for 12 days, adjust as needed
   ];
 
-  return (
-    <div className="mx-auto p-3 bg-white shadow-md rounded-lg w-full mt-3">
-      <CommonDivider
-        label={"Monitoring Report"}
-        compo={
-          <Button
-            className="mb-2 bg-green-400"
-            // onClick={() => setsetAssetInfo(null)}
-          >
-            <ArrowLeftOutlined></ArrowLeftOutlined> Assets Monitoring Listing
-          </Button>
-        }
-      ></CommonDivider>
+  const navigate = useNavigate();
 
-      <div className="mt-4">
-        <div className="flex gap-3">
-          {details.map((item, index) => (
-            <div span={12} key={index}>
-              <strong>{item.label}:</strong> {item.value}
-            </div>
-          ))}
+  return (
+    <div className="mx-auto px-3 pb-3 bg-white shadow-md rounded-lg w-full mt-3">
+      <div className="flex items-center gap-2 mt-3 font-semibold">
+        <Button
+          className="bg-gray-200 rounded-full w-9 h-9"
+          onClick={() => {
+            navigate("/asset-type-list");
+          }}
+        >
+          <ArrowLeftOutlined></ArrowLeftOutlined>
+        </Button>
+        <div className="text-d9 text-2xl  w-full flex items-end justify-between ">
+          Monitoring Report
+        </div>
+      </div>
+      <Divider className="bg-d9 h-2/3 mt-1"></Divider>
+
+      <div className="mt-3">
+        <div className="flex gap-1 flex-col">
+          <div>
+            Latitude:{" "}
+            <span className="font-semibold">{assetDetails.latitude}</span>
+          </div>
+          <div>
+            Longitude:{" "}
+            <span className="font-semibold">{assetDetails.longitude}</span>
+          </div>
+          <div>
+            Remark: <span className="font-semibold">{assetDetails.remark}</span>
+          </div>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-2 mb-3">
           <div className="flex flex-col text-center font-semibold">
             <span>QR Code</span>
-            {URLS.baseUrl + assetInfoSelector.photo}
             <Image
               width={130}
-              src={URLS.baseUrl + assetInfoSelector.photo}
+              src={URLS.baseUrl + assetDetails?.photo}
               alt="QR Code"
             />
           </div>
@@ -117,15 +171,15 @@ const MonitoringReport = ({ data }) => {
             <Image
               width={125}
               height={125}
-              // src={"http://filemanagement.metaxpay.in:8001" + data.img}
+              src={URLS.baseUrl + assetDetails?.photo}
             ></Image>
           </div>
         </div>
         <Table
           columns={dateColumns}
-          dataSource={questionData}
+          dataSource={details}
           pagination={false}
-          scroll={{ x: true, y: 350 }}
+          scroll={{ x: 1200, y: 350 }}
           bordered
           className="rounded-none"
           loading={loading}
