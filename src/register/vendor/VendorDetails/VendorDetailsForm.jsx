@@ -238,12 +238,7 @@ const VendorDetailsForm = () => {
 
         <Divider className="bg-d9 h-2/3 mt-1" />
 
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          initialValues={{ company: "KASH IT SOLUTION" }}
-        >
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             {/* <Form.Item
                 label={<div className="font-semibold">Asset Main Type</div>}

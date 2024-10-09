@@ -3,75 +3,60 @@ import { Row, Col, Button, Table, Image, Tag, message } from "antd";
 import { useParams } from "react-router-dom";
 import CommonDivider from "../commonComponents/CommonDivider";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../Fetch/Axios";
 import URLS from "../urils/URLS";
 
 const MonitoringReport = ({ data }) => {
-  const [assetDetails, setAssetDetails] = useState([]);
+  const [details, setDetails] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const assetInfoSelector = useSelector(
     (state) => state.monitoringSlice?.assetInfo
   );
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const getDetails = async () => {
+    setLoading(true);
+
+    let uri = URLS.monitoringDetails.path + params.id + "&";
+
+    if (params.page) {
+      uri = uri + params.page;
+    } else if (params.per_page) {
+      uri = uri + "&" + params.per_page;
+    }
+
+    const extraHeaders = { "x-api-version": URLS.asset.version };
+    const res = await getData(uri, extraHeaders);
+
+    if (res) {
+      const data = res.data;
+
+      setLoading(false);
+
+      // const list = data.listings.map((el, index) => {
+      //   return {
+      //     ...el,
+      //   };
+      // });
+
+      // setDetails(() => {
+      //   return {
+      //     list,
+      //     pageLength: data.paging[0].length,
+      //     currentPage: data.paging[0].currentpage,
+      //     totalRecords: data.paging[0].totalrecords,
+      //   };
+      // });
+    }
+  };
 
   useEffect(() => {
-    if (assetInfoSelector) {
-      const fetchAssetData = async () => {
-        setLoading(true);
-        try {
-          const result = getData(URLS.monitoring);
-          if (result.data) {
-            const asset = result.data[0];
-            setAssetDetails([
-              { label: "Assets Name", value: data.assetsName }, // Replace with actual data
-              { label: "Assets Code", value: data.assetsCode }, // Replace with actual data
-              // {
-              //   label: "Photo",
-              //   value: (
-              //     <Image width={100} src="path_to_photo_image" alt="Photo" />
-              //   ),
-              // },
-              // { label: "Latitude", value: "18.5110776" }, // Replace with actual data
-              // { label: "Longitude", value: "81.888215" }, // Replace with actual data
-            ]);
-            const date = new Date(asset.date_created);
-            const options = { day: "2-digit", month: "short", year: "numeric" };
-            const formattedDate = date.toLocaleDateString("en-GB", options);
-            // Transform API data to match table format
-            const questions = asset.assetdata.map((item, index) => {
-              return {
-                key: item.id,
-                question: item.question,
-                day1: item.answer ? "Yes" : "No",
-                dataCreated: formattedDate,
-                answer: item.answer ? (
-                  <Tag color="green">
-                    <div className="font-semibold">Yes</div>
-                  </Tag>
-                ) : (
-                  <Tag color="red">
-                    <div className="font-semibold">No</div>
-                  </Tag>
-                ),
-                // Add other days if needed, based on your API data or requirements
-              };
-            });
-            setQuestionData(questions);
-          } else {
-            message.error(result.message || "Failed to load asset details");
-          }
-        } catch (error) {
-          message.error(
-            "Please add monitoring details by scanning the QR code."
-          );
-        } finally {
-          setLoading(false);
-        }
-      };
-    }
-  }, []); // Dependency array includes assetId to refetch data when assetId changes
+    getDetails();
+  }, [params]);
 
   const dateColumns = [
     {
@@ -107,20 +92,23 @@ const MonitoringReport = ({ data }) => {
           </Button>
         }
       ></CommonDivider>
+
       <div className="mt-4">
         <div className="flex gap-3">
-          {assetDetails.map((item, index) => (
+          {details.map((item, index) => (
             <div span={12} key={index}>
               <strong>{item.label}:</strong> {item.value}
             </div>
           ))}
         </div>
+
         <div className="flex justify-between">
           <div className="flex flex-col text-center font-semibold">
             <span>QR Code</span>
+            {URLS.baseUrl + assetInfoSelector.photo}
             <Image
               width={130}
-              // src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}
+              src={URLS.baseUrl + assetInfoSelector.photo}
               alt="QR Code"
             />
           </div>

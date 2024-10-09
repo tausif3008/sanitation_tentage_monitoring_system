@@ -32,7 +32,6 @@ const VehicleRegistrationForm = () => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ companyName: "KASH IT SOLUTION" }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           <Form.Item

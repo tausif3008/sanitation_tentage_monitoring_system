@@ -72,6 +72,12 @@ const CountryStateCity = ({ form, country_id, state_id, city_id }) => {
     }
   }, [selectedCountryId, selectedStateId]);
 
+  useEffect(() => {
+    if (countryOptions.length) {
+      form.setFieldsValue({ country_id: "82" });
+      setSelectedCountryId("82");
+    }
+  }, [form, countryOptions]);
   return (
     <>
       <Form.Item

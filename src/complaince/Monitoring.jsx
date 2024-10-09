@@ -78,7 +78,6 @@ const Monitoring = () => {
     if (isUpdatedSelector) {
       dispatch(setMonitoringListIsUpdated({ isUpdated: false }));
     }
-    getData(URLS.monitoringDetails.path + 7);
   }, [params, isUpdatedSelector]);
 
   const handleCancel = () => {
@@ -147,7 +146,10 @@ const Monitoring = () => {
 
           <div
             className="text-blue-500 cursor-pointer"
-            onClick={() => dispatch(setAssetInfo(record))}
+            onClick={() => {
+              navigate("/monitoring-report/" + record.assets_id);
+              dispatch(setAssetInfo(record));
+            }}
           >
             Monitoring
           </div>
@@ -171,6 +173,7 @@ const Monitoring = () => {
         //   </Button>
         // }
       ></CommonDivider>
+
       <CommonTable
         columns={columns}
         uri={"monitoring"}
@@ -178,6 +181,7 @@ const Monitoring = () => {
         loading={loading}
         scroll={{ x: 1400, y: 400 }}
       ></CommonTable>
+
       <Modal
         width={300}
         title="QR Code"

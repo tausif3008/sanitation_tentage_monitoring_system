@@ -15,7 +15,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    width: 150,
+    width: 200,
   },
   {
     title: "Email",
@@ -34,7 +34,7 @@ const columns = [
     title: "Company",
     dataIndex: "company",
     key: "company",
-    width: 150,
+    width: 200,
   },
   {
     title: "Code",
