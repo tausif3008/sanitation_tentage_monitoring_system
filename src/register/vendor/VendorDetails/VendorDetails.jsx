@@ -54,26 +54,31 @@ const VendorDetails = () => {
       title: "Contract Number",
       dataIndex: "contract_number",
       key: "contract_number",
+      width: 160,
     },
     {
       title: "Manager Contact 1",
       dataIndex: "manager_contact_1",
       key: "manager_contact_1",
+      width: 160,
     },
     {
       title: "Manager Contact 2",
       dataIndex: "manager_contact_2",
       key: "manager_contact_2",
+      width: 160,
     },
     {
       title: "Work Order Number",
       dataIndex: "work_order_number",
       key: "work_order_number",
+      width: 180,
     },
     {
       title: "Date of Allocation",
       dataIndex: "date_of_allocation",
       key: "date_of_allocation",
+      width: 160,
     },
     {
       title: "Total Allotted Quantity",
@@ -125,7 +130,7 @@ const VendorDetails = () => {
       const data = res.data;
       setLoading(false);
 
-      setUserName(data.userdetails[0].user_name);
+      setUserName(data.userdetails[0]?.user_name);
 
       const list = data.userdetails.map((el, index) => {
         return {
@@ -228,7 +233,7 @@ const VendorDetails = () => {
               dataSource={proposedSectors}
               rowKey="question_id"
               pagination={false}
-              scroll={{ x: 800, y: 400 }}
+              scroll={{ x: 300, y: 400 }}
               columns={[
                 {
                   title: "Sector Name",

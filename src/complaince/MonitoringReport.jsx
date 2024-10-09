@@ -40,6 +40,8 @@ const MonitoringReport = ({ data }) => {
         longitude: assetDetails?.longitude,
         remark: assetDetails?.remark,
         photo: assetDetails?.photo,
+        asset_type_name: assetDetails?.asset_type_name,
+        qrCode: assetDetails?.asset_qr_code,
       });
     }
   };
@@ -131,7 +133,10 @@ const MonitoringReport = ({ data }) => {
           </Button>
           <div className="text-d9 text-2xl  w-full flex items-end ">
             <span className="mr-1"> Monitoring Report For: </span>{" "}
-            <span className="text-blue-500"> Asset</span>
+            <span className="text-blue-500">
+              {" "}
+              {assetDetails.asset_type_name}
+            </span>
           </div>
         </div>
         <Divider className="bg-d9 h-2/3 mt-1"></Divider>
@@ -157,7 +162,7 @@ const MonitoringReport = ({ data }) => {
                 <span>QR Code</span>
                 <Image
                   width={130}
-                  src={URLS.baseUrl + assetDetails?.photo}
+                  src={URLS.baseUrl + assetDetails?.qrCode}
                   alt="QR Code"
                 />
               </div>

@@ -41,7 +41,7 @@ const Monitoring = () => {
   const getDetails = async () => {
     setLoading(true);
 
-    let uri = URLS.asset.path + "/?";
+    let uri = URLS.monitoring.path + "/?";
 
     if (params.page) {
       uri = uri + params.page;
@@ -91,7 +91,7 @@ const Monitoring = () => {
 
   const showQrCode = (record) => {
     setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
-    setQrCodeUrl(record.qr_code); // Set the QR code URL
+    setQrCodeUrl(record.asset_qr_code); // Set the QR code URL
     setIsModalVisible(true); // Show the modal
   };
 
@@ -105,7 +105,7 @@ const Monitoring = () => {
 
     {
       title: "Assets Code",
-      dataIndex: "code",
+      dataIndex: "asset_code",
       key: "assetsCode",
     },
     {
@@ -148,7 +148,7 @@ const Monitoring = () => {
           <div
             className="text-blue-500 cursor-pointer"
             onClick={() => {
-              navigate("/monitoring-report/" + record.assets_id);
+              navigate("/monitoring-report/" + record.id);
               dispatch(setAssetInfo(record));
             }}
           >
