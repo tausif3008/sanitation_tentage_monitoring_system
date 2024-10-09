@@ -51,13 +51,38 @@ const VendorDetailsForm = () => {
     if (vendorDetailsUpdateElSelector) {
       const updatedDetails = { ...vendorDetailsUpdateElSelector };
 
-      // Ensure the date is a dayjs object
       updatedDetails.date_of_allocation = dayjs(
         updatedDetails.date_of_allocation
       );
 
-      updatedDetails.proposed_sectors =
-        updatedDetails.proposed_sectors.split(",");
+      const sector_info = [];
+
+      let quantity = 0;
+
+      quantity = quantity + updatedDetails.proposedsectors[0].quantity * 1;
+
+      form.setFieldsValue({
+        sector: updatedDetails.proposedsectors[0].sector_id,
+        quantity: updatedDetails.proposedsectors[0].quantity * 1,
+      });
+
+      for (
+        let index = 1;
+        index < updatedDetails.proposedsectors.length;
+        index++
+      ) {
+        sector_info.push({
+          sector: updatedDetails.proposedsectors[index].sector_id,
+          quantity: updatedDetails.proposedsectors[index].quantity * 1,
+        });
+        quantity =
+          quantity + updatedDetails.proposedsectors[index].quantity * 1;
+      }
+      setQuantity(quantity);
+
+      form.setFieldsValue({
+        sector_info,
+      });
 
       form.setFieldsValue(updatedDetails);
     }
@@ -140,8 +165,6 @@ const VendorDetailsForm = () => {
 
     selectedSectors.push(vals.sector);
     quantities.push(vals.quantity);
-
-    selectedSectors.push(vals.sector);
 
     if (vals?.sector_info) {
       for (const key of vals?.sector_info) {
@@ -240,21 +263,6 @@ const VendorDetailsForm = () => {
 
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
-            {/* <Form.Item
-                label={<div className="font-semibold">Asset Main Type</div>}
-                name="main_type"
-                rules={[{ required: true, message: "Please enter main type" }]}
-                className="mb-4"
-              >
-                <Select
-                  placeholder="Select a option and change input text above"
-                  allowClear
-                >
-                  <Option value="Sanitation">Sanitation</Option>
-                  <Option value="Tentage">Tentage</Option>
-                </Select>
-              </Form.Item> */}
-
             <CommonFormDropDownMaker
               uri={"assetMainTypePerPage"}
               responseListName="assetmaintypes"

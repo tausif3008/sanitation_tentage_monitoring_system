@@ -97,13 +97,13 @@ const VendorDetails = () => {
         );
       },
     },
-    // {
-    //   title: "Action",
-    //   dataIndex: "action",
-    //   key: "action",
-    //   fixed: "right",
-    //   width: 80,
-    // },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      fixed: "right",
+      width: 80,
+    },
   ];
 
   const getDetails = async () => {
