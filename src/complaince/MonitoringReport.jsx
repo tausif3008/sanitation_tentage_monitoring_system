@@ -119,8 +119,8 @@ const MonitoringReport = ({ data }) => {
 
   return (
     <div>
-      <div className="mx-auto px-3 pb-3 bg-white shadow-md rounded-lg w-full mt-3">
-        <div className="flex items-center gap-2 mt-3 font-semibold">
+      <div className="mx-auto p-3 pb-3 bg-white shadow-md rounded-lg w-full mt-3">
+        <div className="flex items-center gap-2 font-semibold">
           <Button
             className="bg-gray-200 rounded-full w-9 h-9"
             onClick={() => {
