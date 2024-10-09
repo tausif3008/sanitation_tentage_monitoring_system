@@ -125,6 +125,8 @@ const VendorDetails = () => {
       const data = res.data;
       setLoading(false);
 
+      setUserName(data.userdetails[0].user_name);
+
       const list = data.userdetails.map((el, index) => {
         return {
           ...el,
