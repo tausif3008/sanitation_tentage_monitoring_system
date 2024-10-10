@@ -87,7 +87,6 @@ const VendorRegistrationForm = () => {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ company: "KASH IT SOLUTION" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5">
             <Form.Item
@@ -163,8 +162,8 @@ const VendorRegistrationForm = () => {
                 rules={[
                   { required: true, message: "Please enter the password" },
                   {
-                    min: 7,
-                    message: "Password must be at least 6 characters long",
+                    min: 8,
+                    message: "Password must be at least 8 characters long",
                   },
                 ]}
                 className="mb-4"

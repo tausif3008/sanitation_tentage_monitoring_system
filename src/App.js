@@ -102,7 +102,7 @@ function App() {
             ></Route>
 
             <Route
-              path="asset-list"
+              path="asset-list/:page?/:per_page?"
               element={<AssetsList></AssetsList>}
             ></Route>
 
@@ -129,7 +129,7 @@ function App() {
             ></Route>
 
             <Route
-              path="vendor/add-vendor-details/:id/:page?/:per_page?"
+              path="vendor/add-vendor-details/:id?/:page?/:per_page?"
               element={<VendorDetails></VendorDetails>}
             ></Route>
 

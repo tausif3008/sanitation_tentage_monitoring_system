@@ -41,7 +41,7 @@ const Monitoring = () => {
   const getDetails = async () => {
     setLoading(true);
 
-    let uri = URLS.asset.path + "/?";
+    let uri = URLS.monitoring.path + "/?";
 
     if (params.page) {
       uri = uri + params.page;
@@ -78,7 +78,6 @@ const Monitoring = () => {
     if (isUpdatedSelector) {
       dispatch(setMonitoringListIsUpdated({ isUpdated: false }));
     }
-    getData(URLS.monitoringDetails.path + 7);
   }, [params, isUpdatedSelector]);
 
   const handleCancel = () => {
@@ -92,7 +91,7 @@ const Monitoring = () => {
 
   const showQrCode = (record) => {
     setQrCodeData(record.assetsCode); // Set the QR code data (can be the assetsCode or any other data)
-    setQrCodeUrl(record.qr_code); // Set the QR code URL
+    setQrCodeUrl(record.asset_qr_code); // Set the QR code URL
     setIsModalVisible(true); // Show the modal
   };
 
@@ -101,18 +100,19 @@ const Monitoring = () => {
       title: "Assets Type Name",
       dataIndex: "asset_type_name",
       key: "assetsName",
-      width: 210,
+      width: 300,
     },
 
     {
       title: "Assets Code",
-      dataIndex: "code",
+      dataIndex: "asset_code",
       key: "assetsCode",
     },
     {
       title: "Vendor Name",
       dataIndex: "vendor_name",
       key: "vendor",
+      width: 200,
     },
     {
       title: "Vendor Asset Code",
@@ -125,11 +125,11 @@ const Monitoring = () => {
       dataIndex: "sector",
       key: "assetsName",
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description_",
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description_",
+    // },
     {
       title: "Action",
       key: "action",
@@ -147,7 +147,10 @@ const Monitoring = () => {
 
           <div
             className="text-blue-500 cursor-pointer"
-            onClick={() => dispatch(setAssetInfo(record))}
+            onClick={() => {
+              navigate("/monitoring-report/" + record.id);
+              dispatch(setAssetInfo(record));
+            }}
           >
             Monitoring
           </div>
@@ -171,13 +174,15 @@ const Monitoring = () => {
         //   </Button>
         // }
       ></CommonDivider>
+
       <CommonTable
         columns={columns}
         uri={"monitoring"}
         details={details}
         loading={loading}
-        scroll={{ x: 1400, y: 400 }}
+        scroll={{ x: 1000, y: 400 }}
       ></CommonTable>
+
       <Modal
         width={300}
         title="QR Code"

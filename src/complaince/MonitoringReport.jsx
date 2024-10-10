@@ -1,147 +1,195 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Table, Image, Tag, message } from "antd";
-import { useParams } from "react-router-dom";
-import CommonDivider from "../commonComponents/CommonDivider";
+import { Button, Table, Image, Divider } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
 import { getData } from "../Fetch/Axios";
 import URLS from "../urils/URLS";
 
 const MonitoringReport = ({ data }) => {
-  const [assetDetails, setAssetDetails] = useState([]);
-  const [questionData, setQuestionData] = useState([]);
+  const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [assetDetails, setAssetDetails] = useState({});
 
-  const assetInfoSelector = useSelector(
-    (state) => state.monitoringSlice?.assetInfo
-  );
+  const params = useParams();
+
+  const getDetails = async () => {
+    setLoading(true);
+
+    let uri = URLS.monitoringDetails.path + params.id + "&";
+
+    if (params.page) {
+      uri = uri + params.page;
+    } else if (params.per_page) {
+      uri = uri + "&" + params.per_page;
+    }
+
+    const extraHeaders = { "x-api-version": URLS.asset.version };
+    const res = await getData(uri, extraHeaders);
+
+    if (res) {
+      const data = res.data;
+
+      setLoading(false);
+
+      const list = data?.monitoring[0]?.questions;
+      setDetails(() => list);
+
+      const assetDetails = data.monitoring[0];
+      setAssetDetails({
+        latitude: assetDetails?.latitude,
+        longitude: assetDetails?.longitude,
+        remark: assetDetails?.remark,
+        photo: assetDetails?.photo,
+        asset_type_name: assetDetails?.asset_type_name,
+        qrCode: assetDetails?.asset_qr_code,
+      });
+    }
+  };
 
   useEffect(() => {
-    if (assetInfoSelector) {
-      const fetchAssetData = async () => {
-        setLoading(true);
-        try {
-          const result = getData(URLS.monitoring);
-          if (result.data) {
-            const asset = result.data[0];
-            setAssetDetails([
-              { label: "Assets Name", value: data.assetsName }, // Replace with actual data
-              { label: "Assets Code", value: data.assetsCode }, // Replace with actual data
-              // {
-              //   label: "Photo",
-              //   value: (
-              //     <Image width={100} src="path_to_photo_image" alt="Photo" />
-              //   ),
-              // },
-              // { label: "Latitude", value: "18.5110776" }, // Replace with actual data
-              // { label: "Longitude", value: "81.888215" }, // Replace with actual data
-            ]);
-            const date = new Date(asset.date_created);
-            const options = { day: "2-digit", month: "short", year: "numeric" };
-            const formattedDate = date.toLocaleDateString("en-GB", options);
-            // Transform API data to match table format
-            const questions = asset.assetdata.map((item, index) => {
-              return {
-                key: item.id,
-                question: item.question,
-                day1: item.answer ? "Yes" : "No",
-                dataCreated: formattedDate,
-                answer: item.answer ? (
-                  <Tag color="green">
-                    <div className="font-semibold">Yes</div>
-                  </Tag>
-                ) : (
-                  <Tag color="red">
-                    <div className="font-semibold">No</div>
-                  </Tag>
-                ),
-                // Add other days if needed, based on your API data or requirements
-              };
-            });
-            setQuestionData(questions);
-          } else {
-            message.error(result.message || "Failed to load asset details");
-          }
-        } catch (error) {
-          message.error(
-            "Please add monitoring details by scanning the QR code."
-          );
-        } finally {
-          setLoading(false);
-        }
-      };
-    }
-  }, []); // Dependency array includes assetId to refetch data when assetId changes
+    getDetails();
+  }, [params]);
 
   const dateColumns = [
     {
-      title: "Date/Question",
-      dataIndex: "question",
-      key: "question",
+      title: "Question (EN)",
+      dataIndex: "question_en",
+      key: "question_en",
+      width: 300,
+    },
+    {
+      title: "Question (HI)",
+      dataIndex: "question_hi",
+      key: "question_hi",
+      width: 300,
+    },
+    {
+      title: "SLA",
+      dataIndex: "sla",
+      key: "sla",
+    },
+
+    {
+      title: "image",
+      dataIndex: "image",
+      key: "answer",
+      render: (image) => {
+        console.log("image", image);
+        if (image !== "N") {
+          <Image width={130} src={URLS.baseUrl + image} alt="QR Code" />;
+        } else {
+          return "-";
+        }
+      },
     },
     {
       title: "Answer",
       dataIndex: "answer",
       key: "answer",
-      width: 90,
+      width: 140,
+      render: (answer) => {
+        if (answer === "1") {
+          return (
+            <div className="bg-green-500 p-1 px-3 rounded-md flex w-fit text-xs">
+              Yes
+            </div>
+          );
+        } else if (answer === "0") {
+          return (
+            <div className="bg-orange-500 p-1 px-3 rounded-md flex w-fit text-xs">
+              No
+            </div>
+          );
+        } else {
+          return (
+            <div className="bg-blue-200 p-1 px-3 rounded-md flex w-fit text-xs">
+              Maintenance
+            </div>
+          );
+        }
+      },
     },
     {
-      title: "Date",
-      dataIndex: "dataCreated",
-      key: "question",
-      width: 120,
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: 250,
     },
-    // Assuming you need columns for 12 days, adjust as needed
   ];
 
+  const navigate = useNavigate();
+
   return (
-    <div className="mx-auto p-3 bg-white shadow-md rounded-lg w-full mt-3">
-      <CommonDivider
-        label={"Monitoring Report"}
-        compo={
+    <div>
+      <div className="mx-auto p-3 pb-3 bg-white shadow-md rounded-lg w-full mt-3">
+        <div className="flex items-center gap-2 font-semibold">
           <Button
-            className="mb-2 bg-green-400"
-            // onClick={() => setsetAssetInfo(null)}
+            className="bg-gray-200 rounded-full w-9 h-9"
+            onClick={() => {
+              navigate("/asset-type-list");
+            }}
           >
-            <ArrowLeftOutlined></ArrowLeftOutlined> Assets Monitoring Listing
+            <ArrowLeftOutlined></ArrowLeftOutlined>
           </Button>
-        }
-      ></CommonDivider>
-      <div className="mt-4">
-        <div className="flex gap-3">
-          {assetDetails.map((item, index) => (
-            <div span={12} key={index}>
-              <strong>{item.label}:</strong> {item.value}
-            </div>
-          ))}
+          <div className="text-d9 text-2xl  w-full flex items-end ">
+            <span className="mr-1"> Monitoring Report For: </span>{" "}
+            <span className="text-blue-500">
+              {" "}
+              {assetDetails.asset_type_name}
+            </span>
+          </div>
         </div>
-        <div className="flex justify-between">
-          <div className="flex flex-col text-center font-semibold">
-            <span>QR Code</span>
-            <Image
-              width={130}
-              // src={"http://filemanagement.metaxpay.in:8001" + data.qrCodeUrl}
-              alt="QR Code"
+        <Divider className="bg-d9 h-2/3 mt-1"></Divider>
+        {details.length ? (
+          <div className="mt-3">
+            <div className="flex gap-1 flex-col">
+              <div>
+                Latitude:{" "}
+                <span className="font-semibold">{assetDetails.latitude}</span>
+              </div>
+              <div>
+                Longitude:{" "}
+                <span className="font-semibold">{assetDetails.longitude}</span>
+              </div>
+              <div>
+                Remark:{" "}
+                <span className="font-semibold">{assetDetails.remark}</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-2 mb-3">
+              <div className="flex flex-col text-center font-semibold">
+                <span>QR Code</span>
+                <Image
+                  width={130}
+                  src={URLS.baseUrl + assetDetails?.qrCode}
+                  alt="QR Code"
+                />
+              </div>
+              <div className="flex flex-col text-center font-semibold">
+                <span>Asset Image</span>
+                <Image
+                  width={125}
+                  height={125}
+                  src={URLS.baseUrl + assetDetails?.photo}
+                ></Image>
+              </div>
+            </div>
+            <Table
+              columns={dateColumns}
+              dataSource={details}
+              pagination={false}
+              scroll={{ x: 1200, y: 350 }}
+              bordered
+              className="rounded-none"
+              loading={loading}
             />
           </div>
-          <div className="flex flex-col text-center font-semibold">
-            <span>Asset Image</span>
-            <Image
-              width={125}
-              height={125}
-              // src={"http://filemanagement.metaxpay.in:8001" + data.img}
-            ></Image>
+        ) : (
+          <div className="mt-3 font-semibold text-orange-500 text-center">
+            Not Report Found
           </div>
-        </div>
-        <Table
-          columns={dateColumns}
-          dataSource={questionData}
-          pagination={false}
-          scroll={{ x: true, y: 350 }}
-          bordered
-          className="rounded-none"
-          loading={loading}
-        />
+        )}
       </div>
     </div>
   );

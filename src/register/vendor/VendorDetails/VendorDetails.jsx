@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Modal, Table } from "antd";
 import CommonTable from "../../../commonComponents/CommonTable";
 import CommonDivider from "../../../commonComponents/CommonDivider";
 import URLS from "../../../urils/URLS";
@@ -13,62 +13,6 @@ import {
   setVendorDetailsListIsUpdated,
 } from "./vendorDetailsSlice";
 
-const columns = [
-  {
-    title: "Asset Main Type",
-    dataIndex: "asset_main_type_name",
-    key: "main_type",
-  },
-  {
-    title: "Asset Type",
-    dataIndex: "asset_type_name",
-    key: "asset_type",
-    width: 200,
-  },
-  {
-    title: "Contract Number",
-    dataIndex: "contract_number",
-    key: "contract_number",
-  },
-  {
-    title: "Manager Contact 1",
-    dataIndex: "manager_contact_1",
-    key: "manager_contact_1",
-  },
-  {
-    title: "Manager Contact 2",
-    dataIndex: "manager_contact_2",
-    key: "manager_contact_2",
-  },
-  {
-    title: "Work Order Number",
-    dataIndex: "work_order_number",
-    key: "work_order_number",
-  },
-  {
-    title: "Date of Allocation",
-    dataIndex: "date_of_allocation",
-    key: "date_of_allocation",
-  },
-  {
-    title: "Total Allotted Quantity",
-    dataIndex: "total_allotted_quantity",
-    key: "total_allotted_quantity",
-  },
-  {
-    title: "Proposed Sectors",
-    dataIndex: "proposed_sectors",
-    key: "proposed_sectors",
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    fixed: "right",
-    width: 80,
-  },
-];
-
 const VendorDetails = () => {
   const dispatch = useDispatch();
 
@@ -79,7 +23,93 @@ const VendorDetails = () => {
     currentPage: 1,
   });
 
+  const [proposedSectors, setProposedSectors] = useState();
+  const [isModalVisible, setIsModalVisible] = useState();
   const params = useParams();
+  const [userName, setUserName] = useState("");
+
+  const handleProposedSectorsView = (record) => {
+    setProposedSectors(record);
+    setIsModalVisible(true); // Show the modal
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setProposedSectors([]);
+  };
+
+  const columns = [
+    {
+      title: "Asset Main Type",
+      dataIndex: "asset_main_type_name",
+      key: "main_type",
+    },
+    {
+      title: "Asset Type",
+      dataIndex: "asset_type_name",
+      key: "asset_type",
+      width: 300,
+    },
+    {
+      title: "Contract Number",
+      dataIndex: "contract_number",
+      key: "contract_number",
+      width: 160,
+    },
+    {
+      title: "Manager Contact 1",
+      dataIndex: "manager_contact_1",
+      key: "manager_contact_1",
+      width: 160,
+    },
+    {
+      title: "Manager Contact 2",
+      dataIndex: "manager_contact_2",
+      key: "manager_contact_2",
+      width: 160,
+    },
+    {
+      title: "Work Order Number",
+      dataIndex: "work_order_number",
+      key: "work_order_number",
+      width: 180,
+    },
+    {
+      title: "Date of Allocation",
+      dataIndex: "date_of_allocation",
+      key: "date_of_allocation",
+      width: 160,
+    },
+    {
+      title: "Total Allotted Quantity",
+      dataIndex: "total_allotted_quantity",
+      key: "total_allotted_quantity",
+    },
+    {
+      title: "Proposed Sectors",
+      dataIndex: "proposedsectors",
+      key: "proposed_sectors",
+
+      render: (record) => {
+        return (
+          <div
+            onClick={() => handleProposedSectorsView(record)}
+            className="text-blue-500"
+          >
+            {" "}
+            View
+          </div>
+        );
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      fixed: "right",
+      width: 80,
+    },
+  ];
 
   const getDetails = async () => {
     setLoading(true);
@@ -99,6 +129,8 @@ const VendorDetails = () => {
     if (res) {
       const data = res.data;
       setLoading(false);
+
+      setUserName(data.userdetails[0]?.user_name);
 
       const list = data.userdetails.map((el, index) => {
         return {
@@ -161,7 +193,12 @@ const VendorDetails = () => {
 
           <div className="w-full">
             <CommonDivider
-              label={"Vendor Details"}
+              label={
+                <div>
+                  Vendor Details For{" "}
+                  <span className="text-blue-500">{userName}</span>
+                </div>
+              }
               compo={
                 <Button
                   className="bg-orange-300 mb-1"
@@ -178,10 +215,42 @@ const VendorDetails = () => {
 
         <CommonTable
           columns={columns}
-          uri={"vendor/add-details/" + params.id} // react url
+          uri={"vendor/add-vendor-details/" + params.id} // react url
           details={details}
           loading={loading}
         ></CommonTable>
+
+        <Modal
+          title={`Proposed Sectors`}
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+          width={800}
+        >
+          {proposedSectors?.length ? (
+            <Table
+              bordered
+              dataSource={proposedSectors}
+              rowKey="question_id"
+              pagination={false}
+              scroll={{ x: 300, y: 400 }}
+              columns={[
+                {
+                  title: "Sector Name",
+                  dataIndex: "sector_name",
+                  key: "sector_name",
+                },
+                {
+                  title: "quantity",
+                  dataIndex: "quantity",
+                  key: "quantity",
+                },
+              ]}
+            />
+          ) : (
+            <p>No questions found for this asset type.</p>
+          )}
+        </Modal>
       </>
     </div>
   );
