@@ -63,19 +63,17 @@ const MonitoringReport = ({ data }) => {
       title: "Question (EN)",
       dataIndex: "question_en",
       key: "question_en",
-      width: 300,
     },
     {
       title: "Question (HI)",
       dataIndex: "question_hi",
       key: "question_hi",
-      width: 300,
     },
-    {
-      title: "SLA",
-      dataIndex: "sla",
-      key: "sla",
-    },
+    // {
+    //   title: "SLA",
+    //   dataIndex: "sla",
+    //   key: "sla",
+    // },
 
     {
       title: "image",
@@ -94,7 +92,6 @@ const MonitoringReport = ({ data }) => {
       title: "Answer",
       dataIndex: "answer",
       key: "answer",
-      width: 140,
       render: (answer) => {
         if (answer === "1") {
           return (
@@ -117,12 +114,12 @@ const MonitoringReport = ({ data }) => {
         }
       },
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: 250,
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description",
+    //   width: 250,
+    // },
   ];
 
   const navigate = useNavigate();
@@ -188,7 +185,7 @@ const MonitoringReport = ({ data }) => {
               columns={dateColumns}
               dataSource={details.list}
               pagination={false}
-              scroll={{ x: 1200, y: 350 }}
+              scroll={{ x: 1000, y: 350 }}
               bordered
               className="rounded-none"
               loading={loading}

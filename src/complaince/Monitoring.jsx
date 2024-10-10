@@ -138,7 +138,7 @@ const Monitoring = () => {
   return (
     <div className="">
       <CommonDivider
-        label={"Assets Monitoring "}
+        label={"Asset Type Monitoring "}
         // compo={
         //   <Button
         //     className="bg-orange-300 mb-1"
